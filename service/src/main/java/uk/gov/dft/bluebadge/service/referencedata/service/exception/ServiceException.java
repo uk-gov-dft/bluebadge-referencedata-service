@@ -1,7 +1,7 @@
-package uk.gov.dft.bluebadge.service.usermanagement.service.exception;
+package uk.gov.dft.bluebadge.service.referencedata.service.exception;
 
-import uk.gov.dft.bluebadge.model.usermanagement.CommonResponse;
-import uk.gov.dft.bluebadge.model.usermanagement.Error;
+import uk.gov.dft.bluebadge.model.referencedata.CommonResponse;
+import uk.gov.dft.bluebadge.model.referencedata.Error;
 
 class ServiceException extends RuntimeException {
   CommonResponse commonResponse;

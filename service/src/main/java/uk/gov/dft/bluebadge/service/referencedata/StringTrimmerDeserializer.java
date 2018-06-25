@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.usermanagement;
+package uk.gov.dft.bluebadge.service.referencedata;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

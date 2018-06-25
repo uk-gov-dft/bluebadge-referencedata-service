@@ -1,11 +1,11 @@
 ### API Acceptance tests
 
-#### Start the usermanagement service
+#### Start the referencedata service
 
-First you need to start the usermanagement service by executing following commands
+First you need to start the referencedata service by executing following commands
 
 ```
-cd usermanagement-service
+cd referencedata-service
 git pull
 git checkout whateverbranch
 cd model

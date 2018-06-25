@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.usermanagement;
+package uk.gov.dft.bluebadge.service.referencedata;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,20 +10,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import uk.gov.dft.bluebadge.model.usermanagement.CommonResponse;
-import uk.gov.dft.bluebadge.model.usermanagement.Error;
-import uk.gov.dft.bluebadge.model.usermanagement.ErrorErrors;
-import uk.gov.dft.bluebadge.service.usermanagement.service.UserManagementService;
+import uk.gov.dft.bluebadge.model.referencedata.CommonResponse;
+import uk.gov.dft.bluebadge.model.referencedata.Error;
+import uk.gov.dft.bluebadge.model.referencedata.ErrorErrors;
 
 @ControllerAdvice
 public class CommonResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-  private UserManagementService userManagementService;
-
   @Autowired
-  public CommonResponseEntityExceptionHandler(UserManagementService userManagementService) {
-    this.userManagementService = userManagementService;
-  }
+  public CommonResponseEntityExceptionHandler() {}
 
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(

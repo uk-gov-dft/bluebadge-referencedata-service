@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.usermanagement;
+package uk.gov.dft.bluebadge.service.referencedata;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;

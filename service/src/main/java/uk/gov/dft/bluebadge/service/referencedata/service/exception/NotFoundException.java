@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.usermanagement.service.exception;
+package uk.gov.dft.bluebadge.service.referencedata.service.exception;
 
 public class NotFoundException extends ServiceException {
   // TODO

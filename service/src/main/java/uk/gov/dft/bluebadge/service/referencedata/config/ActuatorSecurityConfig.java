@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.usermanagement.config;
+package uk.gov.dft.bluebadge.service.referencedata.config;
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
-package uk.gov.dft.bluebadge.service.usermanagement.service.exception;
+package uk.gov.dft.bluebadge.service.referencedata.service.exception;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import uk.gov.dft.bluebadge.model.usermanagement.ErrorErrors;
+import uk.gov.dft.bluebadge.model.referencedata.ErrorErrors;
 
 public class BadRequestException extends ServiceException {
 
