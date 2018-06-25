@@ -25,7 +25,7 @@ node {
             echo "Version: " + ver
             // requires SonarQube Scanner for Gradle 2.1+
             // It's important to add --info because of SONARJNKNS-281
-            sh "./gradlew --info sonarqube -Dsonar.projectName=authorisation-service -Dsonar.projectVersion=${ver} -Dsonar.branch=${BRANCH_NAME}"
+            sh "./gradlew --info sonarqube -Dsonar.projectName=referencedata-service -Dsonar.projectVersion=${ver} -Dsonar.branch=${BRANCH_NAME}"
         }
     }
     stage("Quality Gate") {
