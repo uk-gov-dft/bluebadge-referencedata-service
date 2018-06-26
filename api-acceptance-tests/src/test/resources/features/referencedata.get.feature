@@ -8,4 +8,4 @@ Feature: Verify ref data retrieval
     Given path 'reference-data/BADGE'
     When method GET
     Then status 200
-    And match each $.data contains {shortCode:"#notnull"}
+    And match $.data[*].shortCode contains ['PIP', 'PAPER']

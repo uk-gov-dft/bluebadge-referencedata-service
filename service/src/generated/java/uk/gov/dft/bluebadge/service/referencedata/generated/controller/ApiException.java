@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.referencedata.controller;
+package uk.gov.dft.bluebadge.service.referencedata.generated.controller;
 
 public class ApiException extends Exception {
   private int code;

@@ -1,7 +1,7 @@
 package uk.gov.dft.bluebadge.service.referencedata.converter;
 
 import org.springframework.beans.BeanUtils;
-import uk.gov.dft.bluebadge.model.referencedata.ReferenceData;
+import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceData;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 
 public class ReferenceDataConverter implements BiConverter<ReferenceDataEntity, ReferenceData> {

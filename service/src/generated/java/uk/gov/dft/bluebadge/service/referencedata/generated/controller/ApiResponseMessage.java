@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.referencedata.controller;
+package uk.gov.dft.bluebadge.service.referencedata.generated.controller;
 
 import javax.xml.bind.annotation.XmlTransient;
 

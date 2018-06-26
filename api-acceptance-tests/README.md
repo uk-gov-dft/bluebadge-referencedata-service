@@ -8,11 +8,6 @@ First you need to start the referencedata service by executing following command
 cd referencedata-service
 git pull
 git checkout whateverbranch
-cd model
-gradle install
-cd ../client
-gradle install
-cd ..
 gradle build
 gradle bootRun
 ```

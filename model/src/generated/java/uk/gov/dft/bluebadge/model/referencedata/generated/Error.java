@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.model.referencedata;
+package uk.gov.dft.bluebadge.model.referencedata.generated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;

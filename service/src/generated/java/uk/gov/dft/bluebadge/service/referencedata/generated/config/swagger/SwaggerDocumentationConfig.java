@@ -1,4 +1,4 @@
-package uk.gov.dft.bluebadge.service.referencedata.config.swagger;
+package uk.gov.dft.bluebadge.service.referencedata.generated.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ public class SwaggerDocumentationConfig {
         .select()
         .apis(
             RequestHandlerSelectors.basePackage(
-                "uk.gov.dft.bluebadge.service.referencedata.controller"))
+                "uk.gov.dft.bluebadge.service.referencedata.generated.controller"))
         .build()
         .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
         .directModelSubstitute(java.time.OffsetDateTime.class, java.util.Date.class)
