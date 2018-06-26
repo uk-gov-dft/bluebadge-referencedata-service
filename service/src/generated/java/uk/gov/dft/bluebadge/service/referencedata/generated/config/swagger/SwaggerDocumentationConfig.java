@@ -15,7 +15,7 @@ public class SwaggerDocumentationConfig {
   ApiInfo apiInfo() {
     return new ApiInfoBuilder()
         .title("ReferenceData API")
-        .description("Manage reference data")
+        .description("Manage Reference Data")
         .license("")
         .licenseUrl("http://unlicense.org")
         .termsOfServiceUrl("")

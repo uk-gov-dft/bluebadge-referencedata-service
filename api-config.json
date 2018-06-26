@@ -3,7 +3,7 @@
   "swagger" : "2.0",
   "info" : {
     "title" : "ReferenceData API",
-    "description" : "Manage reference data",
+    "description" : "Manage Reference Data",
     "version" : "1.0.0"
   },
   "schemes" : [ "https", "http" ],
@@ -52,29 +52,39 @@
     "ReferenceData" : {
       "type" : "object",
       "properties" : {
-        "categoryId" : {
-          "type" : "string",
-          "description" : "Group of data."
-        },
         "shortCode" : {
           "type" : "string",
-          "description" : "Identifier of data item within category"
+          "description" : "Identifier of data item",
+          "example" : "AFRFCS"
         },
         "description" : {
           "type" : "string",
-          "description" : "Display value of data item"
+          "description" : "Display value of data item",
+          "example" : "Armed Forces Compensation scheme"
+        },
+        "groupShortCode" : {
+          "type" : "string",
+          "description" : "Group of data.",
+          "example" : "ELIGIBILIT"
+        },
+        "groupDescription" : {
+          "type" : "string",
+          "description" : "Description of group",
+          "example" : "Eligibility"
         },
         "subgroupShortCode" : {
           "type" : "string",
-          "description" : "Id of a subgroup"
+          "description" : "Id of a subgroup",
+          "example" : "ELIG_AUTO"
         },
         "subgroupDescription" : {
           "type" : "string",
-          "description" : "Display value of a sub group"
+          "description" : "Display value of a sub group",
+          "example" : "Automatic"
         },
         "displayOrder" : {
           "type" : "integer",
-          "description" : "Order to display in a list within category"
+          "description" : "Order to display"
         }
       }
     },

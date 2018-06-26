@@ -5,12 +5,13 @@
 
     <select id="findByDomain" parameterType="String" resultType="ReferenceDataEntity">
         SELECT
-          data_category_id  AS categoryId,
-          code              AS shortCode,
-          description       AS description,
-          data_subgroup_id  AS subgroupShortCode,
-          group_description AS subgroupDescription,
-          display_order     AS displayOrder
+            code                  AS shortCode,
+            description           AS description,
+            group_code            AS groupShortCode,
+            group_description     AS groupDescription,
+            sub_group_code        AS subgroupShortCode,
+            sub_group_description AS subgroupDescription,
+            display_order         AS displayOrder
         FROM reference_data_vw
         WHERE data_domain_id = #{domainId}
     </select>

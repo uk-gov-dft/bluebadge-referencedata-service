@@ -18,12 +18,13 @@ public class ReferenceDataConverterTest {
   public void convertToEntity() throws IllegalAccessException {
     ReferenceData model = new ReferenceData();
     // Given a fully populated Entity
-    model.setCategoryId("CAT");
-    model.setDescription("DESC");
-    model.setDisplayOrder(1);
     model.setShortCode("CODE");
+    model.setDescription("DESC");
+    model.setGroupShortCode("CAT");
+    model.setGroupDescription("Group Desc");
     model.setSubgroupDescription("SUBDESC");
     model.setSubgroupShortCode("SUB");
+    model.setDisplayOrder(1);
 
     // When entity populates a model object
     ReferenceDataEntity entity = converter.convertToEntity(model);
@@ -36,12 +37,13 @@ public class ReferenceDataConverterTest {
   public void convertToModel() throws IllegalAccessException {
     ReferenceDataEntity entity = new ReferenceDataEntity();
     // Given a fully populated Entity
-    entity.setCategoryId("CAT");
-    entity.setDescription("DESC");
-    entity.setDisplayOrder(1);
     entity.setShortCode("CODE");
+    entity.setDescription("DESC");
+    entity.setGroupShortCode("CAT");
+    entity.setGroupDescription("Group Desc");
     entity.setSubgroupDescription("SUBDESC");
     entity.setSubgroupShortCode("SUB");
+    entity.setDisplayOrder(1);
 
     // When entity populates a model object
     ReferenceData model = converter.convertToModel(entity);

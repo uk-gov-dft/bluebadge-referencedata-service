@@ -31,16 +31,16 @@ INSERT INTO data_domain (id, description) VALUES
     ('USER', 'User management service.'),
     ('APP', 'Application management service.');
 
-CREATE TABLE data_category(
+CREATE TABLE data_group(
     id VARCHAR(10) PRIMARY KEY,
     description VARCHAR(100)
 );
 
-COMMENT ON TABLE data_category IS 'Holds reference categories, e.g. eligibility.';
-COMMENT ON COLUMN data_category.id IS 'Short code.';
-COMMENT ON COLUMN data_category.description IS 'Category name.';
+COMMENT ON TABLE data_group IS 'Holds reference categories, e.g. eligibility.';
+COMMENT ON COLUMN data_group.id IS 'Short code.';
+COMMENT ON COLUMN data_group.description IS 'Group name.';
 
-INSERT INTO data_category(id, description) VALUES
+INSERT INTO data_group(id, description) VALUES
   ('ELIGIBILIT', 'Eligibility'),
   ('APPSOURCE', 'Application source'),
   ('PARTY', 'Party type')
@@ -61,31 +61,31 @@ INSERT INTO data_subgroup(id, description) VALUES
 ;
 
 CREATE TABLE reference_data(
-  data_category_id VARCHAR(10),
-  code VARCHAR(10),
+  data_group_id VARCHAR(10) NOT NULL,
+  code VARCHAR(10) NOT NULL,
   description VARCHAR(100) NOT NULL,
   display_order INTEGER NOT NULL,
   data_subgroup_id VARCHAR(10),
-  PRIMARY KEY (data_category_id, code)
+  PRIMARY KEY (data_group_id, code)
 );
 
 COMMENT ON TABLE reference_data IS 'Holds reference data.';
 COMMENT ON COLUMN reference_data.code IS 'Short code.';
 COMMENT ON COLUMN reference_data.description IS 'Reference data display text.';
-COMMENT ON COLUMN reference_data.data_category_id IS 'Category of reference data.';
-COMMENT ON COLUMN reference_data.data_subgroup_id IS 'Sub groping of reference data.';
+COMMENT ON COLUMN reference_data.data_group_id IS 'Group of reference data.';
+COMMENT ON COLUMN reference_data.data_subgroup_id IS 'Sub grouping of reference data.';
 
 ALTER TABLE reference_data
-    ADD CONSTRAINT reference_data_data_category_id_fk
-    FOREIGN KEY (data_category_id)
-    REFERENCES data_category(id);
+    ADD CONSTRAINT reference_data_data_group_id_fk
+    FOREIGN KEY (data_group_id)
+    REFERENCES data_group(id);
 ALTER TABLE reference_data
     ADD CONSTRAINT reference_data_data_subgroup_id_fk
     FOREIGN KEY (data_subgroup_id)
     REFERENCES data_subgroup(id);
 
 
-INSERT INTO reference_data (data_category_id, code, description, display_order, data_subgroup_id) VALUES
+INSERT INTO reference_data (data_group_id, code, description, display_order, data_subgroup_id) VALUES
 ('ELIGIBILIT', 'PIP', 'PIP', 1, 'ELIG_AUTO'),
 ('ELIGIBILIT', 'DLA', 'DLA', 2, 'ELIG_AUTO'),
 ('ELIGIBILIT', 'AFRFCS', 'Armed Forces Compensation scheme', 3, 'ELIG_AUTO'),
@@ -104,27 +104,27 @@ INSERT INTO reference_data (data_category_id, code, description, display_order, 
 ('PARTY', 'ORG', 'Organisation', 2, null)
 ;
 
-CREATE TABLE category_domain_map(
-  data_category_id VARCHAR(10),
+CREATE TABLE group_domain_map(
+  data_group_id VARCHAR(10),
   data_domain_id VARCHAR(10),
-  PRIMARY KEY (data_domain_id, data_category_id)
+  PRIMARY KEY (data_domain_id, data_group_id)
 );
 
-COMMENT ON TABLE category_domain_map IS 'Assignes sets of reference data to services.';
-COMMENT ON COLUMN category_domain_map.data_category_id IS 'FK.';
-COMMENT ON COLUMN category_domain_map.data_domain_id IS 'FK.';
+COMMENT ON TABLE group_domain_map IS 'Assignes sets of reference data to services.';
+COMMENT ON COLUMN group_domain_map.data_group_id IS 'FK.';
+COMMENT ON COLUMN group_domain_map.data_domain_id IS 'FK.';
 
-ALTER TABLE category_domain_map
-    ADD CONSTRAINT category_domain_map_category_fk
-    FOREIGN KEY (data_category_id)
-    REFERENCES data_category(id);
+ALTER TABLE group_domain_map
+    ADD CONSTRAINT group_domain_map_category_fk
+    FOREIGN KEY (data_group_id)
+    REFERENCES data_group(id);
 
-ALTER TABLE category_domain_map
-    ADD CONSTRAINT category_domain_map_domain_id_fk
+ALTER TABLE group_domain_map
+    ADD CONSTRAINT group_domain_map_domain_id_fk
     FOREIGN KEY (data_domain_id)
     REFERENCES data_domain(id);
 
-INSERT INTO category_domain_map (data_category_id, data_domain_id) VALUES
+INSERT INTO group_domain_map (data_group_id, data_domain_id) VALUES
   ('ELIGIBILIT', 'BADGE'),
   ('ELIGIBILIT', 'APP'),
   ('APPSOURCE', 'BADGE'),
@@ -135,25 +135,28 @@ INSERT INTO category_domain_map (data_category_id, data_domain_id) VALUES
 
 CREATE OR REPLACE VIEW reference_data_vw AS
   SELECT
-    rd.data_category_id,
     rd.code,
     rd.description,
+    rd.data_group_id AS group_code,
+    dg.description AS group_description,
+    rd.data_subgroup_id AS sub_group_code,
+    dsg.description AS sub_group_description,
     rd.display_order,
-    ccm.data_domain_id,
-    rd.data_subgroup_id,
-    dsg.description AS group_description
+    ccm.data_domain_id
   FROM reference_data rd
-  INNER JOIN category_domain_map ccm
-    ON (ccm.data_category_id = rd.data_category_id)
+  INNER JOIN group_domain_map ccm
+    ON (ccm.data_group_id = rd.data_group_id)
+  INNER JOIN data_group dg
+    ON (rd.data_group_id = dg.id)
   LEFT JOIN data_subgroup dsg
     ON (rd.data_subgroup_id = dsg.id)
-  ORDER BY (ccm.data_domain_id, rd.data_category_id, dsg.id, rd.display_order);
+  ORDER BY (ccm.data_domain_id, rd.data_group_id, dsg.id, rd.display_order);
 
 --//@UNDO
 -- SQL to undo the change goes here.
-DROP VIEW IF EXISTS reference_data_vw;
-DROP TABLE IF EXISTS reference_data;
-DROP TABLE IF EXISTS category_domain_map;
-DROP TABLE IF EXISTS data_category;
-DROP TABLE IF EXISTS data_domain;
-DROP TABLE IF EXISTS data_subgroup;
+DROP VIEW IF EXISTS reference_data_vw CASCADE;
+DROP TABLE IF EXISTS reference_data CASCADE;
+DROP TABLE IF EXISTS group_domain_map CASCADE;
+DROP TABLE IF EXISTS data_group CASCADE;
+DROP TABLE IF EXISTS data_domain CASCADE;
+DROP TABLE IF EXISTS data_subgroup CASCADE;

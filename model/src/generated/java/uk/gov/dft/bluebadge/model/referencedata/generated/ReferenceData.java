@@ -9,14 +9,17 @@ import org.springframework.validation.annotation.Validated;
 /** ReferenceData */
 @Validated
 public class ReferenceData {
-  @JsonProperty("categoryId")
-  private String categoryId = null;
-
   @JsonProperty("shortCode")
   private String shortCode = null;
 
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("groupShortCode")
+  private String groupShortCode = null;
+
+  @JsonProperty("groupDescription")
+  private String groupDescription = null;
 
   @JsonProperty("subgroupShortCode")
   private String subgroupShortCode = null;
@@ -27,36 +30,17 @@ public class ReferenceData {
   @JsonProperty("displayOrder")
   private Integer displayOrder = null;
 
-  public ReferenceData categoryId(String categoryId) {
-    this.categoryId = categoryId;
-    return this;
-  }
-
-  /**
-   * Group of data.
-   *
-   * @return categoryId
-   */
-  @ApiModelProperty(value = "Group of data.")
-  public String getCategoryId() {
-    return categoryId;
-  }
-
-  public void setCategoryId(String categoryId) {
-    this.categoryId = categoryId;
-  }
-
   public ReferenceData shortCode(String shortCode) {
     this.shortCode = shortCode;
     return this;
   }
 
   /**
-   * Identifier of data item within category
+   * Identifier of data item
    *
    * @return shortCode
    */
-  @ApiModelProperty(value = "Identifier of data item within category")
+  @ApiModelProperty(example = "AFRFCS", value = "Identifier of data item")
   public String getShortCode() {
     return shortCode;
   }
@@ -75,13 +59,54 @@ public class ReferenceData {
    *
    * @return description
    */
-  @ApiModelProperty(value = "Display value of data item")
+  @ApiModelProperty(
+    example = "Armed Forces Compensation scheme",
+    value = "Display value of data item"
+  )
   public String getDescription() {
     return description;
   }
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public ReferenceData groupShortCode(String groupShortCode) {
+    this.groupShortCode = groupShortCode;
+    return this;
+  }
+
+  /**
+   * Group of data.
+   *
+   * @return groupShortCode
+   */
+  @ApiModelProperty(example = "ELIGIBILIT", value = "Group of data.")
+  public String getGroupShortCode() {
+    return groupShortCode;
+  }
+
+  public void setGroupShortCode(String groupShortCode) {
+    this.groupShortCode = groupShortCode;
+  }
+
+  public ReferenceData groupDescription(String groupDescription) {
+    this.groupDescription = groupDescription;
+    return this;
+  }
+
+  /**
+   * Description of group
+   *
+   * @return groupDescription
+   */
+  @ApiModelProperty(example = "Eligibility", value = "Description of group")
+  public String getGroupDescription() {
+    return groupDescription;
+  }
+
+  public void setGroupDescription(String groupDescription) {
+    this.groupDescription = groupDescription;
   }
 
   public ReferenceData subgroupShortCode(String subgroupShortCode) {
@@ -94,7 +119,7 @@ public class ReferenceData {
    *
    * @return subgroupShortCode
    */
-  @ApiModelProperty(value = "Id of a subgroup")
+  @ApiModelProperty(example = "ELIG_AUTO", value = "Id of a subgroup")
   public String getSubgroupShortCode() {
     return subgroupShortCode;
   }
@@ -113,7 +138,7 @@ public class ReferenceData {
    *
    * @return subgroupDescription
    */
-  @ApiModelProperty(value = "Display value of a sub group")
+  @ApiModelProperty(example = "Automatic", value = "Display value of a sub group")
   public String getSubgroupDescription() {
     return subgroupDescription;
   }
@@ -128,11 +153,11 @@ public class ReferenceData {
   }
 
   /**
-   * Order to display in a list within category
+   * Order to display
    *
    * @return displayOrder
    */
-  @ApiModelProperty(value = "Order to display in a list within category")
+  @ApiModelProperty(value = "Order to display")
   public Integer getDisplayOrder() {
     return displayOrder;
   }
@@ -150,9 +175,10 @@ public class ReferenceData {
       return false;
     }
     ReferenceData referenceData = (ReferenceData) o;
-    return Objects.equals(this.categoryId, referenceData.categoryId)
-        && Objects.equals(this.shortCode, referenceData.shortCode)
+    return Objects.equals(this.shortCode, referenceData.shortCode)
         && Objects.equals(this.description, referenceData.description)
+        && Objects.equals(this.groupShortCode, referenceData.groupShortCode)
+        && Objects.equals(this.groupDescription, referenceData.groupDescription)
         && Objects.equals(this.subgroupShortCode, referenceData.subgroupShortCode)
         && Objects.equals(this.subgroupDescription, referenceData.subgroupDescription)
         && Objects.equals(this.displayOrder, referenceData.displayOrder);
@@ -161,7 +187,13 @@ public class ReferenceData {
   @Override
   public int hashCode() {
     return Objects.hash(
-        categoryId, shortCode, description, subgroupShortCode, subgroupDescription, displayOrder);
+        shortCode,
+        description,
+        groupShortCode,
+        groupDescription,
+        subgroupShortCode,
+        subgroupDescription,
+        displayOrder);
   }
 
   @Override
@@ -169,9 +201,10 @@ public class ReferenceData {
     StringBuilder sb = new StringBuilder();
     sb.append("class ReferenceData {\n");
 
-    sb.append("    categoryId: ").append(toIndentedString(categoryId)).append("\n");
     sb.append("    shortCode: ").append(toIndentedString(shortCode)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    groupShortCode: ").append(toIndentedString(groupShortCode)).append("\n");
+    sb.append("    groupDescription: ").append(toIndentedString(groupDescription)).append("\n");
     sb.append("    subgroupShortCode: ").append(toIndentedString(subgroupShortCode)).append("\n");
     sb.append("    subgroupDescription: ")
         .append(toIndentedString(subgroupDescription))

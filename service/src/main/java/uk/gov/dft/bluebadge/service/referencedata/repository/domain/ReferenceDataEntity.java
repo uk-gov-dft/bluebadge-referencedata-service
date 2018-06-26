@@ -8,10 +8,11 @@ import org.apache.ibatis.type.Alias;
 @Alias("ReferenceDataEntity")
 @Data
 public class ReferenceDataEntity implements Serializable {
-  private String categoryId = null;
-  private String shortCode = null;
-  private String description = null;
-  private String subgroupShortCode = null;
-  private String subgroupDescription = null;
-  private Integer displayOrder = null;
+  private String shortCode;
+  private String description;
+  private String groupShortCode;
+  private String groupDescription;
+  private String subgroupShortCode;
+  private String subgroupDescription;
+  private Integer displayOrder;
 }
