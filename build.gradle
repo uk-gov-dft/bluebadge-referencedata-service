@@ -38,6 +38,8 @@ allprojects {
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'com.jfrog.artifactory'
+    apply plugin: 'jacoco'
+
     group = 'uk.gov.dft.bluebadge'
     version = rootProject.file('VERSION').text.trim() + '-' + getCurrentGitBranch()
     sourceCompatibility = 1.8
@@ -83,6 +85,11 @@ project(':service') {
         compile project(':model')
     }
 }
+
+jacoco {
+    toolVersion = "0.8.1"
+}
+
 
 task generateSwagger() {
 
