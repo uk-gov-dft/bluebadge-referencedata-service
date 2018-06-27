@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="uk.gov.dft.bluebadge.service.referencedata.repository.mapper.ReferenceDataMapper">
+
+    <select id="findByDomain" parameterType="String" resultType="ReferenceDataEntity">
+        SELECT
+            code                  AS shortCode,
+            description           AS description,
+            group_code            AS groupShortCode,
+            group_description     AS groupDescription,
+            sub_group_code        AS subgroupShortCode,
+            sub_group_description AS subgroupDescription,
+            display_order         AS displayOrder
+        FROM reference_data_vw
+        WHERE data_domain_id = #{domainId}
+    </select>
+
+</mapper>

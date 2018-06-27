@@ -1,0 +1,37 @@
+
+logging:
+  level:
+    root: INFO
+    sample.mybatis.mapper: WARN
+    uk.gov.dft.bluebadge.service: DEBUG
+
+management:
+  server:
+    port: 8581
+    address: localhost
+    servlet:
+      context-path: /manage
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+mybatis:
+  type-aliases-package: uk.gov.dft.bluebadge.service.referencedata.repository.domain
+
+spring:
+  datasource:
+     ***REMOVED***
+    username: developer
+    url: jdbc:postgresql://127.0.0.1:5432/bb_dev?currentSchema=referencedata
+  jackson:
+    date-format: uk.gov.dft.bluebadge.service.referencedata.RFC3339DateFormat
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8580
+  servlet:
+    context-path: /uk-gov-dft/reference-data-service/1.0.0
+
+springfox.documentation.swagger.v2.path: /api-docs

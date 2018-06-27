@@ -1,0 +1,170 @@
+{
+"spec": {
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "ReferenceData API",
+    "description" : "Manage Reference Data",
+    "version" : "1.0.0"
+  },
+  "schemes" : [ "https", "http" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/reference-data/{domain}" : {
+      "parameters" : [ {
+        "in" : "path",
+        "name" : "domain",
+        "type" : "string",
+        "description" : "Domain to retrieve data for",
+        "required" : true
+      } ],
+      "get" : {
+        "tags" : [ "ReferenceData" ],
+        "summary" : "Retrieve all reference data for a domain",
+        "operationId" : "findByDomain",
+        "responses" : {
+          "200" : {
+            "description" : "An array of reference data",
+            "schema" : {
+              "$ref" : "#/definitions/ReferenceDataResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ReferenceDataResponse" : {
+      "type" : "object",
+      "allOf" : [ {
+        "$ref" : "#/definitions/CommonResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/ReferenceData"
+            }
+          }
+        }
+      } ]
+    },
+    "ReferenceData" : {
+      "type" : "object",
+      "properties" : {
+        "shortCode" : {
+          "type" : "string",
+          "description" : "Identifier of data item",
+          "example" : "AFRFCS"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Display value of data item",
+          "example" : "Armed Forces Compensation scheme"
+        },
+        "groupShortCode" : {
+          "type" : "string",
+          "description" : "Group of data.",
+          "example" : "ELIGIBILIT"
+        },
+        "groupDescription" : {
+          "type" : "string",
+          "description" : "Description of group",
+          "example" : "Eligibility"
+        },
+        "subgroupShortCode" : {
+          "type" : "string",
+          "description" : "Id of a subgroup",
+          "example" : "ELIG_AUTO"
+        },
+        "subgroupDescription" : {
+          "type" : "string",
+          "description" : "Display value of a sub group",
+          "example" : "Automatic"
+        },
+        "displayOrder" : {
+          "type" : "integer",
+          "description" : "Order to display"
+        }
+      }
+    },
+    "CommonResponse" : {
+      "type" : "object",
+      "properties" : {
+        "apiVersion" : {
+          "type" : "string"
+        },
+        "context" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "method" : {
+          "type" : "string"
+        },
+        "error" : {
+          "$ref" : "#/definitions/Error"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "errors" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "field" : {
+                "type" : "string"
+              },
+              "reason" : {
+                "type" : "string"
+              },
+              "message" : {
+                "type" : "string"
+              },
+              "location" : {
+                "type" : "string"
+              },
+              "locationType" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/uk-gov-dft/reference-dataservice/1.0.0"
+},
+  "options": {
+    "java8" : true,
+    "sortParamsByRequiredFlag" : false,
+    "modelPackage" : "uk.gov.dft.bluebadge.model.referencedata.generated",
+    "apiPackage" : "uk.gov.dft.bluebadge.service.referencedata.generated.controller",
+    "groupId" : "uk.gov.dft.bluebadge",
+    "artifactId" : "user-management-service",
+    "artifactVersion" : "1.0.0-SNAPSHOT",
+    "sourceFolder" : "generated/src/main/java",
+    "dateLibrary" : "java8-localdatetime",
+    "delegatePattern" : false,
+    "title" : "process-sample",
+    "configPackage" : "uk.gov.dft.bluebadge.service.referencedata.generated.config.swagger",
+    "basePackage" : "uk.gov.dft.bluebadge.dontneed.referencedata.generated.application",
+    "useBeanValidation" : false,
+    "performBeanValidation" : false,
+    "useOptional" : false,
+    "useTags" : true,
+    "hideGenerationTimestamp" : true,
+    "appVersion" : "1.0"
+  }
+}
