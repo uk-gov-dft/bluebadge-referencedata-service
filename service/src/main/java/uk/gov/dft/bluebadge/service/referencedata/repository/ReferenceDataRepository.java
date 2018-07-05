@@ -26,7 +26,7 @@ public class ReferenceDataRepository {
     List<ReferenceDataEntity> referenceDataList =
         this.sqlSession.selectList("findByDomain", domainId);
 
-    if (referenceDataList.size() == 0) {
+    if (referenceDataList.isEmpty()) {
       log.warn("Attempt findByDomain id:{} resulted in empty list.", domainId);
     }
     return referenceDataList;
