@@ -15,21 +15,25 @@ buildscript {
     }
 }
 
-def getCurrentGitBranch() {
-    def gitBranch = "Unknown branch"
-    try {
-        def workingDir = new File("${project.projectDir}")
-        def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
-        result.waitFor()
-        if (result.exitValue() == 0) {
-            gitBranch = result.text.trim().replaceAll('/','_')
-            if (gitBranch == 'develop') {
-                gitBranch = 'SNAPSHOT'
-            }
+def getTheVersion() {
+    def version = rootProject.file('VERSION').text.trim()
+    def versionSuffix = "Unknown"
+    def workingDir = new File("${project.projectDir}")
+    def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
+    result.waitFor()
+    if (result.exitValue() == 0) {
+        def gitBranch = result.text.trim().replaceAll('/','_')
+        if (gitBranch == 'develop') {
+            gitBranch = 'SNAPSHOT'
         }
-    } catch (e) {
+        if (gitBranch == 'master') {
+            versionSuffix = ''
+        } else {
+            versionSuffix = '-' + gitBranch
+        }
+
     }
-    return gitBranch
+    return version + versionSuffix
 }
 
 allprojects {
@@ -41,7 +45,7 @@ allprojects {
     apply plugin: 'jacoco'
 
     group = 'uk.gov.dft.bluebadge'
-    version = rootProject.file('VERSION').text.trim() + '-' + getCurrentGitBranch()
+    version = getTheVersion()
     sourceCompatibility = 1.8
 
     repositories {
@@ -64,7 +68,7 @@ artifactory {
         publishArtifacts=true
         publishPom=true
         defaults {
-            publications('project_model', 'project_service')
+            publications('project_service')
             publishArtifacts=true
             publishPom=true
         }
@@ -135,4 +139,13 @@ task generateService(dependsOn: 'unzipGenerated', type: Sync){
     exclude '**/RFC3339DateFormat.java'
     exclude '**/*ApiController.java'
     into "service/src/generated/java/uk/gov/dft/bluebadge/service/referencedata/generated"
+}
+
+task createDatabaseSchemaZip(type: Zip) {
+    def targetFilename = getTheVersion() + "_schema.zip"
+    from 'database-schema/'
+    include '*'
+    include '*/*'
+    archiveName targetFilename
+    destinationDir(file("service/build/database-schema"))
 }
