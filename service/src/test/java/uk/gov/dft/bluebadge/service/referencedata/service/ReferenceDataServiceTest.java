@@ -18,23 +18,36 @@ public class ReferenceDataServiceTest {
   private ReferenceDataService service;
 
   @Mock private ReferenceDataRepository repository;
+  private ArrayList<ReferenceDataEntity> refDataList;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     service = new ReferenceDataService(repository);
-  }
-
-  @Test
-  public void findByDomain() {
     // A perhaps pointless test as the service does nothing in find at the moment,
     // but it's a placeholder for the future.
-    List<ReferenceDataEntity> refDataList = new ArrayList<>();
+    refDataList = new ArrayList<>();
     ReferenceDataEntity entity = new ReferenceDataEntity();
     refDataList.add(entity);
 
-    when(repository.findByDomain(any())).thenReturn(refDataList);
+    when(repository.findByDomain("ADOMAIN")).thenReturn(refDataList);
 
+  }
+
+
+  @Test
+  public void findByDomain() {
+    Assert.assertEquals(refDataList, service.findByDomain("ADOMAIN"));
+  }
+
+  @Test
+  public void findByLowerCaseDomain_shouldReturnResults() {
     Assert.assertEquals(refDataList, service.findByDomain("adomain"));
   }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void findByBlankDomain_shouldThrowIllegalArgumentException() {
+    Assert.assertEquals(refDataList, service.findByDomain(""));
+  }
+
 }

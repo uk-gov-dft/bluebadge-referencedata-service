@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 
@@ -19,6 +20,7 @@ public class ReferenceDataService {
   }
 
   public List<ReferenceDataEntity> findByDomain(String domain) {
-    return repository.findByDomain(domain);
+    Assert.hasText(domain, "Domain supplied must not be blank!");
+    return repository.findByDomain(domain.toUpperCase());
   }
 }
