@@ -1,0 +1,7 @@
+blue-badge:
+  auth-server:
+    url: http://authorisation-service:8380/bb_auth
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgresql:5432/bb_dev?currentSchema=referencedata

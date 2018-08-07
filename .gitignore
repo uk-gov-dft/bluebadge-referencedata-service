@@ -16,3 +16,5 @@ build
 out
 /env.mk
 VERSION-computed
+acceptance-tests/target/
+target/
