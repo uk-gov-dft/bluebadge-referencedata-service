@@ -1,9 +1,4 @@
-blue-badge:
-  auth-server:
-    url: https://authorisation-service.${bb_env}.does.not.exist/bb_auth
-    client-id: bb_user_management_id
-     ***REMOVED***
-    
+
 logging:
   level:
     root: ${APP_LOGGING_LEVEL:-INFO}
@@ -23,13 +18,19 @@ management:
 mybatis:
   type-aliases-package: uk.gov.dft.bluebadge.service.referencedata.repository.domain
 
+blue-badge:
+  auth-server:
+    url: https://authorisation-service.${bb_env}.does.not.exist/bb_auth
+    client-id: bb_user_management_id
+     ***REMOVED***
+
 spring:
   datasource:
      ***REMOVED***
     username: ${bb_db_username:-developer}
     url: jdbc:postgresql://postgres-service.${bb_env}.does.not.exist:5432/${bb_database:-bb_dev}?currentSchema=referencedata
   jackson:
-    date-format: uk.gov.dft.bluebadge.service.referencedata.RFC3339DateFormat
+    date-format: uk.gov.dft.bluebadge.common.api.RFC3339DateFormat
     serialization:
       write-dates-as-timestamps: false
 
