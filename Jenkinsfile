@@ -40,4 +40,14 @@ node {
             }
         }
     }
+    stage("Acceptance Tests") {
+        timeout(time: 10, unit: 'MINUTES') {
+            try {
+              sh 'cd acceptance-tests && ./run-regression.sh'
+            }
+            finally {
+              // junit '**/TEST*.xml'
+            }
+        }
+    }
 }
