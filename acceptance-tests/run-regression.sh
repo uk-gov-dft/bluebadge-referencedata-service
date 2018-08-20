@@ -19,7 +19,7 @@ if [[ -d dev-env-rob ]]; then
   rm -rf dev-env-rob
 fi
 curl -sL -H "Authorization: token $(cat ~/.ssh/github_token)" https://github.com/uk-gov-dft/dev-env/archive/rob.tar.gz | tar xz
-if [ $? ne 0 ]; then
+if [ $? -ne 0 ]; then
    echo Cannot download dev-env!
    exit 1
 fi
