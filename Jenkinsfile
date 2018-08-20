@@ -50,7 +50,7 @@ node {
 
             timeout(time: 10, unit: 'MINUTES') {
                 try {
-                  sh 'cd acceptance-tests && ./run-regression.sh'
+                  sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
                 }
                 finally {
                   // junit '**/TEST*.xml'
