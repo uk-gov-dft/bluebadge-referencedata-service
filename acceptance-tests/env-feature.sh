@@ -13,4 +13,4 @@ export AZ_VERSION=0.5.0-SNAPSHOT
 # message-service
 export MG_VERSION=0.5.0-SNAPSHOT
 # referencedata-service
-export RD_VERSION=$(cat ../VERSION-computed)
+export RD_VERSION=$(cat VERSION-computed)

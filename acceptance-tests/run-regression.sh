@@ -6,7 +6,7 @@ tearDown() {
   cd ..
 }
 
-set -e -a
+set -e -a -x
 
 if [[ ! -e ~/.ssh/github_token ]]; then
   echo "You need to create a personal access github token in ~/.ssh/github_token in order to access github"
@@ -20,6 +20,7 @@ if [[ -d dev-env-rob ]]; then
 fi
 curl -sL -H "Authorization: token $(cat ~/.ssh/github_token)" https://github.com/uk-gov-dft/dev-env/archive/rob.tar.gz | tar xz
 
+gradle :outputComputedVersion
 . env-feature.sh
 
 cd dev-env-rob
