@@ -8,6 +8,17 @@ tearDown() {
   rm -rf dev-env-develop
 }
 
+outputVersions() {
+  echo "TARGET_ENV=$TARGET_ENV"
+  echo "LA_VERSION=$LA_VERSION"
+  echo "UM_VERSION=$UM_VERSION"
+  echo "BB_VERSION=$BB_VERSION"
+  echo "AP_VERSION=$AP_VERSION"
+  echo "AZ_VERSION=$AZ_VERSION"
+  echo "MG_VERSION=$MG_VERSION"
+  echo "RD_VERSION=$RD_VERSION"
+}
+
 set -a
 
 if [[ ! -e ~/.ssh/github_token ]]; then
@@ -42,7 +53,15 @@ fi
 
 # 'VERSION-computed' needed for environment variables
 gradle :outputComputedVersion
-. env-feature.sh
+
+if [[ "$BRANCH_NAME" ~= "^feature.*|^maintenance.*" ]]; then
+   echo "Using env-feature.sh configuration."
+   . env-feature.sh
+else
+   echo "Using env.sh configuration."
+   . dev-env-develop/env.sh
+fi
+outputVersions
 
 cd dev-env-develop
 bash load-modules.sh
