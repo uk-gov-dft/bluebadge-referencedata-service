@@ -16,9 +16,7 @@ node {
         script {
             env.SPRING_APPLICATION_JSON = '{"spring":{"datasource":{"url":"jdbc:postgresql://postgresql:5432/bb_dev?currentSchema=referencedata"}}}'
         }
-        try {
-            sh './gradlew clean build bootJar createDatabaseSchemaZip artifactoryPublish artifactoryDeploy'
-        }
+        sh './gradlew clean build bootJar createDatabaseSchemaZip artifactoryPublish artifactoryDeploy'
     }
     stage('SonarQube analysis') {
         withSonarQubeEnv('sonarqube') {
@@ -46,9 +44,7 @@ node {
             )
 
             timeout(time: 10, unit: 'MINUTES') {
-                try {
-                  sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
-                }
+                sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
             }
         }
     }
