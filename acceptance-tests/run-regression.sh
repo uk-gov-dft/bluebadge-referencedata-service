@@ -4,6 +4,7 @@ tearDown() {
   docker-compose kill
   docker-compose rm -f
   cd ..
+  rm -rf dev-env-rob
 }
 
 set -a -x
@@ -13,10 +14,21 @@ if [[ ! -e ~/.ssh/github_token ]]; then
   exit 1
 fi
 
+# kill anything that is running
+dockerContainers=$(docker ps -q)
+if [[ "$dockerContainers" == "" ]]; then
+   echo "No previously running containers.. nothing to kill"
+else
+   echo "Killing docker containers.. $dockerContainers"
+   docker kill ${dockerContainers}
+fi
+
+# This really cleans everything up so there's nothing previous that could contaminate
+docker system prune -a -f
+
 # Get the dev-env stuff
 if [[ -d dev-env-rob ]]; then
   tearDown
-  rm -rf dev-env-rob
 fi
 curl -sL -H "Authorization: token $(cat ~/.ssh/github_token)" https://github.com/uk-gov-dft/dev-env/archive/rob.tar.gz | tar xz
 if [ $? -ne 0 ]; then
@@ -24,7 +36,7 @@ if [ $? -ne 0 ]; then
    exit 1
 fi
 
-
+# 'VERSION-computed' needed for environment variables
 gradle :outputComputedVersion
 . env-feature.sh
 
@@ -41,8 +53,8 @@ gradle acceptanceTests
 testExitCode=$?
 
 # Tear down
+docker kill $(docker ps -q)
 tearDown
-rm -rf dev-env-rob
 
 echo "Exiting with code:$testExitCode"
 
