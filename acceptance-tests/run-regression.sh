@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 tearDown() {
-  cd dev-env-rob
+  echo "Tearing down existing dev-env-develop directory"
+  cd dev-env-develop
   docker-compose kill
   docker-compose rm -f
   cd ..
-  rm -rf dev-env-rob
+  rm -rf dev-env-develop
 }
 
-set -a -x
+set -a
 
 if [[ ! -e ~/.ssh/github_token ]]; then
   echo "You need to create a personal access github token in ~/.ssh/github_token in order to access github"
@@ -24,13 +25,16 @@ else
 fi
 
 # This really cleans everything up so there's nothing previous that could contaminate
+echo "Pruning docker containers/images"
 docker system prune -a -f
 
 # Get the dev-env stuff
-if [[ -d dev-env-rob ]]; then
+if [[ -d dev-env-develop ]]; then
   tearDown
 fi
-curl -sL -H "Authorization: token $(cat ~/.ssh/github_token)" https://github.com/uk-gov-dft/dev-env/archive/rob.tar.gz | tar xz
+
+echo "Retrieving dev-env (develop) scripts."
+curl -sL -H "Authorization: token $(cat ~/.ssh/github_token)" https://github.com/uk-gov-dft/dev-env/archive/develop.tar.gz | tar xz
 if [ $? -ne 0 ]; then
    echo Cannot download dev-env!
    exit 1
@@ -40,7 +44,7 @@ fi
 gradle :outputComputedVersion
 . env-feature.sh
 
-cd dev-env-rob
+cd dev-env-develop
 bash load-modules.sh
 docker-compose build 
 docker-compose up -d
