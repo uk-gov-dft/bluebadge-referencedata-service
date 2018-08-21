@@ -16,11 +16,14 @@ node {
         script {
             env.SPRING_APPLICATION_JSON = '{"spring":{"datasource":{"url":"jdbc:postgresql://postgresql:5432/bb_dev?currentSchema=referencedata"}}}'
         }
+
         try {
             sh './gradlew clean build bootJar createDatabaseSchemaZip artifactoryPublish artifactoryDeploy'
             // Run the acceptance tests
-            timeout(time: 10, unit: 'MINUTES') {
-                sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
+            node ('Functional') {
+                timeout(time: 10, unit: 'MINUTES') {
+                    sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
+                }
             }
         }
         finally {
