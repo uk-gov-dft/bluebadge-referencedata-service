@@ -19,9 +19,6 @@ node {
         try {
             sh './gradlew clean build bootJar createDatabaseSchemaZip artifactoryPublish artifactoryDeploy'
         }
-        finally {
-            junit '**/TEST*.xml'
-        }
     }
     stage('SonarQube analysis') {
         withSonarQubeEnv('sonarqube') {
@@ -52,10 +49,12 @@ node {
                 try {
                   sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
                 }
-                finally {
-                  // junit '**/TEST*.xml'
-                }
             }
+        }
+    }
+    post {
+        always {
+            junit '**/TEST*.xml'
         }
     }
 }
