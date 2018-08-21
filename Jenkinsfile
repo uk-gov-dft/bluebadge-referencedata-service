@@ -11,27 +11,18 @@ node {
         )
     }
     
-    stage ('Build and Test') {
+    stage ('Gradle build') {
         // Set Environment Vairable if the CI env variable is set.
         script {
             env.SPRING_APPLICATION_JSON = '{"spring":{"datasource":{"url":"jdbc:postgresql://postgresql:5432/bb_dev?currentSchema=referencedata"}}}'
         }
-
         try {
             sh './gradlew clean build bootJar createDatabaseSchemaZip artifactoryPublish artifactoryDeploy'
-            // Run the acceptance tests
-            node ('Functional') {
-                timeout(time: 10, unit: 'MINUTES') {
-                    sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
-                }
-            }
         }
         finally {
-            // Publish all test results
             junit '**/TEST*.xml'
         }
     }
-
     stage('SonarQube analysis') {
         withSonarQubeEnv('sonarqube') {
             def ver = readFile('VERSION').trim()
@@ -41,12 +32,29 @@ node {
             sh "./gradlew --info sonarqube -Dsonar.projectName=referencedata-service -Dsonar.projectVersion=${ver} -Dsonar.branch=${BRANCH_NAME}"
         }
     }
-
     stage("Quality Gate") {
         timeout(time: 5, unit: 'MINUTES') {
             def qg = waitForQualityGate()
             if (qg.status != 'OK') {
                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+        }
+    }
+    stage("Acceptance Tests") {
+        node('Functional') {
+            git(
+               url: "${REPONAME}",
+               credentialsId: 'dft-buildbot-valtech',
+               branch: "${BRANCH_NAME}"
+            )
+
+            timeout(time: 10, unit: 'MINUTES') {
+                try {
+                    sh 'bash -c "echo $PATH && cd acceptance-tests && ./run-regression.sh"'
+                }
+                finally {
+                    junit '**/TEST*.xml'
+                }
             }
         }
     }
