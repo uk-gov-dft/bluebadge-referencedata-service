@@ -1,11 +1,23 @@
 #!/usr/bin/env bash
 tearDown() {
-  echo "Tearing down existing dev-env-develop directory"
-  cd dev-env-develop
-  docker-compose kill
-  docker-compose rm -f
-  cd ..
-  rm -rf dev-env-develop
+
+    # kill anything that is running
+    dockerContainers=$(docker ps -q)
+    if [[ "$dockerContainers" == "" ]]; then
+       echo "No previously running containers.. nothing to kill"
+    else
+       echo "Killing docker containers.. $dockerContainers"
+       docker kill ${dockerContainers}
+    fi
+
+    # This really cleans everything up so there's nothing previous that could contaminate
+    echo "Pruning docker containers/images"
+    docker system prune -a -f
+
+    if [[ -d dev-env-develop ]]; then
+      echo "Tearing down existing dev-env-develop directory"
+      rm -rf dev-env-develop
+    fi
 }
 
 outputVersions() {
@@ -26,28 +38,14 @@ if [[ ! -e ~/.ssh/github_token ]]; then
   exit 1
 fi
 
-# kill anything that is running
-dockerContainers=$(docker ps -q)
-if [[ "$dockerContainers" == "" ]]; then
-   echo "No previously running containers.. nothing to kill"
-else
-   echo "Killing docker containers.. $dockerContainers"
-   docker kill ${dockerContainers}
-fi
-
-# This really cleans everything up so there's nothing previous that could contaminate
-echo "Pruning docker containers/images"
-docker system prune -a -f
+# Cleanup existing containers
+tearDown
 
 # Get the dev-env stuff
-if [[ -d dev-env-develop ]]; then
-  tearDown
-fi
-
 echo "Retrieving dev-env (develop) scripts."
 curl -sL -H "Authorization: token $(cat ~/.ssh/github_token)" https://github.com/uk-gov-dft/dev-env/archive/develop.tar.gz | tar xz
 if [ $? -ne 0 ]; then
-   echo Cannot download dev-env!
+   echo "Cannot download dev-env!"
    exit 1
 fi
 
