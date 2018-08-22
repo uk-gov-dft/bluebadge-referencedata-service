@@ -75,7 +75,6 @@ gradle acceptanceTests
 testExitCode=$?
 
 # Tear down
-docker kill $(docker ps -q)
 tearDown
 
 echo "Exiting with code:$testExitCode"
