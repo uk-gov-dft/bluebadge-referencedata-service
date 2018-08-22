@@ -52,7 +52,7 @@ fi
 # 'VERSION-computed' needed for environment variables
 gradle :outputComputedVersion
 
-if [[ "$BRANCH_NAME" =~ "^develop.*|^release.*" ]]; then
+if [[ "$BRANCH_NAME" =~ ^develop.*|^release.* ]]; then
    echo "Using env.sh configuration."
    . dev-env-develop/env.sh
 else
