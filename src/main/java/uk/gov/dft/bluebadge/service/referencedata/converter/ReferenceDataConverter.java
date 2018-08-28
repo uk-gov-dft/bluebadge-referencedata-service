@@ -16,11 +16,25 @@ public class ReferenceDataConverter
     implements ToEntityConverter<ReferenceDataEntity, ReferenceData>,
         ToModelConverter<ReferenceDataEntity, ReferenceData> {
 
+  private final ObjectMapper objectMapper;
+
+  public ReferenceDataConverter(ObjectMapper objectMapper) {
+    this.objectMapper = objectMapper;
+  }
+
   @Override
   public ReferenceDataEntity convertToEntity(ReferenceData model) {
     ReferenceDataEntity entity = new ReferenceDataEntity();
 
-    BeanUtils.copyProperties(model, entity);
+    BeanUtils.copyProperties(model, entity, "metaData");
+    if (null != model.getMetaData()) {
+      try {
+        String metaData = objectMapper.writeValueAsString(model.getMetaData());
+        entity.setMetaData(metaData);
+      } catch (IOException e) {
+        log.warn("Failed to convert meta data into a String", e);
+      }
+    }
     return entity;
   }
 
@@ -29,9 +43,8 @@ public class ReferenceDataConverter
     ReferenceData model = new ReferenceData();
     BeanUtils.copyProperties(entity, model, "metaData");
     if (!StringUtils.isEmpty(entity.getMetaData())) {
-      ObjectMapper om = new ObjectMapper();
       try {
-        Map map = om.readValue(entity.getMetaData(), Map.class);
+        Map map = objectMapper.readValue(entity.getMetaData(), Map.class);
         model.setMetaData(map);
       } catch (IOException e) {
         log.warn("Failed to load meta data into a Map", e);

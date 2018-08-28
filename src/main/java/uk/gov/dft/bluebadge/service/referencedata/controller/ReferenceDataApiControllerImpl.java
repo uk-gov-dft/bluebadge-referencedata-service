@@ -1,5 +1,6 @@
 package uk.gov.dft.bluebadge.service.referencedata.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -18,13 +19,14 @@ import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
 @RestController
 public class ReferenceDataApiControllerImpl extends AbstractController implements ReferenceDataApi {
 
-  private ReferenceDataService service;
-  private ReferenceDataConverter converter = new ReferenceDataConverter();
+  private final ReferenceDataService service;
+  private final ReferenceDataConverter converter;
 
   @SuppressWarnings("unused")
   @Autowired
-  public ReferenceDataApiControllerImpl(ReferenceDataService service) {
+  public ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
     this.service = service;
+    converter = new ReferenceDataConverter(objectMapper);
   }
 
   /**
