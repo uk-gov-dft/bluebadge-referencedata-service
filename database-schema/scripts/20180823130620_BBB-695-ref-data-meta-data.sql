@@ -41,12 +41,16 @@ update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode
 update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WAKE","issuingAuthorityName":"Wakefield metropolitan district council","nation":"England","contactUrl":"http://www.wakefield.gov.uk/roads-and-transport/parking/blue-badge"}' where data_group_id = 'LA' and code = 'WAKE';
 update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC","issuingAuthorityName":"Worcestershire county council","nation":"England","contactUrl":"http://www.worcestershire.gov.uk/info/20397/blue_badge/1378/apply_for_or_renew_a_badge"}' where data_group_id = 'LA' and code = 'WORCC';
 
+insert into referencedata.data_domain(id, description) VALUES ('CITIZEN', 'Citizen web app');
 insert into referencedata.data_group(id, description) VALUES ('LC', 'Local Councils');
 insert into referencedata.group_domain_map(data_group_id, data_domain_id) VALUES
   ('LC', 'USER')
   ,('LC', 'APP')
   ,('LC', 'BADGE')
   ;
+insert into referencedata.group_domain_map(data_group_id, data_domain_id)
+  SELECT g.id, 'CITIZEN' from referencedata.data_group g
+;
 
 insert into referencedata.reference_data(data_group_id, code, description, data_subgroup_id, meta_data) VALUES
   ('LC', 'BRID', 'Bridgend county borough council', null, '{"issuingAuthorityShortCode":"BRID"}')
@@ -132,7 +136,9 @@ insert into referencedata.reference_data(data_group_id, code, description, data_
 -- SQL to undo the change goes here.
 delete from referencedata.reference_data where data_group_id = 'LC';
 delete from referencedata.group_domain_map where data_group_id = 'LC';
+delete from referencedata.group_domain_map where data_domain_id = 'CITIZEN';
 delete from referencedata.data_group where id = 'LC';
+delete from referencedata.data_domain where id = 'CITIZEN';
 
 drop view reference_data_vw;
 
