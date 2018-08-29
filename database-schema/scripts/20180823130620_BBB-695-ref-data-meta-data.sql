@@ -21,28 +21,28 @@ SELECT rd.code,
      LEFT JOIN referencedata.data_subgroup dsg ON (((rd.data_subgroup_id)::text = (dsg.id)::text)))
   ORDER BY ROW(ccm.data_domain_id, rd.data_group_id, dsg.id, rd.display_order);
 
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"BRID","issuingAuthorityName":"Bridgend county borough council","nation":"Wales","contactUrl":"https://www.bridgend.gov.uk/residents/roads-transport-and-parking/blue-badge-applications"}' where data_group_id = 'LA' and code = 'BRID';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"CAER","issuingAuthorityName":"Caerphilly county borough council","nation":"Wales","contactUrl":"http://www.caerphilly.gov.uk/bluebadge"}' where data_group_id = 'LA' and code = 'CAER';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC","issuingAuthorityName":"East Sussex county council","nation":"England","contactUrl":"https://www.eastsussex.gov.uk/socialcare/transport/blue-badge-guide/apply"}' where data_group_id = 'LA' and code = 'ESUCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC","issuingAuthorityName":"Gloucestershire county council","nation":"England","contactUrl":"https://www.gloucestershire.gov.uk/health-and-social-care/disabilities/apply-for-a-blue-badge"}' where data_group_id = 'LA' and code = 'GLOCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"HAMCC","issuingAuthorityName":"Hampshire county council","nation":"England","contactUrl":"https://www.hants.gov.uk/transport/parking/bluebadge"}' where data_group_id = 'LA' and code = 'HAMCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ANGL","issuingAuthorityName":"Isle of Anglesey county council","nation":"Wales","contactUrl":"http://www.anglesey.gov.uk/transport-and-roads/parking/blue-badge-scheme"}' where data_group_id = 'LA' and code = 'ANGL';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC","issuingAuthorityName":"Kent county council","nation":"England","contactUrl":"https://www.kent.gov.uk/roads-and-travel/travelling-around-kent/parking/disabled-parking-blue-badge/apply-for-a-blue-badge"}' where data_group_id = 'LA' and code = 'KENTCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"LBEAL","issuingAuthorityName":"London borough of Ealing","nation":"England","contactUrl":"https://www.ealing.gov.uk/info/201175/community_transport/163/blue_badge_scheme"}' where data_group_id = 'LA' and code = 'LBEAL';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NELIN","issuingAuthorityName":"North East Lincolnshire council","nation":"England","contactUrl":"https://www.nelincs.gov.uk/roads-parking-transport/parking/blue-badge-scheme"}' where data_group_id = 'LA' and code = 'NELIN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NYKCC","issuingAuthorityName":"North Yorkshire county council","nation":"England","contactUrl":"https://www.northyorks.gov.uk/blue-badge-parking-permits-disabled-people"}' where data_group_id = 'LA' and code = 'NYKCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SURCC","issuingAuthorityName":"Surrey county council","nation":"England","contactUrl":"https://www.surreycc.gov.uk/roads-and-transport/parking/blue-badge"}' where data_group_id = 'LA' and code = 'SURCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ABERD","issuingAuthorityName":"Aberdeenshire council","nation":"Scotland","contactUrl":"https://www.aberdeenshire.gov.uk"}' where data_group_id = 'LA' and code = 'ABERD';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"EAYR","issuingAuthorityName":"East Ayrshire council","nation":"Scotland","contactUrl":"http://www.east-ayrshire.gov.uk"}' where data_group_id = 'LA' and code = 'EAYR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NAYR","issuingAuthorityName":"North Ayrshire council","nation":"Scotland","contactUrl":"https://www.north-ayrshire.gov.uk"}' where data_group_id = 'LA' and code = 'NAYR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SLAN","issuingAuthorityName":"South Lanarkshire council","nation":"Scotland","contactUrl":"http://www.southlanarkshire.gov.uk/info/200224/disabilities/142/blue_badge_scheme"}' where data_group_id = 'LA' and code = 'SLAN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WDUN","issuingAuthorityName":"West Dunbartonshire council","nation":"Scotland","contactUrl":"http://www.west-dunbarton.gov.uk"}' where data_group_id = 'LA' and code = 'WDUN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WLOTH","issuingAuthorityName":"West Lothian council","nation":"Scotland","contactUrl":"http://www.westlothian.gov.uk"}' where data_group_id = 'LA' and code = 'WLOTH';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WAKE","issuingAuthorityName":"Wakefield metropolitan district council","nation":"England","contactUrl":"http://www.wakefield.gov.uk/roads-and-transport/parking/blue-badge"}' where data_group_id = 'LA' and code = 'WAKE';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC","issuingAuthorityName":"Worcestershire county council","nation":"England","contactUrl":"http://www.worcestershire.gov.uk/info/20397/blue_badge/1378/apply_for_or_renew_a_badge"}' where data_group_id = 'LA' and code = 'WORCC';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"BRID","issuingAuthorityName":"Bridgend county borough council","nation":"WLS","contactUrl":"https://www.bridgend.gov.uk/residents/roads-transport-and-parking/blue-badge-applications"}' where data_group_id = 'LA' and code = 'BRID';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"CAER","issuingAuthorityName":"Caerphilly county borough council","nation":"WLS","contactUrl":"http://www.caerphilly.gov.uk/bluebadge"}' where data_group_id = 'LA' and code = 'CAER';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC","issuingAuthorityName":"East Sussex county council","nation":"ENG","contactUrl":"https://www.eastsussex.gov.uk/socialcare/transport/blue-badge-guide/apply"}' where data_group_id = 'LA' and code = 'ESUCC';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC","issuingAuthorityName":"Gloucestershire county council","nation":"ENG","contactUrl":"https://www.gloucestershire.gov.uk/health-and-social-care/disabilities/apply-for-a-blue-badge"}' where data_group_id = 'LA' and code = 'GLOCC';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"HAMCC","issuingAuthorityName":"Hampshire county council","nation":"ENG","contactUrl":"https://www.hants.gov.uk/transport/parking/bluebadge"}' where data_group_id = 'LA' and code = 'HAMCC';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ANGL","issuingAuthorityName":"Isle of Anglesey county council","nation":"WLS","contactUrl":"http://www.anglesey.gov.uk/transport-and-roads/parking/blue-badge-scheme"}' where data_group_id = 'LA' and code = 'ANGL';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC","issuingAuthorityName":"Kent county council","nation":"ENG","contactUrl":"https://www.kent.gov.uk/roads-and-travel/travelling-around-kent/parking/disabled-parking-blue-badge/apply-for-a-blue-badge"}' where data_group_id = 'LA' and code = 'KENTCC';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"LBEAL","issuingAuthorityName":"London borough of Ealing","nation":"ENG","contactUrl":"https://www.ealing.gov.uk/info/201175/community_transport/163/blue_badge_scheme"}' where data_group_id = 'LA' and code = 'LBEAL';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NELIN","issuingAuthorityName":"North East Lincolnshire council","nation":"ENG","contactUrl":"https://www.nelincs.gov.uk/roads-parking-transport/parking/blue-badge-scheme"}' where data_group_id = 'LA' and code = 'NELIN';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NYKCC","issuingAuthorityName":"North Yorkshire county council","nation":"ENG","contactUrl":"https://www.northyorks.gov.uk/blue-badge-parking-permits-disabled-people"}' where data_group_id = 'LA' and code = 'NYKCC';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SURCC","issuingAuthorityName":"Surrey county council","nation":"ENG","contactUrl":"https://www.surreycc.gov.uk/roads-and-transport/parking/blue-badge"}' where data_group_id = 'LA' and code = 'SURCC';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ABERD","issuingAuthorityName":"Aberdeenshire council","nation":"SCO","contactUrl":"https://www.aberdeenshire.gov.uk"}' where data_group_id = 'LA' and code = 'ABERD';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"EAYR","issuingAuthorityName":"East Ayrshire council","nation":"SCO","contactUrl":"http://www.east-ayrshire.gov.uk"}' where data_group_id = 'LA' and code = 'EAYR';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NAYR","issuingAuthorityName":"North Ayrshire council","nation":"SCO","contactUrl":"https://www.north-ayrshire.gov.uk"}' where data_group_id = 'LA' and code = 'NAYR';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SLAN","issuingAuthorityName":"South Lanarkshire council","nation":"SCO","contactUrl":"http://www.southlanarkshire.gov.uk/info/200224/disabilities/142/blue_badge_scheme"}' where data_group_id = 'LA' and code = 'SLAN';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WDUN","issuingAuthorityName":"West Dunbartonshire council","nation":"SCO","contactUrl":"http://www.west-dunbarton.gov.uk"}' where data_group_id = 'LA' and code = 'WDUN';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WLOTH","issuingAuthorityName":"West Lothian council","nation":"SCO","contactUrl":"http://www.westlothian.gov.uk"}' where data_group_id = 'LA' and code = 'WLOTH';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WAKE","issuingAuthorityName":"Wakefield metropolitan district council","nation":"ENG","contactUrl":"http://www.wakefield.gov.uk/roads-and-transport/parking/blue-badge"}' where data_group_id = 'LA' and code = 'WAKE';
+update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC","issuingAuthorityName":"Worcestershire county council","nation":"ENG","contactUrl":"http://www.worcestershire.gov.uk/info/20397/blue_badge/1378/apply_for_or_renew_a_badge"}' where data_group_id = 'LA' and code = 'WORCC';
 
 insert into referencedata.data_domain(id, description) VALUES ('CITIZEN', 'Citizen web app');
-insert into referencedata.data_group(id, description) VALUES ('LC', 'Local Councils');
+insert into referencedata.data_group(id, description) VALUES ('LC', 'Local Councils'),('NATION', 'Nation');
 insert into referencedata.group_domain_map(data_group_id, data_domain_id) VALUES
   ('LC', 'USER')
   ,('LC', 'APP')
@@ -50,6 +50,13 @@ insert into referencedata.group_domain_map(data_group_id, data_domain_id) VALUES
   ;
 insert into referencedata.group_domain_map(data_group_id, data_domain_id)
   SELECT g.id, 'CITIZEN' from referencedata.data_group g
+;
+
+insert into referencedata.reference_data(data_group_id, code, description, data_subgroup_id, meta_data) VALUES
+  ('NATION', 'SCO', 'Scotland', null, '{"badgeCost":20}')
+  ,('NATION', 'ENG', 'England', null, '{"badgeCost":10}')
+  ,('NATION', 'WLS', 'Wales', null, '{"badgeCost":0}')
+  ,('NATION', 'NIR', 'Northern Island', null, '{"badgeCost":10}')
 ;
 
 insert into referencedata.reference_data(data_group_id, code, description, data_subgroup_id, meta_data) VALUES
@@ -135,9 +142,11 @@ insert into referencedata.reference_data(data_group_id, code, description, data_
 -- //@UNDO
 -- SQL to undo the change goes here.
 delete from referencedata.reference_data where data_group_id = 'LC';
+delete from referencedata.reference_data where data_group_id = 'NATION';
 delete from referencedata.group_domain_map where data_group_id = 'LC';
 delete from referencedata.group_domain_map where data_domain_id = 'CITIZEN';
 delete from referencedata.data_group where id = 'LC';
+delete from referencedata.data_group where id = 'NATION';
 delete from referencedata.data_domain where id = 'CITIZEN';
 
 drop view reference_data_vw;
