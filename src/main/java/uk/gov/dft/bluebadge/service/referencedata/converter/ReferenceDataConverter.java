@@ -32,7 +32,7 @@ public class ReferenceDataConverter
         String metaData = objectMapper.writeValueAsString(model.getMetaData());
         entity.setMetaData(metaData);
       } catch (IOException e) {
-        log.warn("Failed to convert meta data into a String", e);
+        log.error("Failed to convert meta data into a String", e);
       }
     }
     return entity;
@@ -47,7 +47,7 @@ public class ReferenceDataConverter
         Map map = objectMapper.readValue(entity.getMetaData(), Map.class);
         model.setMetaData(map);
       } catch (IOException e) {
-        log.warn("Failed to load meta data into a Map", e);
+        log.error("Failed to load meta data into a Map", e);
       }
     }
     return model;
