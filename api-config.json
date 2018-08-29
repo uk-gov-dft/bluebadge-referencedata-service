@@ -62,6 +62,12 @@
           "description" : "Display value of data item",
           "example" : "Armed Forces Compensation scheme"
         },
+        "metaData" : {
+          "type" : "object",
+          "additionalProperties" : true,
+          "description" : "JSON block of meta data for the item",
+          "example" : "{\"nation\":\"Scotland\"}"
+        },
         "groupShortCode" : {
           "type" : "string",
           "description" : "Group of data.",

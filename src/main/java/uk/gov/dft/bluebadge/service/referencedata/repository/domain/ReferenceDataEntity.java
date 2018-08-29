@@ -10,6 +10,7 @@ import org.apache.ibatis.type.Alias;
 public class ReferenceDataEntity implements Serializable {
   private String shortCode;
   private String description;
+  private String metaData;
   private String groupShortCode;
   private String groupDescription;
   private String subgroupShortCode;

@@ -1,13 +1,14 @@
 package uk.gov.dft.bluebadge.service.referencedata.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import uk.gov.dft.bluebadge.common.controller.AbstractController;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.converter.ReferenceDataConverter;
@@ -15,16 +16,17 @@ import uk.gov.dft.bluebadge.service.referencedata.generated.controller.Reference
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
 
-@Controller
+@RestController
 public class ReferenceDataApiControllerImpl extends AbstractController implements ReferenceDataApi {
 
-  private ReferenceDataService service;
-  private ReferenceDataConverter converter = new ReferenceDataConverter();
+  private final ReferenceDataService service;
+  private final ReferenceDataConverter converter;
 
   @SuppressWarnings("unused")
   @Autowired
-  public ReferenceDataApiControllerImpl(ReferenceDataService service) {
+  public ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
     this.service = service;
+    converter = new ReferenceDataConverter(objectMapper);
   }
 
   /**

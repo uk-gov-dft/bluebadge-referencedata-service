@@ -3,7 +3,6 @@ package uk.gov.dft.bluebadge.model.referencedata.generated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
-import javax.validation.constraints.*;
 import org.springframework.validation.annotation.Validated;
 
 /** ReferenceData */
@@ -14,6 +13,9 @@ public class ReferenceData {
 
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("metaData")
+  private Object metaData = null;
 
   @JsonProperty("groupShortCode")
   private String groupShortCode = null;
@@ -69,6 +71,28 @@ public class ReferenceData {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public ReferenceData metaData(Object metaData) {
+    this.metaData = metaData;
+    return this;
+  }
+
+  /**
+   * JSON block of meta data for the item
+   *
+   * @return metaData
+   */
+  @ApiModelProperty(
+    example = "\"{\\\"nation\\\":\\\"Scotland\\\"}\"",
+    value = "JSON block of meta data for the item"
+  )
+  public Object getMetaData() {
+    return metaData;
+  }
+
+  public void setMetaData(Object metaData) {
+    this.metaData = metaData;
   }
 
   public ReferenceData groupShortCode(String groupShortCode) {
@@ -177,6 +201,7 @@ public class ReferenceData {
     ReferenceData referenceData = (ReferenceData) o;
     return Objects.equals(this.shortCode, referenceData.shortCode)
         && Objects.equals(this.description, referenceData.description)
+        && Objects.equals(this.metaData, referenceData.metaData)
         && Objects.equals(this.groupShortCode, referenceData.groupShortCode)
         && Objects.equals(this.groupDescription, referenceData.groupDescription)
         && Objects.equals(this.subgroupShortCode, referenceData.subgroupShortCode)
@@ -189,6 +214,7 @@ public class ReferenceData {
     return Objects.hash(
         shortCode,
         description,
+        metaData,
         groupShortCode,
         groupDescription,
         subgroupShortCode,
@@ -203,6 +229,7 @@ public class ReferenceData {
 
     sb.append("    shortCode: ").append(toIndentedString(shortCode)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    metaData: ").append(toIndentedString(metaData)).append("\n");
     sb.append("    groupShortCode: ").append(toIndentedString(groupShortCode)).append("\n");
     sb.append("    groupDescription: ").append(toIndentedString(groupDescription)).append("\n");
     sb.append("    subgroupShortCode: ").append(toIndentedString(subgroupShortCode)).append("\n");
