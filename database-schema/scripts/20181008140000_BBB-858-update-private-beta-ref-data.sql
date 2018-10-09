@@ -1,10 +1,11 @@
 DELETE FROM referencedata.reference_data WHERE data_group_id='LC' AND code IN (
 'NYKCC', 'CRA', 'HAE', 'HAG', 'RIH',
-'RYE', 'SCE', 'SEL', 'ESUCC', 'EAS',
-'HAS', 'LEE', 'ROH', 'WEA', 'SURCC',
+'RYE', 'SCE', 'SEL', 'SURCC',
 'ELM', 'EPS', 'GRT', 'MOL', 'REI',
 'RUN', 'SPE', 'SUR', 'TAN', 'WAE',
-'WOI');
+'WOI', 'HAMCC', 'HAT', 'HAA', 'NEW',
+'RUH', 'TES', 'WIN', 'BAN', 'EHA',
+'EAT', 'FAR', 'GOS');
 
 insert into referencedata.reference_data(data_group_id, code, description, data_subgroup_id, meta_data) VALUES
   ('LC', 'NWA', 'North Warwickshire borough council', null, '{"issuingAuthorityShortCode":"WARCC"}'),
@@ -53,12 +54,6 @@ insert into referencedata.reference_data(data_group_id, code, description, data_
   ,('LC', 'RYE', 'Ryedale district council', null, '{"issuingAuthorityShortCode":"NYKCC"}')
   ,('LC', 'SCE', 'Scarborough borough council', null, '{"issuingAuthorityShortCode":"NYKCC"}')
   ,('LC', 'SEL', 'Selby district council', null, '{"issuingAuthorityShortCode":"NYKCC"}')
-  ,('LC', 'ESUCC', 'East Sussex county council', null, '{"issuingAuthorityShortCode":"ESUCC"}')
-  ,('LC', 'EAS', 'Eastbourne borough council', null, '{"issuingAuthorityShortCode":"ESUCC"}')
-  ,('LC', 'HAS', 'Hastings borough council', null, '{"issuingAuthorityShortCode":"ESUCC"}')
-  ,('LC', 'LEE', 'Lewes district council', null, '{"issuingAuthorityShortCode":"ESUCC"}')
-  ,('LC', 'ROH', 'Rother district council', null, '{"issuingAuthorityShortCode":"ESUCC"}')
-  ,('LC', 'WEA', 'Wealden district council', null, '{"issuingAuthorityShortCode":"ESUCC"}')
   ,('LC', 'SURCC', 'Surrey county council', null, '{"issuingAuthorityShortCode":"SURCC"}')
   ,('LC', 'ELM', 'Elmbridge borough council', null, '{"issuingAuthorityShortCode":"SURCC"}')
   ,('LC', 'EPS', 'Epsom and Ewell borough council', null, '{"issuingAuthorityShortCode":"SURCC"}')
@@ -70,7 +65,19 @@ insert into referencedata.reference_data(data_group_id, code, description, data_
   ,('LC', 'SUR', 'Surrey Heath borough council', null, '{"issuingAuthorityShortCode":"SURCC"}')
   ,('LC', 'TAN', 'Tandridge district council', null, '{"issuingAuthorityShortCode":"SURCC"}')
   ,('LC', 'WAE', 'Waverley borough council', null, '{"issuingAuthorityShortCode":"SURCC"}')
-  ,('LC', 'WOI', 'Woking borough council', null, '{"issuingAuthorityShortCode":"SURCC"}');
+  ,('LC', 'WOI', 'Woking borough council', null, '{"issuingAuthorityShortCode":"SURCC"}')
+  ,('LC', 'HAMCC', 'Hampshire county council', null, '{"issuingAuthorityShortCode": "HAMCC"}')
+  ,('LC', 'HAT', 'Hart district council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'HAA', 'Havant borough council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'NEW', 'New Forest district council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'RUH', 'Rushmoor borough council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'TES', 'Test Valley borough council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'WIN', 'Winchester city council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'BAN', 'Basingstoke and Deane borough council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'EHA', 'East Hampshire district council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'EAT', 'Eastleigh borough council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'FAR', 'Fareham borough council', null, '{"issuingAuthorityShortCode":"HAMCC"}')
+  ,('LC', 'GOS', 'Gosport borough council', null, '{"issuingAuthorityShortCode":"HAMCC"}');
 
 DELETE FROM referencedata.reference_data WHERE data_group_id='LC' AND code IN (
 'NWA', 'NUN', 'RUG', 'STR', 'WAW',
