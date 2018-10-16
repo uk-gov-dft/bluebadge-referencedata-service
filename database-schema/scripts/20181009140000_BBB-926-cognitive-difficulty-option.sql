@@ -2,7 +2,8 @@ UPDATE reference_data SET display_order = 5 WHERE display_order = 4 and code = '
 UPDATE reference_data SET display_order = 6 WHERE display_order = 5 and code = 'STRUGGLE';
 UPDATE reference_data SET display_order = 7 WHERE display_order = 6 and code = 'SOMELSE';
 
-INSERT INTO reference_data (data_group_id, code, description, display_order, data_subgroup_id) VALUES ('WALKDIFF', 'LONGTIME', 'Long time', 4, null);
+INSERT INTO reference_data (data_group_id, code, description, display_order, data_subgroup_id)
+VALUES ('WALKDIFF', 'LONGTIME', 'Takes a long time', 4, null);
 
 -- //@UNDO
 -- SQL to undo the change goes here.
