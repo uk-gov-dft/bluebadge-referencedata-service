@@ -35,7 +35,6 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'checkstyle'
 apply plugin: 'jacoco'
-apply plugin: 'pmd'
 apply plugin: 'org.owasp.dependencycheck'
 
 group = 'uk.gov.dft.bluebadge'
@@ -64,20 +63,6 @@ sourceSets {
         java {
             srcDir 'src/test/java'
         }
-    }
-}
-
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
-
-tasks.withType(Pmd) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
     }
 }
 
@@ -120,7 +105,7 @@ compileJava.dependsOn 'googleJavaFormat'
 publishing {
     publications {
         project_service(MavenPublication) {
-            artifact("service/build/database-schema/" + getTheVersion() + "_schema.zip") {
+            artifact ("${buildDir}/database-schema/" + getTheVersion() + "_schema.zip") {
                 classifier "schema"
             }
             from components.java
@@ -153,9 +138,28 @@ def getTheVersion() {
     return version + versionSuffix
 }
 
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.artifactory'
+    apply plugin: 'jacoco'
+
+    group = 'uk.gov.dft.bluebadge'
+    version = getTheVersion()
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'https://artifactory.does.not.exist/artifactory/gradle-release-dev'
+        }
+    }
+}
+
 artifactory {
-    contextUrl = "https://artifactory.does.not.exist/artifactory"
-    //The base Artifactory URL if not overridden by the publisher/resolver
+    contextUrl = "https://artifactory.does.not.exist/artifactory"   //The base Artifactory URL if not overridden by the publisher/resolver
     publish {
         repository {
             repoKey = 'gradle-dev-local'
@@ -236,7 +240,7 @@ task createDatabaseSchemaZip(type: Zip) {
     include '*'
     include '*/*'
     archiveName targetFilename
-    destinationDir(file("service/build/database-schema"))
+    destinationDir(file("build/database-schema"))
 }
 
 task outputComputedVersion {
