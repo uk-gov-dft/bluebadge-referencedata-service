@@ -22,12 +22,35 @@ node {
             env.SPRING_APPLICATION_JSON = '{"spring":{"datasource":{"url":"jdbc:postgresql://postgresql:5432/bb_dev?currentSchema=referencedata"}}}'
         }
         try {
-            sh './gradlew clean build bootJar createDatabaseSchemaZip artifactoryPublish artifactoryDeploy'
+            sh './gradlew --no-daemon --profile --configure-on-demand clean build bootJar createDatabaseSchemaZip artifactoryPublish artifactoryDeploy'
+            sh 'mv build/reports/profile/profile-*.html build/reports/profile/index.html'
         }
         finally {
             junit '**/TEST*.xml'
         }
+        publishHTML (target: [
+          allowMissing: false,
+          alwaysLinkToLastBuild: false,
+          keepAll: true,
+          reportDir: 'build/reports/profile',
+          reportFiles: 'index.html',
+          reportName: "Gradle Profile Report"
+        ])
     }
+
+    stage ('OWASP Dependency Check') {
+        sh './gradlew dependencyCheckUpdate dependencyCheckAggregate'
+
+        publishHTML (target: [
+         allowMissing: false,
+         alwaysLinkToLastBuild: false,
+         keepAll: true,
+         reportDir: 'build/reports',
+         reportFiles: 'dependency-check-report.html',
+         reportName: "OWASP Dependency Check"
+        ])
+    }
+
     stage('SonarQube analysis') {
         withSonarQubeEnv('sonarqube') {
             def ver = readFile('VERSION').trim()
