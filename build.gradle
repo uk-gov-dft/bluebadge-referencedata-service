@@ -247,6 +247,7 @@ task outputComputedVersion {
     def computedVersion = new File('VERSION-computed')
     computedVersion.delete()
     computedVersion.write(getTheVersion())
+    println(getTheVersion())
 }
 
 build.finalizedBy(outputComputedVersion)
