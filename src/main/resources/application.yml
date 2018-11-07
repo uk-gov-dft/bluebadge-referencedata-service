@@ -1,9 +1,9 @@
 
 logging:
   level:
-    root: ${APP_LOGGING_LEVEL:-INFO}
+    root: ${APP_LOGGING_LEVEL:INFO}
     sample.mybatis.mapper: WARN
-    uk.gov.dft.bluebadge.service: ${APP_LOGGING_LEVEL:-DEBUG}
+    uk.gov.dft.bluebadge.service: ${APP_LOGGING_LEVEL:DEBUG}
 
 management:
   server:
@@ -33,6 +33,8 @@ spring:
     date-format: uk.gov.dft.bluebadge.common.api.RFC3339DateFormat
     serialization:
       write-dates-as-timestamps: false
+  profiles:
+    active: dev
 
 server:
   port: 8580
