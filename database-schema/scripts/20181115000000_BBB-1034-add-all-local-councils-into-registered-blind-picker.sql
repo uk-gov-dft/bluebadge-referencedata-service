@@ -1,73 +1,15 @@
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"BRID", "isActive": true}' where data_group_id = 'LC' and code = 'BRID';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"CAER", "isActive": true}' where data_group_id = 'LC' and code = 'CAER';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC", "isActive": true}' where data_group_id = 'LC' and code = 'ESUCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC", "isActive": true}' where data_group_id = 'LC' and code = 'EAS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC", "isActive": true}' where data_group_id = 'LC' and code = 'HAS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC", "isActive": true}' where data_group_id = 'LC' and code = 'LEE';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC", "isActive": true}' where data_group_id = 'LC' and code = 'ROH';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC", "isActive": true}' where data_group_id = 'LC' and code = 'WEA';
+update referencedata.reference_data set meta_data = meta_data::JSONB || '{"isActive":true}' where data_group_id = 'LC' and code in
+(
+'BRID', 'CAER', 'ESUCC', 'EAS', 'HAS', 'LEE', 'ROH', 'WEA', 'GLOCC',
+'CHT', 'COT', 'FOE', 'GLS', 'STO', 'TEW', 'ANGL', 'LBEAL', 'NELIN', 'ABERD',
+'EAYR', 'SLAN', 'WDUN', 'WLOTH', 'WAKE', 'WORCC', 'BRM', 'MAV', 'RED', 'WOC',
+'WYC', 'WYE', 'NWA', 'NUN', 'RUG', 'STR', 'WAW', 'WARCC', 'BAB', 'FOR',
+'IPS', 'MSU', 'SED', 'SUF', 'SUFCC', 'WAV', 'BARNS'
+);
 
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC", "isActive": true}' where data_group_id = 'LC' and code = 'GLOCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC", "isActive": true}' where data_group_id = 'LC' and code = 'CHT';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC", "isActive": true}' where data_group_id = 'LC' and code = 'COT';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC", "isActive": true}' where data_group_id = 'LC' and code = 'FOE';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC", "isActive": true}' where data_group_id = 'LC' and code = 'GLS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC", "isActive": true}' where data_group_id = 'LC' and code = 'STO';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC", "isActive": true}' where data_group_id = 'LC' and code = 'TEW';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ANGL", "isActive": true}' where data_group_id = 'LC' and code = 'ANGL';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'KENTCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'ASF';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'CAT';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'DAR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'DOV';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'SHE';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'GRA';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'MAI';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'SEV';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'SWL';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'THA';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'TON';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC", "isActive": false}' where data_group_id = 'LC' and code = 'TUN';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"LBEAL", "isActive": true}' where data_group_id = 'LC' and code = 'LBEAL';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NELIN", "isActive": true}' where data_group_id = 'LC' and code = 'NELIN';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ABERD", "isActive": true}' where data_group_id = 'LC' and code = 'ABERD';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"EAYR", "isActive": true}' where data_group_id = 'LC' and code = 'EAYR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NAYR", "isActive": false}' where data_group_id = 'LC' and code = 'NAYR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SLAN", "isActive": true}' where data_group_id = 'LC' and code = 'SLAN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WDUN", "isActive": true}' where data_group_id = 'LC' and code = 'WDUN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WLOTH", "isActive": true}' where data_group_id = 'LC' and code = 'WLOTH';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WAKE", "isActive": true}' where data_group_id = 'LC' and code = 'WAKE';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC", "isActive": true}' where data_group_id = 'LC' and code = 'WORCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC", "isActive": true}' where data_group_id = 'LC' and code = 'BRM';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC", "isActive": true}' where data_group_id = 'LC' and code = 'MAV';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC", "isActive": true}' where data_group_id = 'LC' and code = 'RED';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC", "isActive": true}' where data_group_id = 'LC' and code = 'WOC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC", "isActive": true}' where data_group_id = 'LC' and code = 'WYC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC", "isActive": true}' where data_group_id = 'LC' and code = 'WYE';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC", "isActive": true}' where data_group_id = 'LC' and code = 'NWA';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC", "isActive": true}' where data_group_id = 'LC' and code = 'NUN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC", "isActive": true}' where data_group_id = 'LC' and code = 'RUG';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC", "isActive": true}' where data_group_id = 'LC' and code = 'STR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC", "isActive": true}' where data_group_id = 'LC' and code = 'WAW';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC", "isActive": true}' where data_group_id = 'LC' and code = 'WARCC';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'BAB';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'FOR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'IPS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'MSU';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'SED';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'SUF';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'SUFCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC", "isActive": true}' where data_group_id = 'LC' and code = 'WAV';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"BARNS", "isActive": true}' where data_group_id = 'LC' and code = 'BARNS';
-
+update referencedata.reference_data set meta_data = meta_data::JSONB || '{"isActive":false}' where data_group_id = 'LC' and code in (
+'KENTCC', 'ASF', 'CAT', 'DAR', 'DOV', 'SHE', 'GRA', 'MAI', 'SEV', 'SWL', 'THA', 'TON', 'TUN', 'NAYR'
+);
 
 insert into referencedata.reference_data(data_group_id, code, description, data_subgroup_id, meta_data) VALUES
 ('LC', 'ABERC',  'Aberdeen city council', null, '{"issuingAuthorityShortCode":"ABERC", "isActive": false }')
@@ -205,18 +147,6 @@ insert into referencedata.reference_data(data_group_id, code, description, data_
 ,('LC', 'INVC', ' Inverclyde council ', null, '{"issuingAuthorityShortCode":"INVC", "isActive": false }')
 ,('LC', 'IOS', 'Council of the Isles of Scilly ', null, '{"issuingAuthorityShortCode":"IOS", "isActive": false }')
 ,('LC', 'IOW', 'Isle of Wight council', null, '{"issuingAuthorityShortCode":"IOW", "isActive": false }')
---,('LC', 'CAT', 'Canterbury city council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'DAR', 'Dartford borough council ', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'DOV', 'Dover district council ', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'SHE', 'Folkestone and hythe council ', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'GRA', 'Gravesham borough council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'KENTCC', ' Kent county council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'MAI', 'Maidstone borough council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'SEV', 'Sevenoaks district council ', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'SWL', 'Swale borough council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'THA', 'Thanet district council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'TON', 'Tonbridge and malling borough council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
---,('LC', 'TUN', 'Tunbridge wells borough council', null, '{"issuingAuthorityShortCode":"KENTCC", "isActive": false }')
 ,('LC', 'KIRK', ' Kirklees council ', null, '{"issuingAuthorityShortCode":"KIRK", "isActive": false }')
 ,('LC', 'KNOWS', 'Knowsley metropolitan borough council', null, '{"issuingAuthorityShortCode":"KNOWS", "isActive": false }')
 ,('LC', 'BUN', 'Burnley borough council', null, '{"issuingAuthorityShortCode":"LANCC", "isActive": false }')
@@ -292,7 +222,6 @@ insert into referencedata.reference_data(data_group_id, code, description, data_
 ,('LC', 'MILKN', 'Milton Keynes council', null, '{"issuingAuthorityShortCode":"MILKN", "isActive": false }')
 ,('LC', 'MON', 'Monmouthshire county council ', null, '{"issuingAuthorityShortCode":"MON", "isActive": false }')
 ,('LC', 'MORAY', 'Moray council', null, '{"issuingAuthorityShortCode":"MORAY", "isActive": false }')
---,('LC', 'NAYR', ' North Ayrshire council ', null, '{"issuingAuthorityShortCode":"NAYR", "isActive": false }')
 ,('LC', 'NEATH', 'Neath Port Talbot county borough council ', null, '{"issuingAuthorityShortCode":"NEATH", "isActive": false }')
 ,('LC', 'NEWC', ' Newcastle city council ', null, '{"issuingAuthorityShortCode":"NEWC", "isActive": false }')
 ,('LC', 'NEWP', ' Newport city council ', null, '{"issuingAuthorityShortCode":"NEWP", "isActive": false }')
@@ -445,73 +374,14 @@ insert into referencedata.reference_data(data_group_id, code, description, data_
 
 -- //@UNDO
 -- SQL to undo the change goes here.
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"BRID"}' where data_group_id = 'LC' and code = 'BRID';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"CAER"}' where data_group_id = 'LC' and code = 'CAER';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC"}' where data_group_id = 'LC' and code = 'ESUCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC"}' where data_group_id = 'LC' and code = 'EAS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC"}' where data_group_id = 'LC' and code = 'HAS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC"}' where data_group_id = 'LC' and code = 'LEE';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC"}' where data_group_id = 'LC' and code = 'ROH';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ESUCC"}' where data_group_id = 'LC' and code = 'WEA';
 
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC"}' where data_group_id = 'LC' and code = 'GLOCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC"}' where data_group_id = 'LC' and code = 'CHT';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC"}' where data_group_id = 'LC' and code = 'COT';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC"}' where data_group_id = 'LC' and code = 'FOE';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC"}' where data_group_id = 'LC' and code = 'GLS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC"}' where data_group_id = 'LC' and code = 'STO';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"GLOCC"}' where data_group_id = 'LC' and code = 'TEW';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ANGL"}' where data_group_id = 'LC' and code = 'ANGL';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'KENTCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'ASF';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'CAT';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'DAR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'DOV';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'SHE';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'GRA';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'MAI';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'SEV';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'SWL';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'THA';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'TON';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"KENTCC"}' where data_group_id = 'LC' and code = 'TUN';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"LBEAL"}' where data_group_id = 'LC' and code = 'LBEAL';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NELIN"}' where data_group_id = 'LC' and code = 'NELIN';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"ABERD"}' where data_group_id = 'LC' and code = 'ABERD';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"EAYR"}' where data_group_id = 'LC' and code = 'EAYR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"NAYR"}' where data_group_id = 'LC' and code = 'NAYR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SLAN"}' where data_group_id = 'LC' and code = 'SLAN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WDUN"}' where data_group_id = 'LC' and code = 'WDUN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WLOTH"}' where data_group_id = 'LC' and code = 'WLOTH';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WAKE"}' where data_group_id = 'LC' and code = 'WAKE';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC"}' where data_group_id = 'LC' and code = 'WORCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC"}' where data_group_id = 'LC' and code = 'BRM';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC"}' where data_group_id = 'LC' and code = 'MAV';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC"}' where data_group_id = 'LC' and code = 'RED';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC"}' where data_group_id = 'LC' and code = 'WOC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC"}' where data_group_id = 'LC' and code = 'WYC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WORCC"}' where data_group_id = 'LC' and code = 'WYE';
-
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC"}' where data_group_id = 'LC' and code = 'NWA';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC"}' where data_group_id = 'LC' and code = 'NUN';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC"}' where data_group_id = 'LC' and code = 'RUG';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC"}' where data_group_id = 'LC' and code = 'STR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC"}' where data_group_id = 'LC' and code = 'WAW';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"WARCC"}' where data_group_id = 'LC' and code = 'WARCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'BAB';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'FOR';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'IPS';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'MSU';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'SED';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'SUF';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'SUFCC';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"SUFCC"}' where data_group_id = 'LC' and code = 'WAV';
-update referencedata.reference_data set meta_data = '{"issuingAuthorityShortCode":"BARNS"}' where data_group_id = 'LC' and code = 'BARNS';
+update referencedata.reference_data set meta_data = meta_data::JSONB - 'isActive' where data_group_id = 'LC' and code in
+('BRID', 'CAER', 'ESUCC', 'EAS', 'HAS', 'LEE', 'ROH', 'WEA', 'GLOCC', 'CHT',
+'COT', 'FOE', 'GLS', 'STO', 'TEW', 'ANGL', 'KENTCC', 'ASF', 'CAT', 'DAR',
+'DOV', 'SHE', 'GRA', 'MAI', 'SEV', 'SWL', 'THA', 'TON', 'TUN', 'LBEAL',
+'NELIN', 'ABERD', 'EAYR', 'NAYR', 'SLAN', 'WDUN', 'WLOTH', 'WAKE', 'WORCC', 'BRM',
+'MAV', 'RED', 'WOC', 'WYC', 'WYE', 'NWA', 'NUN', 'RUG', 'STR', 'WAW',
+'WARCC', 'BAB', 'FOR', 'IPS', 'MSU', 'SED', 'SUF', 'SUFCC', 'WAV', 'BARNS');
 
 DELETE FROM referencedata.reference_data WHERE data_group_id='LC' AND code IN (
 'ABERC', 'ANGUS','ARBUT','BEDF', 'BIRM','BLACK','BLDRN','BLGW', 'BOLT', 'BOURN',
@@ -528,18 +398,6 @@ DELETE FROM referencedata.reference_data WHERE data_group_id='LC' AND code IN (
 'HAMCC','HAT','HAA','NEW','RUH','TES','WIN','HART','BRX','DAC',
 'EHE','HERCC','HER','NHE','SAL','STV','THE','WAT','WEW','HEREF',
 'HIGH','HULL','INVC','IOS','IOW',
---'ASF',
---'CAT',
---'DAR',
---'DOV',
---'SHE',
---'GRA',
---'KENTCC',
---'MAI',
---'SEV',
---'SWL',
---'THA',
---'TON','TUN',
 'KIRK','KNOWS',
 'BUN','CHO','FYL','HYN','LANCC','LAC','PEN','PRE','RIB','ROS',
 'SRI','WLA','WYR','LBBAD','LBBAR','LBBEX','LBBRE','LBBRO','LBCAM','LBCOL',
@@ -549,7 +407,6 @@ DELETE FROM referencedata.reference_data WHERE data_group_id='LC' AND code IN (
 'HIN','LEICC','MEL','NWL','OAD','BOT','LIC','ELI','LINCC','NKE',
 'SHO','SKE','WLI','LIVER','LUTON','MANC','MEDTN','MERTH','MIDDL','MIDLH',
 'MILKN','MON','MORAY',
---'NAYR',
 'NEATH',
 'NEWC','NEWP','ANN','AND','ABC',
 'BFS','CCG','DRS','FMO','LBC','MEA','MUL','NIRE','NMD','NLAN',
