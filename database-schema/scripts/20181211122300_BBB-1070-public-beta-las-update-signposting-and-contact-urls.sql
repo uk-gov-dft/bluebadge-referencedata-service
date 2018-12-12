@@ -1,3 +1,5 @@
+-- Add third party url and contact URL to some LAs
+
 update referencedata.reference_data
 set meta_data = meta_data::JSONB || '{"differentServiceSignpostUrl":"https://www.cheshireeast.gov.uk/bluebadge", "contactUrl":"https://www.cheshireeast.gov.uk/benefits_housing_council_tax/blue_badge_scheme/blue_badge_scheme.aspx"}'
 where data_group_id='LA' and code = 'CHESE';
@@ -27,9 +29,14 @@ set meta_data = meta_data::JSONB || '{"differentServiceSignpostUrl":"https://sel
 where data_group_id='LA' and code = 'WOK';
 
 
+-- Remove third party url from some LAs
+
 update referencedata.reference_data
 set meta_data = meta_data::JSONB - 'differentServiceSignpostUrl'
 where data_group_id='LA' and code in ('BLACK', 'BEDF', 'LBBRO', 'DERCC', 'ELOTH', 'GLAS', 'BRIST', 'MANC', 'SCBRD', 'SEFT');
+
+
+-- Update contactUrl in LAs that we have removed differentServiceSignpostUrl)
 
 update referencedata.reference_data
 set meta_data = meta_data::JSONB || '{"contactUrl":"https://www.blackpool.gov.uk/Residents/Parking-roads-and-transport/Parking/Blue-badge-disabled-parking/Blue-Badge-disabled-parking.aspx"}'
@@ -73,18 +80,36 @@ where data_group_id='LA' and code = 'SEFT';
 
 
 
+-- Update differentServiceSignpostUrl (Third party url) to old application
 
 update referencedata.reference_data
 set meta_data = meta_data::JSONB || '{"differentServiceSignpostUrl":"https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here"}'
 where data_group_id='LA' and code in ('WARCC', 'WORCC', 'GLOCC');
 
 
+--- Update nation to the newly active LAs
+update referencedata.reference_data
+set meta_data = meta_data::JSONB || '{"nation":"ENG"}'
+where data_group_id='LA' and code in ('BEDF', 'BLACK', 'BRIST', 'CAMCC', 'CHESE', 'DERCC', 'DORCC', 'ESSCC', 'LBBRO', 'LBWES', 'MANC', 'SEFT', 'WOK');
+
+update referencedata.reference_data
+set meta_data = meta_data::JSONB || '{"nation":"NIR"}'
+where data_group_id='LA' and code in ('NIRE');
+
+
+update referencedata.reference_data
+set meta_data = meta_data::JSONB || '{"nation":"SCO"}'
+where data_group_id='LA' and code in ('ELOTH', 'GLAS', 'SCBRD');
+
+
 -- //@UNDO
 -- SQL to undo the change goes here.
+-- Remove contact Url from
 update referencedata.reference_data
 set meta_data = meta_data::JSONB - 'contactUrl'
 where data_group_id='LA' and code in ('CHESE', 'LBWES', 'NIRE', 'ESSCC', 'DORCC', 'CAMCC', 'WOK');
 
+-- Change back the differentServiceSignpostUrl
 update referencedata.reference_data
 set meta_data = meta_data::JSONB || '{"differentServiceSignpostUrl":"https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here"}'
 where data_group_id='LA' and code = 'CHESE';
@@ -114,17 +139,27 @@ set meta_data = meta_data::JSONB || '{"differentServiceSignpostUrl":"https://blu
 where data_group_id='LA' and code = 'WOK';
 
 
+-- Change back differentServiceSignpostUrl to old application
 
 update referencedata.reference_data
 set meta_data = meta_data::JSONB || '{"differentServiceSignpostUrl":"https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here"}'
 where data_group_id='LA' and code in ('BLACK', 'BEDF', 'LBBRO', 'DERCC', 'ELOTH', 'GLAS', 'BRIST', 'MANC', 'SCBRD', 'SEFT');
+
+-- Remove contact Url from LA that use old application
 
 update referencedata.reference_data
 set meta_data = meta_data::JSONB - 'contactUrl'
 where data_group_id='LA' and code in ('BLACK', 'BEDF', 'LBBRO', 'DERCC', 'ELOTH', 'GLAS', 'BRIST', 'MANC', 'SCBRD', 'SEFT');
 
 
-
+-- Remove differentServiceSignpostUrl from some LAs
 update referencedata.reference_data
 set meta_data = meta_data::JSONB - 'differentServiceSignpostUrl'
 where data_group_id='LA' and code in ('WARCC', 'WORCC', 'GLOCC');
+
+
+-- Remove Nation
+--- Update nation to the newly active LAs
+update referencedata.reference_data
+set meta_data = meta_data::JSONB - 'nation'
+where data_group_id='LA' and code in ('BEDF', 'BLACK', 'BRIST', 'CAMCC', 'CHESE', 'DERCC', 'DORCC', 'ESSCC', 'LBBRO', 'LBWES', 'MANC', 'SEFT', 'WOK', 'NIRE', 'ELOTH', 'GLAS', 'SCBRD');
