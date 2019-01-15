@@ -11,7 +11,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
+import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntity;
 
 public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
 
@@ -27,5 +29,35 @@ public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
         sampleEntityList.get(0).getShortCode(),
         repository.findByDomain("ABC").get(0).getShortCode());
     verify(session, times(1)).selectList("findByDomain", "ABC");
+  }
+
+  @Test
+  public void updateLASuccess() {
+    MockitoAnnotations.initMocks(this);
+    when(session.update(any(), any())).thenReturn(1);
+    ReferenceDataRepository repository = new ReferenceDataRepository(session);
+
+    LocalAuthorityEntity la =
+        LocalAuthorityEntity.builder()
+            .shortCode("ABC")
+            .differentServiceSignpostUrl("http://different_url.com")
+            .build();
+    repository.update(la);
+    verify(session, times(1)).update("updateLAMetaData", la);
+  }
+
+  @Test(expected = BadRequestException.class)
+  public void updateLAFail() {
+    MockitoAnnotations.initMocks(this);
+    when(session.update(any(), any())).thenReturn(0);
+    ReferenceDataRepository repository = new ReferenceDataRepository(session);
+
+    LocalAuthorityEntity la =
+        LocalAuthorityEntity.builder()
+            .shortCode("ABC")
+            .differentServiceSignpostUrl("http://different_url.com")
+            .build();
+    repository.update(la);
+    verify(session, times(1)).update("updateLAMetaData", la);
   }
 }
