@@ -3,13 +3,18 @@ package uk.gov.dft.bluebadge.service.referencedata.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
+import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.dft.bluebadge.common.api.model.CommonResponse;
 import uk.gov.dft.bluebadge.common.controller.AbstractController;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.converter.ReferenceDataConverter;
 import uk.gov.dft.bluebadge.service.referencedata.generated.controller.ReferenceDataApi;
@@ -45,5 +50,15 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
     List<ReferenceDataEntity> dataList = service.findByDomain(domain);
     response.setData(converter.convertToModelList(dataList));
     return ResponseEntity.ok(response);
+  }
+
+  @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
+  @Override
+  public ResponseEntity<CommonResponse> update(
+      @PathVariable(required = true) String shortCode,
+      @Valid @RequestBody LocalAuthority localAuthority) {
+
+    service.update(shortCode, localAuthority);
+    return ResponseEntity.ok(new CommonResponse());
   }
 }

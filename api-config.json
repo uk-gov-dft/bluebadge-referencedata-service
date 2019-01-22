@@ -1,158 +1,231 @@
-{
-"spec": {
-  "swagger" : "2.0",
-  "info" : {
-    "title" : "ReferenceData API",
-    "description" : "Manage Reference Data",
-    "version" : "1.0.0"
-  },
-  "schemes" : [ "https", "http" ],
-  "produces" : [ "application/json" ],
-  "paths" : {
-    "/reference-data/{domain}" : {
-      "parameters" : [ {
-        "in" : "path",
-        "name" : "domain",
-        "type" : "string",
-        "description" : "Domain to retrieve data for",
-        "required" : true
-      } ],
-      "get" : {
-        "tags" : [ "ReferenceData" ],
-        "summary" : "Retrieve all reference data for a domain",
-        "operationId" : "findByDomain",
-        "responses" : {
-          "200" : {
-            "description" : "An array of reference data",
-            "schema" : {
-              "$ref" : "#/definitions/ReferenceDataResponse"
+{  
+  "spec" : {  
+    "swagger" : "2.0",
+    "info" : {  
+      "description" : "Manage Reference Data",
+      "version" : "1.0.0",
+      "title" : "ReferenceData API"
+    },
+    "host" : "virtserver.swaggerhub.com",
+    "basePath" : "/uk-gov-dft/reference-dataservice/1.0.0",
+    "schemes" : [  
+      "https",
+      "http"
+    ],
+    "produces" : [  
+      "application/json"
+    ],
+    "paths" : {  
+      "/reference-data/{domain}" : {  
+        "get" : {  
+          "tags" : [  
+            "ReferenceData"
+          ],
+          "summary" : "Retrieve all reference data for a domain",
+          "operationId" : "findByDomain",
+          "parameters" : [  
+            {  
+              "name" : "domain",
+              "in" : "path",
+              "description" : "Domain to retrieve data for",
+              "required" : true,
+              "type" : "string"
+            }
+          ],
+          "responses" : {  
+            "200" : {  
+              "description" : "An array of reference data",
+              "schema" : {  
+                "$ref" : "#/definitions/ReferenceDataResponse"
+              }
             }
           }
         }
-      }
-    }
-  },
-  "definitions" : {
-    "ReferenceDataResponse" : {
-      "type" : "object",
-      "allOf" : [ {
-        "$ref" : "#/definitions/CommonResponse"
-      }, {
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/ReferenceData"
+      },
+      "/reference-data/authorities/{shortCode}" : {  
+        "put" : {  
+          "tags" : [  
+            "ReferenceData"
+          ],
+          "summary" : "Update Local Authority data",
+          "operationId" : "update",
+          "parameters" : [  
+            {  
+              "name" : "shortCode",
+              "in" : "path",
+              "description" : "Local Authority short code",
+              "required" : true,
+              "type" : "string"
+            },
+            {  
+              "in" : "body",
+              "name" : "localAuthority",
+              "description" : "Local Authority meta info to update",
+              "required" : true,
+              "schema" : {  
+                "$ref" : "#/definitions/LocalAuthority"
+              }
             }
-          }
-        }
-      } ]
-    },
-    "ReferenceData" : {
-      "type" : "object",
-      "properties" : {
-        "shortCode" : {
-          "type" : "string",
-          "description" : "Identifier of data item",
-          "example" : "AFRFCS"
-        },
-        "description" : {
-          "type" : "string",
-          "description" : "Display value of data item",
-          "example" : "Armed Forces Compensation scheme"
-        },
-        "metaData" : {
-          "type" : "object",
-          "additionalProperties" : true,
-          "description" : "JSON block of meta data for the item",
-          "example" : "{\"nation\":\"Scotland\"}"
-        },
-        "groupShortCode" : {
-          "type" : "string",
-          "description" : "Group of data.",
-          "example" : "ELIGIBILIT"
-        },
-        "groupDescription" : {
-          "type" : "string",
-          "description" : "Description of group",
-          "example" : "Eligibility"
-        },
-        "subgroupShortCode" : {
-          "type" : "string",
-          "description" : "Id of a subgroup",
-          "example" : "ELIG_AUTO"
-        },
-        "subgroupDescription" : {
-          "type" : "string",
-          "description" : "Display value of a sub group",
-          "example" : "Automatic"
-        },
-        "displayOrder" : {
-          "type" : "integer",
-          "description" : "Order to display"
-        }
-      }
-    },
-    "CommonResponse" : {
-      "type" : "object",
-      "properties" : {
-        "apiVersion" : {
-          "type" : "string"
-        },
-        "context" : {
-          "type" : "string"
-        },
-        "id" : {
-          "type" : "string"
-        },
-        "method" : {
-          "type" : "string"
-        },
-        "error" : {
-          "$ref" : "#/definitions/Error"
-        }
-      }
-    },
-    "Error" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer"
-        },
-        "message" : {
-          "type" : "string"
-        },
-        "errors" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object",
-            "properties" : {
-              "field" : {
-                "type" : "string"
-              },
-              "reason" : {
-                "type" : "string"
-              },
-              "message" : {
-                "type" : "string"
-              },
-              "location" : {
-                "type" : "string"
-              },
-              "locationType" : {
-                "type" : "string"
+          ],
+          "responses" : {  
+            "200" : {  
+              "description" : "Ok.",
+              "schema" : {  
+                "$ref" : "#/definitions/CommonResponse"
+              }
+            },
+            "400" : {  
+              "description" : "Bad request",
+              "schema" : {  
+                "$ref" : "#/definitions/CommonResponse"
+              }
+            },
+            "404" : {  
+              "description" : "Local Authority not found.",
+              "schema" : {  
+                "$ref" : "#/definitions/CommonResponse"
               }
             }
           }
         }
       }
+    },
+    "definitions" : {  
+      "LocalAuthority" : {  
+        "type" : "object",
+        "properties" : {  
+          "differentServiceSignpostUrl" : {  
+            "type" : "string",
+            "example" : "http : //tiny.url?q=ab63fg",
+            "description" : "Service signpost url.",
+            "maxLength" : 255
+          }
+        }
+      },
+      "ReferenceDataResponse" : {  
+        "allOf" : [  
+          {  
+            "$ref" : "#/definitions/CommonResponse"
+          },
+          {  
+            "type" : "object",
+            "properties" : {  
+              "data" : {  
+                "type" : "array",
+                "items" : {  
+                  "$ref" : "#/definitions/ReferenceData"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ReferenceData" : {  
+        "type" : "object",
+        "properties" : {  
+          "shortCode" : {  
+            "type" : "string",
+            "example" : "AFRFCS",
+            "description" : "Identifier of data item"
+          },
+          "description" : {  
+            "type" : "string",
+            "example" : "Armed Forces Compensation scheme",
+            "description" : "Display value of data item"
+          },
+          "metaData" : {  
+            "type" : "object",
+            "example" : "{\"nation\" : \"Scotland\"}",
+            "description" : "JSON block of meta data for the item",
+            "properties" : {  
+
+            }
+          },
+          "groupShortCode" : {  
+            "type" : "string",
+            "example" : "ELIGIBILIT",
+            "description" : "Group of data."
+          },
+          "groupDescription" : {  
+            "type" : "string",
+            "example" : "Eligibility",
+            "description" : "Description of group"
+          },
+          "subgroupShortCode" : {  
+            "type" : "string",
+            "example" : "ELIG_AUTO",
+            "description" : "Id of a subgroup"
+          },
+          "subgroupDescription" : {  
+            "type" : "string",
+            "example" : "Automatic",
+            "description" : "Display value of a sub group"
+          },
+          "displayOrder" : {  
+            "type" : "integer",
+            "description" : "Order to display"
+          }
+        }
+      },
+      "CommonResponse" : {  
+        "type" : "object",
+        "properties" : {  
+          "apiVersion" : {  
+            "type" : "string"
+          },
+          "context" : {  
+            "type" : "string"
+          },
+          "id" : {  
+            "type" : "string"
+          },
+          "method" : {  
+            "type" : "string"
+          },
+          "error" : {  
+            "$ref" : "#/definitions/Error"
+          }
+        }
+      },
+      "Error" : {  
+        "type" : "object",
+        "properties" : {  
+          "code" : {  
+            "type" : "integer"
+          },
+          "message" : {  
+            "type" : "string"
+          },
+          "errors" : {  
+            "type" : "array",
+            "items" : {  
+              "$ref" : "#/definitions/Error_errors"
+            }
+          }
+        }
+      },
+      "Error_errors" : {  
+        "properties" : {  
+          "field" : {  
+            "type" : "string"
+          },
+          "reason" : {  
+            "type" : "string"
+          },
+          "message" : {  
+            "type" : "string"
+          },
+          "location" : {  
+            "type" : "string"
+          },
+          "locationType" : {  
+            "type" : "string"
+          }
+        }
+      }
     }
   },
-  "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/uk-gov-dft/reference-dataservice/1.0.0"
-},
-  "options": {
+  "options" : {  
     "java8" : true,
     "sortParamsByRequiredFlag" : false,
     "modelPackage" : "uk.gov.dft.bluebadge.model.referencedata.generated",

@@ -3,6 +3,7 @@ package uk.gov.dft.bluebadge.model.referencedata.generated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
+import javax.validation.constraints.*;
 import org.springframework.validation.annotation.Validated;
 
 /** ReferenceData */
@@ -84,7 +85,7 @@ public class ReferenceData {
    * @return metaData
    */
   @ApiModelProperty(
-    example = "\"{\\\"nation\\\":\\\"Scotland\\\"}\"",
+    example = "\"{\\\"nation\\\" : \\\"Scotland\\\"}\"",
     value = "JSON block of meta data for the item"
   )
   public Object getMetaData() {

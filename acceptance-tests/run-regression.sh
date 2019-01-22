@@ -33,6 +33,8 @@ outputVersions() {
 
 set -a
 
+export COMPOSE_INTERACTIVE_NO_CLI=1
+
 if [[ ! -e ~/.ssh/github_token ]]; then
   echo "You need to create a personal access github token in ~/.ssh/github_token in order to access github"
   exit 1
@@ -75,12 +77,19 @@ if [[ "$?" -ne 0 ]]; then
 fi
 
 ./wait_for_it.sh localhost:5432 localhost:8681:/manage/actuator/health localhost:8381:/manage/actuator/health localhost:8281:/manage/actuator/health localhost:8081:/manage/actuator/health localhost:8481:/manage/actuator/health localhost:8181:/manage/actuator/health localhost:8581:/manage/actuator/health
-psql -h localhost -U developer -d bb_dev -f ./scripts/db/setup-users.sql 
+psql -h localhost -U developer -d bb_dev -f ./scripts/db/setup-users.sql -a
+echo "Users in postgresql container before acceptance tests"
+docker-compose exec -T postgresql psql -d bb_dev -U developer -c 'select * from usermanagement.users'
 
 # Run the acceptance tests
 cd ..
 gradle acceptanceTests
 testExitCode=$?
+
+cd dev-env-develop
+echo "Users in postgresql container after acceptance tests"
+docker-compose exec -T postgresql psql -d bb_dev -U developer -c 'select * from usermanagement.users'
+cd ..
 
 # Save the logs if something went wrong
 if [[ "$testExitCode" -ne 0 ]]; then
