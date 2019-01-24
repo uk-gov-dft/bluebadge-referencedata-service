@@ -1,88 +1,72 @@
-{  
-  "spec" : {  
+{
+  "spec" : {
     "swagger" : "2.0",
-    "info" : {  
+    "info" : {
+      "title" : "ReferenceData API",
       "description" : "Manage Reference Data",
-      "version" : "1.0.0",
-      "title" : "ReferenceData API"
+      "version" : "1.0.0"
     },
-    "host" : "virtserver.swaggerhub.com",
-    "basePath" : "/uk-gov-dft/reference-dataservice/1.0.0",
-    "schemes" : [  
-      "https",
-      "http"
-    ],
-    "produces" : [  
-      "application/json"
-    ],
-    "paths" : {  
-      "/reference-data/{domain}" : {  
-        "get" : {  
-          "tags" : [  
-            "ReferenceData"
-          ],
+    "schemes" : [ "https", "http" ],
+    "produces" : [ "application/json" ],
+    "paths" : {
+      "/reference-data/{domain}" : {
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "domain",
+          "type" : "string",
+          "description" : "Domain to retrieve data for",
+          "required" : true
+        } ],
+        "get" : {
+          "tags" : [ "ReferenceData" ],
           "summary" : "Retrieve all reference data for a domain",
           "operationId" : "findByDomain",
-          "parameters" : [  
-            {  
-              "name" : "domain",
-              "in" : "path",
-              "description" : "Domain to retrieve data for",
-              "required" : true,
-              "type" : "string"
-            }
-          ],
-          "responses" : {  
-            "200" : {  
+          "responses" : {
+            "200" : {
               "description" : "An array of reference data",
-              "schema" : {  
+              "schema" : {
                 "$ref" : "#/definitions/ReferenceDataResponse"
               }
             }
           }
         }
       },
-      "/reference-data/authorities/{shortCode}" : {  
-        "put" : {  
-          "tags" : [  
-            "ReferenceData"
-          ],
+      "/reference-data/authorities/{shortCode}" : {
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "shortCode",
+          "type" : "string",
+          "description" : "Local Authority short code",
+          "required" : true
+        }, {
+          "in" : "body",
+          "name" : "localAuthority",
+          "description" : "Local Authority meta info to update",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/LocalAuthority"
+          }
+        } ],
+        "put" : {
+          "tags" : [ "ReferenceData" ],
           "summary" : "Update Local Authority data",
           "operationId" : "update",
-          "parameters" : [  
-            {  
-              "name" : "shortCode",
-              "in" : "path",
-              "description" : "Local Authority short code",
-              "required" : true,
-              "type" : "string"
-            },
-            {  
-              "in" : "body",
-              "name" : "localAuthority",
-              "description" : "Local Authority meta info to update",
-              "required" : true,
-              "schema" : {  
-                "$ref" : "#/definitions/LocalAuthority"
-              }
-            }
-          ],
-          "responses" : {  
-            "200" : {  
+          "responses" : {
+            "200" : {
               "description" : "Ok.",
-              "schema" : {  
+              "schema" : {
                 "$ref" : "#/definitions/CommonResponse"
               }
             },
-            "400" : {  
+            "400" : {
               "description" : "Bad request",
-              "schema" : {  
+              "schema" : {
                 "$ref" : "#/definitions/CommonResponse"
               }
             },
-            "404" : {  
+            "404" : {
               "description" : "Local Authority not found.",
-              "schema" : {  
+              "schema" : {
                 "$ref" : "#/definitions/CommonResponse"
               }
             }
@@ -90,142 +74,215 @@
         }
       }
     },
-    "definitions" : {  
-      "LocalAuthority" : {  
+    "definitions" : {
+      "LocalAuthority" : {
         "type" : "object",
-        "properties" : {  
-          "differentServiceSignpostUrl" : {  
+        "properties" : {
+          "nameLine2" : {
             "type" : "string",
-            "example" : "http : //tiny.url?q=ab63fg",
-            "description" : "Service signpost url.",
-            "maxLength" : 255
-          }
-        }
-      },
-      "ReferenceDataResponse" : {  
-        "allOf" : [  
-          {  
-            "$ref" : "#/definitions/CommonResponse"
+            "description" : "name line 2",
+            "example" : null
           },
-          {  
-            "type" : "object",
-            "properties" : {  
-              "data" : {  
-                "type" : "array",
-                "items" : {  
-                  "$ref" : "#/definitions/ReferenceData"
-                }
+          "addressLine1" : {
+            "type" : "string",
+            "description" : "address line 1",
+            "example" : "high street 1"
+          },
+          "addressLine2" : {
+            "type" : "string",
+            "description" : "address line 2",
+            "example" : "borough"
+          },
+          "addressLine3" : {
+            "type" : "string",
+            "description" : "address line 3",
+            "example" : "city"
+          },
+          "addressLine4" : {
+            "type" : "string",
+            "description" : "address line 4",
+            "example" : "other"
+          },
+          "town" : {
+            "type" : "string",
+            "description" : "town",
+            "example" : "Manchester"
+          },
+          "county" : {
+            "type" : "string",
+            "description" : "county",
+            "example" : "Lancashire"
+          },
+          "postcode" : {
+            "type" : "string",
+            "description" : "postcode",
+            "example" : "SW1P 4DR"
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "country",
+            "example" : "United Kingdom"
+          },
+          "nation" : {
+            "type" : "string",
+            "description" : "ENG, WLS, SCO or NIR",
+            "example" : "ENG"
+          },
+          "contactNumber" : {
+            "type" : "string",
+            "description" : "contact phone number",
+            "example" : "01632 960493"
+          },
+          "contactUrl" : {
+            "type" : "string",
+            "description" : "web site url",
+            "example" : "https://www.gov.uk/"
+          },
+          "emailAddress" : {
+            "type" : "string",
+            "description" : "email address",
+            "example" : "abc@abcdefghijk.co.uk"
+          },
+          "badgePackType" : {
+            "type" : "string",
+            "description" : "badge pack type STANDARD, WALLET",
+            "example" : "STANDARD"
+          },
+          "badgeCost" : {
+            "type" : "number",
+            "minimum" : 0.0,
+            "maximum" : 999.99,
+            "description" : "badge cost",
+            "example" : 100.0
+          },
+          "differentServiceSignpostUrl" : {
+            "type" : "string",
+            "description" : "Service signpost url",
+            "example" : "http://tiny.url?q=ab63fg"
+          }
+        },
+        "required" : [ "postcode", "country", "nation", "contactUrl" ]
+      },
+      "ReferenceDataResponse" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/definitions/CommonResponse"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ReferenceData"
               }
             }
           }
-        ]
+        } ]
       },
-      "ReferenceData" : {  
+      "ReferenceData" : {
         "type" : "object",
-        "properties" : {  
-          "shortCode" : {  
+        "properties" : {
+          "shortCode" : {
             "type" : "string",
-            "example" : "AFRFCS",
-            "description" : "Identifier of data item"
+            "description" : "Identifier of data item",
+            "example" : "AFRFCS"
           },
-          "description" : {  
+          "description" : {
             "type" : "string",
-            "example" : "Armed Forces Compensation scheme",
-            "description" : "Display value of data item"
+            "description" : "Display value of data item",
+            "example" : "Armed Forces Compensation scheme"
           },
-          "metaData" : {  
+          "metaData" : {
             "type" : "object",
-            "example" : "{\"nation\" : \"Scotland\"}",
+            "additionalProperties" : true,
             "description" : "JSON block of meta data for the item",
-            "properties" : {  
-
-            }
+            "example" : "{\"nation\":\"Scotland\"}"
           },
-          "groupShortCode" : {  
+          "groupShortCode" : {
             "type" : "string",
-            "example" : "ELIGIBILIT",
-            "description" : "Group of data."
+            "description" : "Group of data.",
+            "example" : "ELIGIBILIT"
           },
-          "groupDescription" : {  
+          "groupDescription" : {
             "type" : "string",
-            "example" : "Eligibility",
-            "description" : "Description of group"
+            "description" : "Description of group",
+            "example" : "Eligibility"
           },
-          "subgroupShortCode" : {  
+          "subgroupShortCode" : {
             "type" : "string",
-            "example" : "ELIG_AUTO",
-            "description" : "Id of a subgroup"
+            "description" : "Id of a subgroup",
+            "example" : "ELIG_AUTO"
           },
-          "subgroupDescription" : {  
+          "subgroupDescription" : {
             "type" : "string",
-            "example" : "Automatic",
-            "description" : "Display value of a sub group"
+            "description" : "Display value of a sub group",
+            "example" : "Automatic"
           },
-          "displayOrder" : {  
+          "displayOrder" : {
             "type" : "integer",
             "description" : "Order to display"
           }
         }
       },
-      "CommonResponse" : {  
+      "CommonResponse" : {
         "type" : "object",
-        "properties" : {  
-          "apiVersion" : {  
+        "properties" : {
+          "apiVersion" : {
             "type" : "string"
           },
-          "context" : {  
+          "context" : {
             "type" : "string"
           },
-          "id" : {  
+          "id" : {
             "type" : "string"
           },
-          "method" : {  
+          "method" : {
             "type" : "string"
           },
-          "error" : {  
+          "error" : {
             "$ref" : "#/definitions/Error"
           }
         }
       },
-      "Error" : {  
+      "Error" : {
         "type" : "object",
-        "properties" : {  
-          "code" : {  
+        "properties" : {
+          "code" : {
             "type" : "integer"
           },
-          "message" : {  
+          "message" : {
             "type" : "string"
           },
-          "errors" : {  
+          "errors" : {
             "type" : "array",
-            "items" : {  
-              "$ref" : "#/definitions/Error_errors"
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "field" : {
+                  "type" : "string"
+                },
+                "reason" : {
+                  "type" : "string"
+                },
+                "message" : {
+                  "type" : "string"
+                },
+                "location" : {
+                  "type" : "string"
+                },
+                "locationType" : {
+                  "type" : "string"
+                }
+              }
             }
           }
         }
-      },
-      "Error_errors" : {  
-        "properties" : {  
-          "field" : {  
-            "type" : "string"
-          },
-          "reason" : {  
-            "type" : "string"
-          },
-          "message" : {  
-            "type" : "string"
-          },
-          "location" : {  
-            "type" : "string"
-          },
-          "locationType" : {  
-            "type" : "string"
-          }
-        }
       }
-    }
+    },
+    "host" : "virtserver.swaggerhub.com",
+    "basePath" : "/uk-gov-dft/reference-dataservice/1.0.0"
   },
-  "options" : {  
+  "options" : {
     "java8" : true,
     "sortParamsByRequiredFlag" : false,
     "modelPackage" : "uk.gov.dft.bluebadge.model.referencedata.generated",

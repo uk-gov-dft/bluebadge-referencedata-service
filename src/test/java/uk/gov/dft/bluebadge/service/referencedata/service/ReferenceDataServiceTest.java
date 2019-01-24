@@ -1,6 +1,5 @@
 package uk.gov.dft.bluebadge.service.referencedata.service;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -10,28 +9,29 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
-import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
+import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 
-public class ReferenceDataServiceTest {
+public class ReferenceDataServiceTest extends ReferenceDataFixture {
 
   private ReferenceDataService service;
 
-  @Mock private ReferenceDataRepository repository;
+  @Mock private ReferenceDataRepository repositoryMock;
+
   private ArrayList<ReferenceDataEntity> refDataList;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    service = new ReferenceDataService(repository);
+    service = new ReferenceDataService(repositoryMock);
     // A perhaps pointless test as the service does nothing in find at the moment,
     // but it's a placeholder for the future.
     refDataList = new ArrayList<>();
     ReferenceDataEntity entity = new ReferenceDataEntity();
     refDataList.add(entity);
 
-    when(repository.findByDomain("ADOMAIN")).thenReturn(refDataList);
+    when(repositoryMock.findByDomain("ADOMAIN")).thenReturn(refDataList);
   }
 
   @Test
@@ -50,20 +50,15 @@ public class ReferenceDataServiceTest {
   }
 
   @Test
-  public void updateLA_existing_shortCode() {
-    when(repository.update(any())).thenReturn(true);
-
-    LocalAuthority la = new LocalAuthority();
-    la.setDifferentServiceSignpostUrl("http://dirreferent_url.com");
-    Assert.assertTrue(service.update("ABC", la));
+  public void update_shouldReturnTrue_WhenUpdateIsSuccessful() {
+    when(repositoryMock.update(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY)).thenReturn(true);
+    Assert.assertTrue(service.update(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
   }
 
   @Test(expected = BadRequestException.class)
-  public void updateLA_absent_shortCode() {
-    when(repository.update(any())).thenThrow(BadRequestException.class);
-
-    LocalAuthority la = new LocalAuthority();
-    la.setDifferentServiceSignpostUrl("http://dirreferent_url.com");
-    Assert.assertFalse(service.update("XYZ", la));
+  public void update_shouldReturnBadRequestException_whenUpdateFails() {
+    when(repositoryMock.update(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+        .thenThrow(BadRequestException.class);
+    Assert.assertFalse(service.update(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
   }
 }

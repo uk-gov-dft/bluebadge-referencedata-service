@@ -12,17 +12,26 @@ Feature: Verify LAs metadata could be updated
 
   Scenario: Verify update metadata for LA
     Given path '/reference-data/authorities/DELETE_1'
-    And request {differentServiceSignpostUrl: "http://new_url.com"}
+    And request {"postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
     When method PUT
     Then status 200
  	* def updatedLA = db.readValueAsString("select meta_data from referencedata.reference_data la where la.data_group_id = 'LA' and la.code = 'DELETE_1'")
-	* match updatedLA contains 'http://new_url.com'
- 
+    * match updatedLA.differentServiceSignpostUrl contains 'http://new_url.com'
+    * match updatedLA.postcode contains 'ABC123'
+    * match updatedLA.nation contains 'SCO'
+    * match updatedLA.country contains 'United Kingdom2'
+    * match updatedLA.contactUrl contains 'http://localhost2'
+    * match updatedLA.emailAddress contains ''
+
    Scenario: Verify upsert metadata for LA
     Given path '/reference-data/authorities/DELETE_2'
-    And request {differentServiceSignpostUrl: "http://new_url.com"}
+     And request {"postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
     When method PUT
     Then status 200
  	* def updatedLA = db.readValueAsString("select meta_data from referencedata.reference_data la where la.data_group_id = 'LA' and la.code = 'DELETE_2'")
-	* match updatedLA contains 'http://new_url.com'
- 
+     * match updatedLA.differentServiceSignpostUrl contains 'http://new_url.com'
+     * match updatedLA.postcode contains 'ABC123'
+     * match updatedLA.nation contains 'SCO'
+     * match updatedLA.country contains 'United Kingdom2'
+     * match updatedLA.contactUrl contains 'http://localhost2'
+     * match updatedLA.emailAddress contains ''

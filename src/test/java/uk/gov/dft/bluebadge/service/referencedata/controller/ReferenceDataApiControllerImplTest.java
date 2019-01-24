@@ -2,10 +2,7 @@ package uk.gov.dft.bluebadge.service.referencedata.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,10 +50,9 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Test
   @SneakyThrows
-  public void updateLA_success() {
+  public void update_shouldBeOK_WhenPassingAllMandatoryValues() {
+    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
 
-    String body =
-        "{\"differentServiceSignpostUrl\": \"https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here\"}";
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
@@ -69,9 +65,8 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Test
   @SneakyThrows
-  public void updateLA_malformedURL() {
-
-    String body = "{\"differentServiceSignpostUrl\": \"new-url\"}";
+  public void update_shouldBeBadRequest_WhenPassingAnEmptyMandatoryValue() {
+    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_ONE_MANDATORY_VALUE_IS_EMPTY);
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
@@ -84,10 +79,24 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Test
   @SneakyThrows
-  public void updateLA_fail() {
-
+  public void update_shouldBeBadRequest_WhenPassingAnInvalidValues() {
     String body =
-        "{\"differentServiceSignpostUrl\": \"https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here\"}";
+        objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_PLUS_INVALID_VALUE);
+    RequestBuilder builder =
+        MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
+            .content(body)
+            .contentType(MediaType.APPLICATION_JSON);
+
+    mvc.perform(builder).andExpect(status().isBadRequest());
+
+    verify(service, never()).update(any(), any());
+  }
+
+  @Test
+  @SneakyThrows
+  public void update_shouldBeBadRequest_whenUpdateFails() {
+    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
+
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)

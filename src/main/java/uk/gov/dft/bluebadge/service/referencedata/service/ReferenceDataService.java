@@ -30,6 +30,21 @@ public class ReferenceDataService {
     LocalAuthorityEntity entity =
         LocalAuthorityEntity.builder()
             .shortCode(shortCode)
+            .nameLine2(la.getNameLine2())
+            .addressLine1(la.getAddressLine1())
+            .addressLine2(la.getAddressLine2())
+            .addressLine3(la.getAddressLine3())
+            .addressLine4(la.getAddressLine4())
+            .town(la.getTown())
+            .county(la.getCounty())
+            .country(la.getCountry())
+            .postcode(la.getPostcode())
+            .nation(la.getNation())
+            .contactNumber(la.getContactNumber())
+            .contactUrl(la.getContactUrl())
+            .emailAddress(la.getEmailAddress())
+            .badgePackType(la.getBadgePackType())
+            .badgeCost(la.getBadgeCost())
             .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
             .build();
     return repository.update(entity);

@@ -19,8 +19,24 @@
 
     <update id="updateLAMetaData" parameterType="LocalAuthorityEntity">
         UPDATE reference_data
-        SET 
-        	    meta_data = meta_data::JSONB || '{"differentServiceSignpostUrl" : "${differentServiceSignpostUrl}"}'
+        SET
+            meta_data = meta_data::JSONB || '{
+            "nameLine2": "${nameLine2}",
+            "addressLine1": "${addressLine1}",
+            "addressLine2": "${addressLine2}",
+            "addressLine3": "${addressLine3}",
+            "addressLine4": "${addressLine4}",
+            "town": "${town}",
+            "county": "${county}",
+            "postcode": "${postcode}",
+            "country": "${country}",
+            "nation": "${nation}",
+            "contactNumber": "${contactNumber}",
+            "contactUrl": "${contactUrl}",
+            "emailAddress": "${emailAddress}",
+            "badgePackType": "${badgePackType}",
+            "badgeCost": "${badgeCost}",
+            "differentServiceSignpostUrl" : "${differentServiceSignpostUrl}"}'
         WHERE data_group_id = 'LA' AND code = #{shortCode}
     </update>
 </mapper>
