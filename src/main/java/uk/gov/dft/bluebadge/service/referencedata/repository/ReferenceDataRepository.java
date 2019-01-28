@@ -45,7 +45,7 @@ public class ReferenceDataRepository {
       return true;
     }
 
-    log.error(
+    log.warn(
         "Attempt to update Local Authority with short code: {} that does not exist.",
         la.getShortCode());
     ErrorErrors error = new ErrorErrors();
