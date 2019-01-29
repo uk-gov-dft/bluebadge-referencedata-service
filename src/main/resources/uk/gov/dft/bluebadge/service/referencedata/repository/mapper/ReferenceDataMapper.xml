@@ -21,6 +21,7 @@
         UPDATE reference_data
         SET
             meta_data = meta_data::JSONB || '{
+            "welshDescription" : "${welshDescription}",
             "nameLine2": "${nameLine2}",
             "addressLine1": "${addressLine1}",
             "addressLine2": "${addressLine2}",
@@ -35,6 +36,7 @@
             "contactUrl": "${contactUrl}",
             "emailAddress": "${emailAddress}",
             "badgePackType": "${badgePackType}",
+            "paymentsEnabled": "${paymentsEnabled}",
             "badgeCost": "${badgeCost}",
             "differentServiceSignpostUrl" : "${differentServiceSignpostUrl}"}'
         WHERE data_group_id = 'LA' AND code = #{shortCode}

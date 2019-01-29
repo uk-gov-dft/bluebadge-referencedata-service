@@ -30,6 +30,7 @@ public class ReferenceDataService {
     LocalAuthorityEntity entity =
         LocalAuthorityEntity.builder()
             .shortCode(shortCode)
+            .welshDescription(la.getWelshDescription())
             .nameLine2(la.getNameLine2())
             .addressLine1(la.getAddressLine1())
             .addressLine2(la.getAddressLine2())
@@ -44,6 +45,7 @@ public class ReferenceDataService {
             .contactUrl(la.getContactUrl())
             .emailAddress(la.getEmailAddress())
             .badgePackType(la.getBadgePackType())
+            .paymentsEnabled(la.getPaymentsEnabled())
             .badgeCost(la.getBadgeCost())
             .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
             .build();

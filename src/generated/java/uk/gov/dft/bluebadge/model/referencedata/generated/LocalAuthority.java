@@ -5,13 +5,18 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Objects;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.validation.annotation.Validated;
 
 /** LocalAuthority */
 @Validated
 public class LocalAuthority {
+  @JsonProperty("welshDescription")
+  private String welshDescription = null;
+
   @JsonProperty("nameLine2")
   private String nameLine2 = null;
 
@@ -57,11 +62,33 @@ public class LocalAuthority {
   @JsonProperty("badgeCost")
   private BigDecimal badgeCost = null;
 
+  @JsonProperty("paymentsEnabled")
+  private Boolean paymentsEnabled = null;
+
   @JsonProperty("differentServiceSignpostUrl")
   private String differentServiceSignpostUrl = null;
 
   public LocalAuthority nameLine2(String nameLine2) {
     this.nameLine2 = nameLine2;
+    return this;
+  }
+
+  /**
+   * welsh description
+   *
+   * @return welshDescription
+   */
+  @ApiModelProperty(value = "welsh description")
+  public String getWelshDescription() {
+    return welshDescription;
+  }
+
+  public void seWelshDescription(String welshDescription) {
+    this.welshDescription = welshDescription;
+  }
+
+  public LocalAuthority welshDescription(String welshDescription) {
+    this.welshDescription = welshDescription;
     return this;
   }
 
@@ -363,14 +390,33 @@ public class LocalAuthority {
    *
    * @return differentServiceSignpostUrl
    */
-  @ApiModelProperty(example = "http://tiny.url?q=ab63fg", value = "Service signpost url")
   @URL
+  @ApiModelProperty(example = "http://tiny.url?q=ab63fg", value = "Service signpost url")
   public String getDifferentServiceSignpostUrl() {
     return differentServiceSignpostUrl;
   }
 
   public void setDifferentServiceSignpostUrl(String differentServiceSignpostUrl) {
     this.differentServiceSignpostUrl = differentServiceSignpostUrl;
+  }
+
+  /**
+   * payments enabled
+   *
+   * @return paymentsEnabled
+   */
+  @ApiModelProperty(value = "payments enabled")
+  public Boolean getPaymentsEnabled() {
+    return paymentsEnabled;
+  }
+
+  public void setPaymentsEnabled(Boolean paymentsEnabled) {
+    this.paymentsEnabled = paymentsEnabled;
+  }
+
+  public LocalAuthority paymentsEnabled(Boolean paymentsEnabled) {
+    this.paymentsEnabled = paymentsEnabled;
+    return this;
   }
 
   @Override
@@ -382,7 +428,8 @@ public class LocalAuthority {
       return false;
     }
     LocalAuthority localAuthority = (LocalAuthority) o;
-    return Objects.equals(this.nameLine2, localAuthority.nameLine2)
+    return Objects.equals(this.welshDescription, localAuthority.welshDescription)
+        && Objects.equals(this.nameLine2, localAuthority.nameLine2)
         && Objects.equals(this.addressLine1, localAuthority.addressLine1)
         && Objects.equals(this.addressLine2, localAuthority.addressLine2)
         && Objects.equals(this.addressLine3, localAuthority.addressLine3)
@@ -404,6 +451,7 @@ public class LocalAuthority {
   @Override
   public int hashCode() {
     return Objects.hash(
+        welshDescription,
         nameLine2,
         addressLine1,
         addressLine2,
@@ -427,6 +475,7 @@ public class LocalAuthority {
     StringBuilder sb = new StringBuilder();
     sb.append("class LocalAuthority {\n");
 
+    sb.append("    welshDescription: ").append(toIndentedString(welshDescription)).append("\n");
     sb.append("    nameLine2: ").append(toIndentedString(nameLine2)).append("\n");
     sb.append("    addressLine1: ").append(toIndentedString(addressLine1)).append("\n");
     sb.append("    addressLine2: ").append(toIndentedString(addressLine2)).append("\n");

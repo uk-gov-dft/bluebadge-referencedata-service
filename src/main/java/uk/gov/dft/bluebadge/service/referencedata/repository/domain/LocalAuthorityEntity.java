@@ -9,6 +9,7 @@ import org.apache.ibatis.type.Alias;
 @Data
 @Builder
 public class LocalAuthorityEntity {
+  private String welshDescription;
   private String shortCode;
   private String nameLine2;
   private String addressLine1;
@@ -24,6 +25,7 @@ public class LocalAuthorityEntity {
   private String contactUrl;
   private String emailAddress;
   private String badgePackType;
+  private Boolean paymentsEnabled;
   private BigDecimal badgeCost;
   private String differentServiceSignpostUrl;
 }
