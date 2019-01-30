@@ -10,7 +10,6 @@ import org.apache.ibatis.type.Alias;
 @Builder
 public class LocalAuthorityEntity {
   private String welshDescription;
-  private String shortCode;
   private String nameLine2;
   private String addressLine1;
   private String addressLine2;

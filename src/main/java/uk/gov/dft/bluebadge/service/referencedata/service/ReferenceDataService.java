@@ -1,5 +1,6 @@
 package uk.gov.dft.bluebadge.service.referencedata.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,9 @@ public class ReferenceDataService {
     return repository.findByDomain(domain.toUpperCase());
   }
 
-  public boolean update(String shortCode, LocalAuthority la) {
+  public boolean update(String shortCode, LocalAuthority la) throws JsonProcessingException {
     LocalAuthorityEntity entity =
         LocalAuthorityEntity.builder()
-            .shortCode(shortCode)
             .welshDescription(la.getWelshDescription())
             .nameLine2(la.getNameLine2())
             .addressLine1(la.getAddressLine1())
@@ -49,6 +49,6 @@ public class ReferenceDataService {
             .badgeCost(la.getBadgeCost())
             .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
             .build();
-    return repository.update(entity);
+    return repository.update(shortCode, entity);
   }
 }

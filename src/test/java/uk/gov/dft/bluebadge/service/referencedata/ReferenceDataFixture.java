@@ -51,6 +51,6 @@ public class ReferenceDataFixture {
           .nation(NATION)
           .country(COUNTRY)
           .postcode(POSTCODE)
-          .shortCode(SHORTCODE)
+          //.shortCode(SHORTCODE)
           .build();
 }

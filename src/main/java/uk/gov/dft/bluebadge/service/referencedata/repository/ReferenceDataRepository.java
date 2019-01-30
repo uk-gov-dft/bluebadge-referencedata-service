@@ -1,5 +1,7 @@
 package uk.gov.dft.bluebadge.service.referencedata.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Component;
 import uk.gov.dft.bluebadge.common.api.model.ErrorErrors;
 import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntity;
+import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntityUpdate;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 
 /** Provides CRUD operations on ReferenceDataEntity. */
@@ -15,10 +18,12 @@ import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDat
 @Slf4j
 public class ReferenceDataRepository {
   private final SqlSession sqlSession;
+  private ObjectMapper objectMapper;
 
   @Autowired
-  public ReferenceDataRepository(SqlSession sqlSession) {
+  public ReferenceDataRepository(SqlSession sqlSession, ObjectMapper objectMapper) {
     this.sqlSession = sqlSession;
+    this.objectMapper = objectMapper;
   }
 
   /**
@@ -36,23 +41,26 @@ public class ReferenceDataRepository {
     return referenceDataList;
   }
 
-  public boolean update(LocalAuthorityEntity la) {
+  public boolean update(String shortCode, LocalAuthorityEntity la) throws JsonProcessingException {
+    String body = objectMapper.writeValueAsString(la);
+    LocalAuthorityEntityUpdate localAuthorityUpdateEntity = new LocalAuthorityEntityUpdate();
+    localAuthorityUpdateEntity.setShortCode(shortCode);
+    localAuthorityUpdateEntity.setJson(body);
 
-    int result = sqlSession.update("updateLAMetaData", la);
+    int result = sqlSession.update("updateLAMetaData", localAuthorityUpdateEntity);
 
     if (result == 1) {
-      log.debug("Updated Local Authority with short code: {}.", la.getShortCode());
+      log.debug("Updated Local Authority with short code: {}.", shortCode);
       return true;
     }
 
     log.error(
-        "Attempt to update Local Authority with short code: {} that does not exist.",
-        la.getShortCode());
+        "Attempt to update Local Authority with short code: {} that does not exist.", shortCode);
     ErrorErrors error = new ErrorErrors();
     error
         .field("shortCode")
         .message("Invalid short code ")
-        .reason("There is no Local Authority with given short code:" + la.getShortCode());
+        .reason("There is no Local Authority with given short code:" + shortCode);
     throw new BadRequestException(error);
   }
 }

@@ -1,5 +1,6 @@
 package uk.gov.dft.bluebadge.service.referencedata.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.dft.bluebadge.common.api.model.CommonResponse;
 import uk.gov.dft.bluebadge.common.controller.AbstractController;
+import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.converter.ReferenceDataConverter;
@@ -57,8 +59,14 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
   public ResponseEntity<CommonResponse> update(
       @PathVariable(required = true) String shortCode,
       @Valid @RequestBody LocalAuthority localAuthority) {
-
-    service.update(shortCode, localAuthority);
-    return ResponseEntity.ok(new CommonResponse());
+    try {
+      service.update(shortCode, localAuthority);
+      return ResponseEntity.ok(new CommonResponse());
+    } catch (JsonProcessingException ex) {
+      uk.gov.dft.bluebadge.common.api.model.Error error =
+          new uk.gov.dft.bluebadge.common.api.model.Error();
+      error.setMessage("There was a problem converting the request to Json");
+      throw new BadRequestException(error);
+    }
   }
 }
