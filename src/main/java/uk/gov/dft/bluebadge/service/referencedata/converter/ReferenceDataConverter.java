@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import uk.gov.dft.bluebadge.common.converter.ToEntityConverter;
 import uk.gov.dft.bluebadge.common.converter.ToModelConverter;
+import uk.gov.dft.bluebadge.common.service.exception.InternalServerException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceData;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 
@@ -32,7 +33,7 @@ public class ReferenceDataConverter
         String metaData = objectMapper.writeValueAsString(model.getMetaData());
         entity.setMetaData(metaData);
       } catch (IOException e) {
-        log.error("Failed to convert meta data into a String", e);
+        throw new InternalServerException(e);
       }
     }
     return entity;
@@ -47,7 +48,7 @@ public class ReferenceDataConverter
         Map map = objectMapper.readValue(entity.getMetaData(), Map.class);
         model.setMetaData(map);
       } catch (IOException e) {
-        log.error("Failed to load meta data into a Map", e);
+        throw new InternalServerException(e);
       }
     }
     return model;
