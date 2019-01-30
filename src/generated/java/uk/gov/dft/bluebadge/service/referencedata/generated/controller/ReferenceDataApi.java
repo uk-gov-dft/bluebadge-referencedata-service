@@ -69,7 +69,7 @@ public interface ReferenceDataApi {
     produces = {"application/json"},
     method = RequestMethod.PUT
   )
-  ResponseEntity<CommonResponse> updateLocalAuthority(
+  ResponseEntity<Void> updateLocalAuthority(
       @ApiParam(value = "Local Authority short code", required = true) @PathVariable("shortCode")
           String shortCode,
       @ApiParam(value = "Local Authority meta info to update", required = true) @Valid @RequestBody
@@ -99,7 +99,7 @@ public interface ReferenceDataApi {
     produces = {"application/json"},
     method = RequestMethod.PUT
   )
-  ResponseEntity<CommonResponse> updateLocalCouncil(
+  ResponseEntity<Void> updateLocalCouncil(
       @ApiParam(value = "Local Council short code", required = true) @PathVariable("shortCode")
           String shortCode,
       @ApiParam(value = "Local Council data", required = true) @Valid @RequestBody

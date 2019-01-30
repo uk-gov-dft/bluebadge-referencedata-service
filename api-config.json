@@ -54,10 +54,7 @@
           } ],
           "responses" : {
             "200" : {
-              "description" : "Ok.",
-              "schema" : {
-                "$ref" : "#/definitions/CommonResponse"
-              }
+              "description" : "Ok."
             },
             "400" : {
               "description" : "Bad request",
@@ -66,10 +63,7 @@
               }
             },
             "404" : {
-              "description" : "Local Authority not found.",
-              "schema" : {
-                "$ref" : "#/definitions/CommonResponse"
-              }
+              "description" : "Local Authority not found."
             }
           }
         }
@@ -96,10 +90,7 @@
           "operationId" : "updateLocalAuthority",
           "responses" : {
             "200" : {
-              "description" : "Ok.",
-              "schema" : {
-                "$ref" : "#/definitions/CommonResponse"
-              }
+              "description" : "Ok."
             },
             "400" : {
               "description" : "Bad request",
@@ -108,10 +99,7 @@
               }
             },
             "404" : {
-              "description" : "Local Authority not found.",
-              "schema" : {
-                "$ref" : "#/definitions/CommonResponse"
-              }
+              "description" : "Local Authority not found."
             }
           }
         }
@@ -346,7 +334,6 @@
     "host" : "virtserver.swaggerhub.com",
     "basePath" : "/uk-gov-dft/reference-dataservice/1.0.0"
   },
-  "options" : {
     "java8" : true,
     "sortParamsByRequiredFlag" : false,
     "modelPackage" : "uk.gov.dft.bluebadge.model.referencedata.generated",

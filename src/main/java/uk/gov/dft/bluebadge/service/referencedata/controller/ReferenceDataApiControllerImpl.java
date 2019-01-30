@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.dft.bluebadge.common.api.model.CommonResponse;
 import uk.gov.dft.bluebadge.common.controller.AbstractController;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
@@ -55,8 +54,8 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
 
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
   @Override
-  public ResponseEntity<CommonResponse> updateLocalAuthority(
-      @PathVariable(required = true) String shortCode,
+  public ResponseEntity<Void> updateLocalAuthority(
+      @PathVariable("shortCode") String shortCode,
       @Valid @RequestBody LocalAuthority localAuthority) {
     if (service.updateLocalAuthority(shortCode, localAuthority)) {
       return ResponseEntity.ok().build();
@@ -67,7 +66,7 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
 
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
   @Override
-  public ResponseEntity<CommonResponse> updateLocalCouncil(
+  public ResponseEntity<Void> updateLocalCouncil(
       @PathVariable("shortCode") String shortCode, @Valid @RequestBody LocalCouncil localCouncil) {
     if (service.updateLocalCouncil(shortCode, localCouncil)) {
       return ResponseEntity.ok().build();
