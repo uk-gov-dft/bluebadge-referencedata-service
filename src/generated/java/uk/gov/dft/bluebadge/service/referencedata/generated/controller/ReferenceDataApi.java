@@ -89,7 +89,7 @@ public interface ReferenceDataApi {
 
   @ApiOperation(
     value = "Update Local Authority data",
-    nickname = "update",
+    nickname = "updateLocalAuthority",
     notes = "",
     response = CommonResponse.class,
     tags = {
@@ -112,10 +112,10 @@ public interface ReferenceDataApi {
     produces = {"application/json"},
     method = RequestMethod.PUT
   )
-  default ResponseEntity<CommonResponse> update(
+  default ResponseEntity<CommonResponse> updateLocalAuthority(
       @ApiParam(value = "Local Authority short code", required = true) @PathVariable("shortCode")
           String shortCode,
-      @ApiParam(value = "Local Authority meta info to update", required = true) @Valid @RequestBody
+      @ApiParam(value = "Local Authority meta info to updateLocalAuthority", required = true) @Valid @RequestBody
           LocalAuthority localAuthority) {
     if (getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
       if (getAcceptHeader().get().contains("application/json")) {

@@ -29,6 +29,7 @@ public class ReferenceDataFixture {
   public static final String NATION = "ENG";
   public static final String COUNTRY = "United Kingdom";
   public static final String POSTCODE = "ABC123";
+  public static final String LOCAL_AUTHORITY_DESCRIPTION = "North Middlelandshire";
 
   // LocalAuthority
   public static LocalAuthority LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY =

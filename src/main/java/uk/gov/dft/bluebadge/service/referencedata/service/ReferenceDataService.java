@@ -1,7 +1,6 @@
 package uk.gov.dft.bluebadge.service.referencedata.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +9,8 @@ import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntity;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,28 +28,28 @@ public class ReferenceDataService {
     return repository.findByDomain(domain.toUpperCase());
   }
 
-  public boolean update(String shortCode, LocalAuthority la) throws JsonProcessingException {
+  public boolean updateLocalAuthority(String shortCode, LocalAuthority la) {
     LocalAuthorityEntity entity =
-        LocalAuthorityEntity.builder()
-            .welshDescription(la.getWelshDescription())
-            .nameLine2(la.getNameLine2())
-            .addressLine1(la.getAddressLine1())
-            .addressLine2(la.getAddressLine2())
-            .addressLine3(la.getAddressLine3())
-            .addressLine4(la.getAddressLine4())
-            .town(la.getTown())
-            .county(la.getCounty())
-            .country(la.getCountry())
-            .postcode(la.getPostcode())
-            .nation(la.getNation())
-            .contactNumber(la.getContactNumber())
-            .contactUrl(la.getContactUrl())
-            .emailAddress(la.getEmailAddress())
-            .badgePackType(la.getBadgePackType())
-            .paymentsEnabled(la.getPaymentsEnabled())
-            .badgeCost(la.getBadgeCost())
-            .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
-            .build();
-    return repository.update(shortCode, entity);
+      LocalAuthorityEntity.builder()
+        .welshDescription(la.getWelshDescription())
+        .nameLine2(la.getNameLine2())
+        .addressLine1(la.getAddressLine1())
+        .addressLine2(la.getAddressLine2())
+        .addressLine3(la.getAddressLine3())
+        .addressLine4(la.getAddressLine4())
+        .town(la.getTown())
+        .county(la.getCounty())
+        .country(la.getCountry())
+        .postcode(la.getPostcode())
+        .nation(la.getNation())
+        .contactNumber(la.getContactNumber())
+        .contactUrl(la.getContactUrl())
+        .emailAddress(la.getEmailAddress())
+        .badgePackType(la.getBadgePackType())
+        .paymentsEnabled(la.getPaymentsEnabled())
+        .badgeCost(la.getBadgeCost())
+        .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
+        .build();
+    return 1 == repository.updateLocalAuthority(shortCode, la.getDescription(), entity);
   }
 }

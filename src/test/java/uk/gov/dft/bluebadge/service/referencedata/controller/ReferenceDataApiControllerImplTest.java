@@ -57,10 +57,10 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
             .contentType(MediaType.APPLICATION_JSON);
-    when(service.update(any(), any())).thenReturn(true);
+    when(service.updateLocalAuthority(any(), any())).thenReturn(true);
 
     mvc.perform(builder).andExpect(status().isOk());
-    verify(service, times(1)).update(any(), any());
+    verify(service, times(1)).updateLocalAuthority(any(), any());
   }
 
   @Test
@@ -74,7 +74,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
     mvc.perform(builder).andExpect(status().isBadRequest());
 
-    verify(service, never()).update(any(), any());
+    verify(service, never()).updateLocalAuthority(any(), any());
   }
 
   @Test
@@ -89,7 +89,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
     mvc.perform(builder).andExpect(status().isBadRequest());
 
-    verify(service, never()).update(any(), any());
+    verify(service, never()).updateLocalAuthority(any(), any());
   }
 
   @Test
@@ -109,11 +109,11 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
         .reason("There is no Local Authority with given short code: ABC");
 
     BadRequestException e = new BadRequestException(error);
-    when(service.update(any(), any())).thenThrow(e);
+    when(service.updateLocalAuthority(any(), any())).thenThrow(e);
 
     ResultActions result = mvc.perform(builder);
     result.andExpect(status().isBadRequest());
 
-    verify(service, times(1)).update(any(), any());
+    verify(service, times(1)).updateLocalAuthority(any(), any());
   }
 }

@@ -17,9 +17,10 @@
         WHERE data_domain_id = #{domainId}
     </select>
 
-    <update id="updateLAMetaData" parameterType="LocalAuthorityEntityUpdate">
+    <update id="updateLAMetaData" parameterType="LocalAuthorityEntityUpdateParams">
         UPDATE reference_data
         SET
+        description = #{description},
         meta_data = meta_data::JSONB || #{localAuthorityInJson}::JSONB
         WHERE data_group_id = 'LA' AND code = #{shortCode}
     </update>

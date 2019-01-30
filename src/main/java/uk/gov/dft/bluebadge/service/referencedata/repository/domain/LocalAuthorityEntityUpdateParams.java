@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class LocalAuthorityEntityUpdate {
+public class LocalAuthorityEntityUpdateParams {
   String shortCode;
+  String description;
   String localAuthorityInJson;
 }
