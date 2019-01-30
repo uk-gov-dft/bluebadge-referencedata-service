@@ -72,7 +72,6 @@ public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
         new ReferenceDataRepository(sqlSessionMock, objectMapperMock);
     when(objectMapperMock.writeValueAsString(any())).thenThrow(JsonProcessingException.class);
 
-    //when(sqlSessionMock.update(any(), any())).thenReturn(0);
     repository.updateLocalAuthority(
         SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
 
