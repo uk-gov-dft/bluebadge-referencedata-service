@@ -3,8 +3,6 @@ package uk.gov.dft.bluebadge.service.referencedata.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
-import java.util.List;
-import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +12,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.dft.bluebadge.common.api.model.CommonResponse;
+import uk.gov.dft.bluebadge.common.api.model.Error;
 import uk.gov.dft.bluebadge.common.controller.AbstractController;
 import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.converter.ReferenceDataConverter;
 import uk.gov.dft.bluebadge.service.referencedata.generated.controller.ReferenceDataApi;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ReferenceDataApiControllerImpl extends AbstractController implements ReferenceDataApi {
@@ -31,7 +34,7 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
 
   @SuppressWarnings("unused")
   @Autowired
-  public ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
+  ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
     this.service = service;
     converter = new ReferenceDataConverter(objectMapper);
   }
@@ -56,17 +59,27 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
 
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
   @Override
-  public ResponseEntity<CommonResponse> update(
-      @PathVariable(required = true) String shortCode,
+  public ResponseEntity<CommonResponse> updateLocalAuthority(
+      @PathVariable("shortCode") String shortCode,
       @Valid @RequestBody LocalAuthority localAuthority) {
     try {
-      service.update(shortCode, localAuthority);
+      service.updateLocalAuthority(shortCode, localAuthority);
       return ResponseEntity.ok(new CommonResponse());
     } catch (JsonProcessingException ex) {
-      uk.gov.dft.bluebadge.common.api.model.Error error =
-          new uk.gov.dft.bluebadge.common.api.model.Error();
+      Error error = new Error();
       error.setMessage("There was a problem converting the request to Json");
       throw new BadRequestException(error);
+    }
+  }
+
+  @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
+  @Override
+  public ResponseEntity<CommonResponse> updateLocalCouncil(
+      @PathVariable("shortCode") String shortCode, @Valid @RequestBody LocalCouncil localCouncil) {
+    if (service.updateLocalCouncil(shortCode, localCouncil)) {
+      return ResponseEntity.ok().build();
+    } else {
+      return ResponseEntity.notFound().build();
     }
   }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntity;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
@@ -27,7 +28,7 @@ public class ReferenceDataService {
     return repository.findByDomain(domain.toUpperCase());
   }
 
-  public boolean update(String shortCode, LocalAuthority la) throws JsonProcessingException {
+  public boolean updateLocalAuthority(String shortCode, LocalAuthority la) throws JsonProcessingException {
     LocalAuthorityEntity entity =
         LocalAuthorityEntity.builder()
             .welshDescription(la.getWelshDescription())
@@ -50,5 +51,10 @@ public class ReferenceDataService {
             .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
             .build();
     return repository.update(shortCode, entity);
+  }
+
+  public boolean updateLocalCouncil(String shortCode, LocalCouncil localCouncil) {
+    int result = repository.updateLocalCouncil(shortCode, localCouncil);
+    return result == 1;
   }
 }
