@@ -12,6 +12,6 @@ Feature: Verify LAs metadata could be updated
 
   Scenario: Verify update metadata for LA
     Given path '/reference-data/authorities/DELETE_1'
-    And request {"postcode": "ABC123", "nation": "SCO", "country": "United Kingdom", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
+    And request {"description": "a description", "postcode": "ABC123", "nation": "SCO", "country": "United Kingdom", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
     When method PUT
     Then status 403

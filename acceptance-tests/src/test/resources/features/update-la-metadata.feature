@@ -12,10 +12,12 @@ Feature: Verify LAs metadata could be updated
 
   Scenario: Verify update metadata for LA
     Given path '/reference-data/authorities/DELETE_1'
-    And request {"postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
+    And request {"description": "local authority", "postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
     When method PUT
     Then status 200
  	* def updatedLA = db.readValueAsString("select meta_data from referencedata.reference_data la where la.data_group_id = 'LA' and la.code = 'DELETE_1'")
+    * def updatedLADescription = db.readValueAsString("select description from referencedata.reference_data la where la.data_group_id = 'LA' and la.code = 'DELETE_1'")
+    * match updatedLADescription contains 'local authority'
     * match updatedLA.differentServiceSignpostUrl contains 'http://new_url.com'
     * match updatedLA.postcode contains 'ABC123'
     * match updatedLA.nation contains 'SCO'
@@ -25,10 +27,12 @@ Feature: Verify LAs metadata could be updated
 
    Scenario: Verify upsert metadata for LA
     Given path '/reference-data/authorities/DELETE_2'
-     And request {"postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
+     And request {"description": "local authority", "postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com"}
     When method PUT
     Then status 200
  	* def updatedLA = db.readValueAsString("select meta_data from referencedata.reference_data la where la.data_group_id = 'LA' and la.code = 'DELETE_2'")
+     * def updatedLADescription = db.readValueAsString("select description from referencedata.reference_data la where la.data_group_id = 'LA' and la.code = 'DELETE_1'")
+     * match updatedLADescription contains 'local authority'
      * match updatedLA.differentServiceSignpostUrl contains 'http://new_url.com'
      * match updatedLA.postcode contains 'ABC123'
      * match updatedLA.nation contains 'SCO'

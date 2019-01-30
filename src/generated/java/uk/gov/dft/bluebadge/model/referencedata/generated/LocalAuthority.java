@@ -82,6 +82,7 @@ public class LocalAuthority {
    * @return description
    */
   @ApiModelProperty(value = "description")
+  @NotBlank
   public String getDescription() {
     return description;
   }
