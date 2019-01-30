@@ -1,15 +1,16 @@
 package uk.gov.dft.bluebadge.service.referencedata.service;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
@@ -51,7 +52,7 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
   }
 
   @Test
-  public void update_shouldReturnTrue_WhenUpdateIsSuccessful() throws JsonProcessingException {
+  public void updateLocalAuthority_shouldReturnTrue_WhenUpdateIsSuccessful() {
     when(repositoryMock.updateLocalAuthority(
             SHORTCODE, null, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenReturn(1);
@@ -59,13 +60,23 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
         service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
   }
 
-  @Test(expected = BadRequestException.class)
-  public void update_shouldReturnBadRequestException_whenUpdateFails()
-      throws JsonProcessingException {
+  @Test
+  public void updateLocalAuthority_shouldReturn0_whenUpdateFails() {
     when(repositoryMock.updateLocalAuthority(
             SHORTCODE, null, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
-        .thenThrow(BadRequestException.class);
+        .thenReturn(0);
     Assert.assertFalse(
         service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
+  }
+
+  @Test
+  public void updateLocalCouncil() {
+    // Success path
+    when(repositoryMock.updateLocalCouncil(any(), any())).thenReturn(1);
+    assertThat(service.updateLocalCouncil("ANGL", new LocalCouncil())).isTrue();
+
+    // Fail path
+    when(repositoryMock.updateLocalCouncil(any(), any())).thenReturn(0);
+    assertThat(service.updateLocalCouncil("ANGL", new LocalCouncil())).isFalse();
   }
 }

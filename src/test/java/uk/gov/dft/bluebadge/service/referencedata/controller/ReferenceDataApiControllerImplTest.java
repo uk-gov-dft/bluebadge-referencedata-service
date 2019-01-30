@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import uk.gov.dft.bluebadge.common.api.model.ErrorErrors;
 import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
@@ -26,7 +27,7 @@ import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
 public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Mock ReferenceDataService service;
-  ObjectMapper objectMapper = new ObjectMapper();
+  private ObjectMapper objectMapper = new ObjectMapper();
 
   private MockMvc mvc;
 
@@ -115,5 +116,62 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
     result.andExpect(status().isBadRequest());
 
     verify(service, times(1)).updateLocalAuthority(any(), any());
+  }
+
+  @Test
+  @SneakyThrows
+  public void updateLocalCouncil_success() {
+
+    LocalCouncil lc = new LocalCouncil();
+    lc.setDescription("Norm description");
+    lc.setWelshDescription("Welsh description");
+    when(service.updateLocalCouncil("ABC", lc)).thenReturn(true);
+
+    RequestBuilder builder =
+        MockMvcRequestBuilders.put("/reference-data/councils/ABC")
+            .content(objectMapper.writeValueAsString(lc))
+            .contentType(MediaType.APPLICATION_JSON);
+
+    mvc.perform(builder).andExpect(status().isOk());
+
+    verify(service, times(1)).updateLocalCouncil("ABC", lc);
+  }
+
+  @Test
+  @SneakyThrows
+  public void updateLocalCouncil_notFound() {
+
+    LocalCouncil lc = new LocalCouncil();
+    lc.setDescription("Norm description");
+    lc.setWelshDescription("Welsh description");
+    when(service.updateLocalCouncil("ABC", lc)).thenReturn(false);
+
+    RequestBuilder builder =
+        MockMvcRequestBuilders.put("/reference-data/councils/ABC")
+            .content(objectMapper.writeValueAsString(lc))
+            .contentType(MediaType.APPLICATION_JSON);
+
+    mvc.perform(builder).andExpect(status().isNotFound());
+
+    verify(service, times(1)).updateLocalCouncil("ABC", lc);
+  }
+
+  @Test
+  @SneakyThrows
+  public void updateLocalCouncil_badRequest() {
+
+    LocalCouncil lc = new LocalCouncil();
+    lc.setDescription(null); // A NotNull property.
+
+    when(service.updateLocalCouncil("ABC", lc)).thenReturn(false);
+
+    RequestBuilder builder =
+        MockMvcRequestBuilders.put("/reference-data/councils/ABC")
+            .content(objectMapper.writeValueAsString(lc))
+            .contentType(MediaType.APPLICATION_JSON);
+
+    mvc.perform(builder).andExpect(status().isBadRequest());
+
+    verify(service, times(0)).updateLocalCouncil(any(), any());
   }
 }
