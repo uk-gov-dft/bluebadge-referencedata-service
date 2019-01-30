@@ -53,7 +53,7 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
   @Test
   public void update_shouldReturnTrue_WhenUpdateIsSuccessful() throws JsonProcessingException {
     when(repositoryMock.updateLocalAuthority(
-            SHORTCODE, null, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+            SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenReturn(1);
     Assert.assertTrue(
         service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
@@ -63,7 +63,7 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
   public void update_shouldReturnBadRequestException_whenUpdateFails()
       throws JsonProcessingException {
     when(repositoryMock.updateLocalAuthority(
-            SHORTCODE, null, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+            SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenThrow(BadRequestException.class);
     Assert.assertFalse(
         service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));

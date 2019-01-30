@@ -25,6 +25,7 @@ public class ReferenceDataFixture {
 
   // Field constants
   public static final String SHORTCODE = "ABC";
+  public static final String DESCRIPTION = "local authority description";
   public static final String CONTACT_URL = "http://localhost";
   public static final String NATION = "ENG";
   public static final String COUNTRY = "United Kingdom";
@@ -34,6 +35,7 @@ public class ReferenceDataFixture {
   // LocalAuthority
   public static LocalAuthority LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY =
       new LocalAuthority()
+          .description(DESCRIPTION)
           .contactUrl(CONTACT_URL)
           .nation(NATION)
           .country(COUNTRY)
@@ -42,6 +44,7 @@ public class ReferenceDataFixture {
       new LocalAuthority().contactUrl(CONTACT_URL).nation(NATION).country(COUNTRY).postcode("");
   public static LocalAuthority LOCAL_AUTHORITY_MANDATORY_VALUES_PLUS_INVALID_VALUE =
       new LocalAuthority()
+          .description(DESCRIPTION)
           .contactUrl(CONTACT_URL)
           .nation(NATION)
           .country(COUNTRY)
