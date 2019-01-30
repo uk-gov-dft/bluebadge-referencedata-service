@@ -2,6 +2,7 @@ package uk.gov.dft.bluebadge.service.referencedata.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,7 @@ import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthori
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntityUpdateParams;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 
-import java.util.List;
-
-/**
- * Provides CRUD operations on ReferenceDataEntity.
- */
+/** Provides CRUD operations on ReferenceDataEntity. */
 @Component
 @Slf4j
 public class ReferenceDataRepository {
@@ -48,11 +45,11 @@ public class ReferenceDataRepository {
     try {
       String localAuthorityEntityInJson = objectMapper.writeValueAsString(la);
       LocalAuthorityEntityUpdateParams localAuthorityUpdateEntity =
-        LocalAuthorityEntityUpdateParams.builder()
-          .shortCode(shortCode)
-          .description(description)
-          .localAuthorityInJson(localAuthorityEntityInJson)
-          .build();
+          LocalAuthorityEntityUpdateParams.builder()
+              .shortCode(shortCode)
+              .description(description)
+              .localAuthorityInJson(localAuthorityEntityInJson)
+              .build();
       return sqlSession.update("updateLAMetaData", localAuthorityUpdateEntity);
     } catch (JsonProcessingException ex) {
       Error error = new Error();

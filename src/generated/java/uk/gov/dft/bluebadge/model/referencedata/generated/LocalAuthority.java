@@ -2,19 +2,16 @@ package uk.gov.dft.bluebadge.model.referencedata.generated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.URL;
-import org.springframework.validation.annotation.Validated;
-
+import java.math.BigDecimal;
+import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
-import java.util.Objects;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.validation.annotation.Validated;
 
-/**
- * LocalAuthority
- */
+/** LocalAuthority */
 @Validated
 public class LocalAuthority {
   @JsonProperty("description")
@@ -454,49 +451,49 @@ public class LocalAuthority {
     }
     LocalAuthority localAuthority = (LocalAuthority) o;
     return Objects.equals(this.description, localAuthority.description)
-      && Objects.equals(this.welshDescription, localAuthority.welshDescription)
-      && Objects.equals(this.nameLine2, localAuthority.nameLine2)
-      && Objects.equals(this.addressLine1, localAuthority.addressLine1)
-      && Objects.equals(this.addressLine2, localAuthority.addressLine2)
-      && Objects.equals(this.addressLine3, localAuthority.addressLine3)
-      && Objects.equals(this.addressLine4, localAuthority.addressLine4)
-      && Objects.equals(this.town, localAuthority.town)
-      && Objects.equals(this.county, localAuthority.county)
-      && Objects.equals(this.postcode, localAuthority.postcode)
-      && Objects.equals(this.country, localAuthority.country)
-      && Objects.equals(this.nation, localAuthority.nation)
-      && Objects.equals(this.contactNumber, localAuthority.contactNumber)
-      && Objects.equals(this.contactUrl, localAuthority.contactUrl)
-      && Objects.equals(this.emailAddress, localAuthority.emailAddress)
-      && Objects.equals(this.badgePackType, localAuthority.badgePackType)
-      && Objects.equals(this.paymentsEnabled, localAuthority.paymentsEnabled)
-      && Objects.equals(this.badgeCost, localAuthority.badgeCost)
-      && Objects.equals(
-      this.differentServiceSignpostUrl, localAuthority.differentServiceSignpostUrl);
+        && Objects.equals(this.welshDescription, localAuthority.welshDescription)
+        && Objects.equals(this.nameLine2, localAuthority.nameLine2)
+        && Objects.equals(this.addressLine1, localAuthority.addressLine1)
+        && Objects.equals(this.addressLine2, localAuthority.addressLine2)
+        && Objects.equals(this.addressLine3, localAuthority.addressLine3)
+        && Objects.equals(this.addressLine4, localAuthority.addressLine4)
+        && Objects.equals(this.town, localAuthority.town)
+        && Objects.equals(this.county, localAuthority.county)
+        && Objects.equals(this.postcode, localAuthority.postcode)
+        && Objects.equals(this.country, localAuthority.country)
+        && Objects.equals(this.nation, localAuthority.nation)
+        && Objects.equals(this.contactNumber, localAuthority.contactNumber)
+        && Objects.equals(this.contactUrl, localAuthority.contactUrl)
+        && Objects.equals(this.emailAddress, localAuthority.emailAddress)
+        && Objects.equals(this.badgePackType, localAuthority.badgePackType)
+        && Objects.equals(this.paymentsEnabled, localAuthority.paymentsEnabled)
+        && Objects.equals(this.badgeCost, localAuthority.badgeCost)
+        && Objects.equals(
+            this.differentServiceSignpostUrl, localAuthority.differentServiceSignpostUrl);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-      description,
-      welshDescription,
-      nameLine2,
-      addressLine1,
-      addressLine2,
-      addressLine3,
-      addressLine4,
-      town,
-      county,
-      postcode,
-      country,
-      nation,
-      contactNumber,
-      contactUrl,
-      emailAddress,
-      badgePackType,
-      paymentsEnabled,
-      badgeCost,
-      differentServiceSignpostUrl);
+        description,
+        welshDescription,
+        nameLine2,
+        addressLine1,
+        addressLine2,
+        addressLine3,
+        addressLine4,
+        town,
+        county,
+        postcode,
+        country,
+        nation,
+        contactNumber,
+        contactUrl,
+        emailAddress,
+        badgePackType,
+        paymentsEnabled,
+        badgeCost,
+        differentServiceSignpostUrl);
   }
 
   @Override
@@ -522,8 +519,8 @@ public class LocalAuthority {
     sb.append("    paymentsEnabled: ").append(toIndentedString(paymentsEnabled)).append("\n");
     sb.append("    badgeCost: ").append(toIndentedString(badgeCost)).append("\n");
     sb.append("    differentServiceSignpostUrl: ")
-      .append(toIndentedString(differentServiceSignpostUrl))
-      .append("\n");
+        .append(toIndentedString(differentServiceSignpostUrl))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
