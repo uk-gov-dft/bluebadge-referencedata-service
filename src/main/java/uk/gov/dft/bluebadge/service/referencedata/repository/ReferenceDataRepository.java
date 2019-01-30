@@ -18,7 +18,7 @@ import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDat
 @Slf4j
 public class ReferenceDataRepository {
   private final SqlSession sqlSession;
-  private ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
   @Autowired
   public ReferenceDataRepository(SqlSession sqlSession, ObjectMapper objectMapper) {
@@ -42,10 +42,12 @@ public class ReferenceDataRepository {
   }
 
   public boolean update(String shortCode, LocalAuthorityEntity la) throws JsonProcessingException {
-    String body = objectMapper.writeValueAsString(la);
-    LocalAuthorityEntityUpdate localAuthorityUpdateEntity = new LocalAuthorityEntityUpdate();
-    localAuthorityUpdateEntity.setShortCode(shortCode);
-    localAuthorityUpdateEntity.setJson(body);
+    String localAuthorityEntityInJson = objectMapper.writeValueAsString(la);
+    LocalAuthorityEntityUpdate localAuthorityUpdateEntity =
+        LocalAuthorityEntityUpdate.builder()
+            .shortCode(shortCode)
+            .localAuthorityInJson(localAuthorityEntityInJson)
+            .build();
 
     int result = sqlSession.update("updateLAMetaData", localAuthorityUpdateEntity);
 
