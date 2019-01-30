@@ -2,6 +2,7 @@ package uk.gov.dft.bluebadge.service.referencedata.service;
 
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,15 +51,21 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
   }
 
   @Test
-  public void update_shouldReturnTrue_WhenUpdateIsSuccessful() {
-    when(repositoryMock.update(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY)).thenReturn(true);
-    Assert.assertTrue(service.update(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
+  public void update_shouldReturnTrue_WhenUpdateIsSuccessful() throws JsonProcessingException {
+    when(repositoryMock.updateLocalAuthority(
+            SHORTCODE, null, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+        .thenReturn(1);
+    Assert.assertTrue(
+        service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
   }
 
   @Test(expected = BadRequestException.class)
-  public void update_shouldReturnBadRequestException_whenUpdateFails() {
-    when(repositoryMock.update(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+  public void update_shouldReturnBadRequestException_whenUpdateFails()
+      throws JsonProcessingException {
+    when(repositoryMock.updateLocalAuthority(
+            SHORTCODE, null, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenThrow(BadRequestException.class);
-    Assert.assertFalse(service.update(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
+    Assert.assertFalse(
+        service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
   }
 }

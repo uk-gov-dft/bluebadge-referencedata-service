@@ -14,6 +14,9 @@ import org.springframework.validation.annotation.Validated;
 /** LocalAuthority */
 @Validated
 public class LocalAuthority {
+  @JsonProperty("description")
+  private String description = null;
+
   @JsonProperty("welshDescription")
   private String welshDescription = null;
 
@@ -74,6 +77,25 @@ public class LocalAuthority {
   }
 
   /**
+   * description
+   *
+   * @return description
+   */
+  @ApiModelProperty(value = "description")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public LocalAuthority description(String description) {
+    this.description = description;
+    return this;
+  }
+
+  /**
    * welsh description
    *
    * @return welshDescription
@@ -83,7 +105,7 @@ public class LocalAuthority {
     return welshDescription;
   }
 
-  public void seWelshDescription(String welshDescription) {
+  public void setWelshDescription(String welshDescription) {
     this.welshDescription = welshDescription;
   }
 
@@ -428,7 +450,8 @@ public class LocalAuthority {
       return false;
     }
     LocalAuthority localAuthority = (LocalAuthority) o;
-    return Objects.equals(this.welshDescription, localAuthority.welshDescription)
+    return Objects.equals(this.description, localAuthority.description)
+        && Objects.equals(this.welshDescription, localAuthority.welshDescription)
         && Objects.equals(this.nameLine2, localAuthority.nameLine2)
         && Objects.equals(this.addressLine1, localAuthority.addressLine1)
         && Objects.equals(this.addressLine2, localAuthority.addressLine2)
@@ -452,6 +475,7 @@ public class LocalAuthority {
   @Override
   public int hashCode() {
     return Objects.hash(
+        description,
         welshDescription,
         nameLine2,
         addressLine1,
@@ -476,6 +500,7 @@ public class LocalAuthority {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class LocalAuthority {\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    welshDescription: ").append(toIndentedString(welshDescription)).append("\n");
     sb.append("    nameLine2: ").append(toIndentedString(nameLine2)).append("\n");
     sb.append("    addressLine1: ").append(toIndentedString(addressLine1)).append("\n");

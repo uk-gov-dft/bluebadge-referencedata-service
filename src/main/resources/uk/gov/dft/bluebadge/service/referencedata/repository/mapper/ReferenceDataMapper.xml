@@ -20,7 +20,8 @@
     <update id="updateLAMetaData" parameterType="LocalAuthorityEntityUpdateParams">
         UPDATE reference_data
         SET
-        meta_data = meta_data::JSONB || #{json}::JSONB
+        description = #{description},
+        meta_data = meta_data::JSONB || #{localAuthorityInJson}::JSONB
         WHERE data_group_id = 'LA' AND code = #{shortCode}
     </update>
 
