@@ -124,6 +124,9 @@
       "LocalAuthority" : {
         "type" : "object",
         "properties" : {
+          "description" : {
+            "type" : "string"
+          },
           "welshDescription" : {
             "type" : "string"
           },
@@ -213,7 +216,7 @@
             "example" : "http://tiny.url?q=ab63fg"
           }
         },
-        "required" : [ "postcode", "country", "nation", "contactUrl" ]
+        "required" : [ "description", "postcode", "country", "nation", "contactUrl" ]
       },
       "ReferenceDataResponse" : {
         "type" : "object",
