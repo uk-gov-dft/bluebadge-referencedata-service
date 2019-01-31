@@ -28,7 +28,7 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
 
   @SuppressWarnings("unused")
   @Autowired
-  public ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
+  ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
     this.service = service;
     converter = new ReferenceDataConverter(objectMapper);
   }
@@ -54,12 +54,8 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
   @Override
   public ResponseEntity<Void> updateLocalAuthority(
-      @PathVariable(required = true) String shortCode,
-      @Valid @RequestBody LocalAuthority localAuthority) {
-    if (service.updateLocalAuthority(shortCode, localAuthority)) {
-      return ResponseEntity.ok().build();
-    } else {
-      return ResponseEntity.notFound().build();
-    }
+      @PathVariable() String shortCode, @Valid @RequestBody LocalAuthority localAuthority) {
+    service.updateLocalAuthority(shortCode, localAuthority);
+    return ResponseEntity.ok().build();
   }
 }

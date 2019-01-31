@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
+import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
@@ -55,17 +55,16 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
     when(repositoryMock.updateLocalAuthority(
             SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenReturn(1);
-    Assert.assertTrue(
-        service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
+
+    service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
   }
 
-  @Test(expected = BadRequestException.class)
-  public void update_shouldReturnBadRequestException_whenUpdateFails()
-      throws JsonProcessingException {
+  @Test(expected = NotFoundException.class)
+  public void update_shouldReturnBadRequestException_whenUpdateFails() {
     when(repositoryMock.updateLocalAuthority(
             SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
-        .thenThrow(BadRequestException.class);
-    Assert.assertFalse(
-        service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
+        .thenReturn(0);
+
+    service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
   }
 }
