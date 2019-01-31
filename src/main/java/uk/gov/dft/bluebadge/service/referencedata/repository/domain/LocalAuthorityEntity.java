@@ -23,7 +23,7 @@ public class LocalAuthorityEntity {
   private String contactNumber;
   private String contactUrl;
   private String emailAddress;
-  private String badgePackType;
+  private String clockType;
   private Boolean paymentsEnabled;
   private BigDecimal badgeCost;
   private String differentServiceSignpostUrl;
