@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
@@ -27,7 +28,7 @@ public class ReferenceDataService {
     return repository.findByDomain(domain.toUpperCase());
   }
 
-  public boolean updateLocalAuthority(String shortCode, LocalAuthority la) {
+  public void updateLocalAuthority(String shortCode, LocalAuthority la) {
     LocalAuthorityEntity entity =
         LocalAuthorityEntity.builder()
             .welshDescription(la.getWelshDescription())
@@ -49,11 +50,15 @@ public class ReferenceDataService {
             .badgeCost(la.getBadgeCost())
             .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
             .build();
-    return 1 == repository.updateLocalAuthority(shortCode, la.getDescription(), entity);
+    int updates = repository.updateLocalAuthority(shortCode, la.getDescription(), entity);
+    if (updates == 0) {
+      throw new NotFoundException("LA", NotFoundException.Operation.UPDATE);
+    }
   }
 
-  public boolean updateLocalCouncil(String shortCode, LocalCouncil localCouncil) {
-    int result = repository.updateLocalCouncil(shortCode, localCouncil);
-    return result == 1;
+  public void updateLocalCouncil(String shortCode, LocalCouncil localCouncil) {
+    if (repository.updateLocalCouncil(shortCode, localCouncil) == 0) {
+      throw new NotFoundException("LC", NotFoundException.Operation.UPDATE);
+    }
   }
 }

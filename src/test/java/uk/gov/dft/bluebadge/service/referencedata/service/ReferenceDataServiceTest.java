@@ -1,6 +1,5 @@
 package uk.gov.dft.bluebadge.service.referencedata.service;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -10,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
@@ -56,27 +56,28 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
     when(repositoryMock.updateLocalAuthority(
             SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenReturn(1);
-    Assert.assertTrue(
-        service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
+
+    service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
   }
 
-  @Test
-  public void updateLocalAuthority_shouldReturn0_whenUpdateFails() {
+  @Test(expected = NotFoundException.class)
+  public void update_shouldReturnBadRequestException_whenUpdateFails() {
     when(repositoryMock.updateLocalAuthority(
-            SHORTCODE, null, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+            SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenReturn(0);
-    Assert.assertFalse(
-        service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY));
+
+    service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
   }
 
   @Test
   public void updateLocalCouncil() {
-    // Success path
     when(repositoryMock.updateLocalCouncil(any(), any())).thenReturn(1);
-    assertThat(service.updateLocalCouncil("ANGL", new LocalCouncil())).isTrue();
+    service.updateLocalCouncil("ANGL", new LocalCouncil());
+  }
 
-    // Fail path
+  @Test(expected = NotFoundException.class)
+  public void updateLocalCouncil_NotFound() {
     when(repositoryMock.updateLocalCouncil(any(), any())).thenReturn(0);
-    assertThat(service.updateLocalCouncil("ANGL", new LocalCouncil())).isFalse();
+    service.updateLocalCouncil("ANGL", new LocalCouncil());
   }
 }

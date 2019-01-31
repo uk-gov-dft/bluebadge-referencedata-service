@@ -55,23 +55,16 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
   @Override
   public ResponseEntity<Void> updateLocalAuthority(
-      @PathVariable("shortCode") String shortCode,
-      @Valid @RequestBody LocalAuthority localAuthority) {
-    if (service.updateLocalAuthority(shortCode, localAuthority)) {
-      return ResponseEntity.ok().build();
-    } else {
-      return ResponseEntity.notFound().build();
-    }
+      @PathVariable() String shortCode, @Valid @RequestBody LocalAuthority localAuthority) {
+    service.updateLocalAuthority(shortCode, localAuthority);
+    return ResponseEntity.ok().build();
   }
 
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
   @Override
   public ResponseEntity<Void> updateLocalCouncil(
       @PathVariable("shortCode") String shortCode, @Valid @RequestBody LocalCouncil localCouncil) {
-    if (service.updateLocalCouncil(shortCode, localCouncil)) {
-      return ResponseEntity.ok().build();
-    } else {
-      return ResponseEntity.notFound().build();
-    }
+    service.updateLocalCouncil(shortCode, localCouncil);
+    return ResponseEntity.ok().build();
   }
 }
