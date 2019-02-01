@@ -1,13 +1,16 @@
 package uk.gov.dft.bluebadge.service.referencedata.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.gov.dft.bluebadge.common.api.model.ErrorErrors;
+import uk.gov.dft.bluebadge.common.api.model.Error;
 import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntity;
+import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntityUpdateParams;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 
 /** Provides CRUD operations on ReferenceDataEntity. */
@@ -15,10 +18,12 @@ import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDat
 @Slf4j
 public class ReferenceDataRepository {
   private final SqlSession sqlSession;
+  private final ObjectMapper objectMapper;
 
   @Autowired
-  public ReferenceDataRepository(SqlSession sqlSession) {
+  public ReferenceDataRepository(SqlSession sqlSession, ObjectMapper objectMapper) {
     this.sqlSession = sqlSession;
+    this.objectMapper = objectMapper;
   }
 
   /**
@@ -36,23 +41,20 @@ public class ReferenceDataRepository {
     return referenceDataList;
   }
 
-  public boolean update(LocalAuthorityEntity la) {
-
-    int result = sqlSession.update("updateLAMetaData", la);
-
-    if (result == 1) {
-      log.debug("Updated Local Authority with short code: {}.", la.getShortCode());
-      return true;
+  public int updateLocalAuthority(String shortCode, String description, LocalAuthorityEntity la) {
+    try {
+      String localAuthorityEntityInJson = objectMapper.writeValueAsString(la);
+      LocalAuthorityEntityUpdateParams localAuthorityUpdateEntity =
+          LocalAuthorityEntityUpdateParams.builder()
+              .shortCode(shortCode)
+              .description(description)
+              .localAuthorityInJson(localAuthorityEntityInJson)
+              .build();
+      return sqlSession.update("updateLAMetaData", localAuthorityUpdateEntity);
+    } catch (JsonProcessingException ex) {
+      Error error = new Error();
+      error.setMessage("There was a problem converting the request to Json");
+      throw new BadRequestException(error);
     }
-
-    log.warn(
-        "Attempt to update Local Authority with short code: {} that does not exist.",
-        la.getShortCode());
-    ErrorErrors error = new ErrorErrors();
-    error
-        .field("shortCode")
-        .message("Invalid short code ")
-        .reason("There is no Local Authority with given short code:" + la.getShortCode());
-    throw new BadRequestException(error);
   }
 }

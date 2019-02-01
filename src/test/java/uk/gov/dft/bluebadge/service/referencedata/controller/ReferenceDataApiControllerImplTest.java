@@ -2,6 +2,7 @@ package uk.gov.dft.bluebadge.service.referencedata.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Objects;
 import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +22,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import uk.gov.dft.bluebadge.common.api.model.ErrorErrors;
-import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
+import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
@@ -29,7 +30,7 @@ import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
 public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Mock ReferenceDataService service;
-  ObjectMapper objectMapper = new ObjectMapper();
+  private ObjectMapper objectMapper = new ObjectMapper();
 
   private MockMvc mvc;
 
@@ -48,30 +49,27 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
         new ReferenceDataApiControllerImpl(service, objectMapper);
 
     ResponseEntity<ReferenceDataResponse> response = controller.findByDomain("DOMAIN");
-    assertEquals(1, response.getBody().getData().size());
+    assertEquals(1, Objects.requireNonNull(response.getBody()).getData().size());
   }
 
   @Test
   @SneakyThrows
-  public void updateLA_success() {
+  public void update_shouldBeOK_WhenPassingAllMandatoryValues() {
+    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
 
-    String body =
-        "{\"differentServiceSignpostUrl\": \"https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here\"}";
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
             .contentType(MediaType.APPLICATION_JSON);
-    when(service.update(any(), any())).thenReturn(true);
 
     mvc.perform(builder).andExpect(status().isOk());
-    verify(service, times(1)).update(any(), any());
+    verify(service, times(1)).updateLocalAuthority(any(), any());
   }
 
   @Test
   @SneakyThrows
-  public void updateLA_malformedURL() {
-
-    String body = "{\"differentServiceSignpostUrl\": \"new-url\"}";
+  public void update_shouldBeBadRequest_WhenPassingAnEmptyMandatoryValue() {
+    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_ONE_MANDATORY_VALUE_IS_EMPTY);
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
@@ -79,32 +77,39 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
     mvc.perform(builder).andExpect(status().isBadRequest());
 
-    verify(service, never()).update(any(), any());
+    verify(service, never()).updateLocalAuthority(any(), any());
   }
 
   @Test
   @SneakyThrows
-  public void updateLA_fail() {
-
+  public void updateLocalAuthority_shouldBeBadRequest_WhenPassingAnInvalidValues() {
     String body =
-        "{\"differentServiceSignpostUrl\": \"https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here\"}";
+        objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_PLUS_INVALID_VALUE);
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
             .contentType(MediaType.APPLICATION_JSON);
 
-    ErrorErrors error = new ErrorErrors();
-    error
-        .field("shortCode")
-        .message("Invalid short code ")
-        .reason("There is no Local Authority with given short code: ABC");
+    mvc.perform(builder).andExpect(status().isBadRequest());
 
-    BadRequestException e = new BadRequestException(error);
-    when(service.update(any(), any())).thenThrow(e);
+    verify(service, never()).updateLocalAuthority(any(), any());
+  }
+
+  @Test
+  @SneakyThrows
+  public void updateLocalAuthority_shouldBeNotFound_whenUpdateFails() {
+    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
+
+    RequestBuilder builder =
+        MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
+            .content(body)
+            .contentType(MediaType.APPLICATION_JSON);
+
+    doThrow(new NotFoundException("", NotFoundException.Operation.UPDATE))
+        .when(service)
+        .updateLocalAuthority(any(), any());
 
     ResultActions result = mvc.perform(builder);
-    result.andExpect(status().isBadRequest());
-
-    verify(service, times(1)).update(any(), any());
+    result.andExpect(status().isNotFound());
   }
 }

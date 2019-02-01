@@ -89,7 +89,7 @@ public interface ReferenceDataApi {
 
   @ApiOperation(
     value = "Update Local Authority data",
-    nickname = "update",
+    nickname = "updateLocalAuthority",
     notes = "",
     response = CommonResponse.class,
     tags = {
@@ -112,30 +112,11 @@ public interface ReferenceDataApi {
     produces = {"application/json"},
     method = RequestMethod.PUT
   )
-  default ResponseEntity<CommonResponse> update(
+  ResponseEntity<Void> updateLocalAuthority(
       @ApiParam(value = "Local Authority short code", required = true) @PathVariable("shortCode")
           String shortCode,
-      @ApiParam(value = "Local Authority meta info to update", required = true) @Valid @RequestBody
-          LocalAuthority localAuthority) {
-    if (getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-      if (getAcceptHeader().get().contains("application/json")) {
-        try {
-          return new ResponseEntity<>(
-              getObjectMapper()
-                  .get()
-                  .readValue(
-                      "{  \"apiVersion\" : \"apiVersion\",  \"method\" : \"method\",  \"context\" : \"context\",  \"id\" : \"id\",  \"error\" : {    \"code\" : 0,    \"message\" : \"message\",    \"errors\" : [ {      \"reason\" : \"reason\",      \"field\" : \"field\",      \"locationType\" : \"locationType\",      \"location\" : \"location\",      \"message\" : \"message\"    }, {      \"reason\" : \"reason\",      \"field\" : \"field\",      \"locationType\" : \"locationType\",      \"location\" : \"location\",      \"message\" : \"message\"    } ]  }}",
-                      CommonResponse.class),
-              HttpStatus.NOT_IMPLEMENTED);
-        } catch (IOException e) {
-          log.error("Couldn't serialize response for content type application/json", e);
-          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-      }
-    } else {
-      log.warn(
-          "ObjectMapper or HttpServletRequest not configured in default ReferenceDataApi interface so no example is generated");
-    }
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
+      @ApiParam(value = "Local Authority meta info to updateLocalAuthority", required = true)
+          @Valid
+          @RequestBody
+          LocalAuthority localAuthority);
 }
