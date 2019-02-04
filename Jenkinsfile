@@ -3,10 +3,6 @@ def REPONAME      = "${scm.getUserRemoteConfigs()[0].getUrl()}"
 
 node {
 
-    environment {
-        GITHUB_TOKEN=credentials('GITHUB_TOKEN')
-     }
-    
     stage('clean workspace') {
         cleanWs()
     }
@@ -42,7 +38,11 @@ node {
     }
 
     stage("Docker Publish") {
-      sh "curl -H 'Authorization: token ${GITHUB_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/uk-gov-dft/shell-scripts/master/docker-publish.sh?token=AAKXBtRhILJTyebFtSfyA8QCItapyJw2ks5cYbG9wA%3D%3D | bash"
+      withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+        sh '''
+          curl -H 'Authorization: token ${GITHUB_TOKEN}' -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/uk-gov-dft/shell-scripts/master/docker-publish.sh?token=AAKXBtRhILJTyebFtSfyA8QCItapyJw2ks5cYbG9wA%3D%3D | bash
+        '''
+      }
     }
 
     stage ('OWASP Dependency Check') {
