@@ -45,7 +45,7 @@ public class ReferenceDataService {
             .contactNumber(la.getContactNumber())
             .contactUrl(la.getContactUrl())
             .emailAddress(la.getEmailAddress())
-            .badgePackType(la.getBadgePackType())
+            .clockType(la.getBadgePackType())
             .paymentsEnabled(la.getPaymentsEnabled())
             .badgeCost(la.getBadgeCost())
             .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
