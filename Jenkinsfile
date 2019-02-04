@@ -3,6 +3,9 @@ def REPONAME      = "${scm.getUserRemoteConfigs()[0].getUrl()}"
 
 node {
 
+    environment {
+        GITHUB_TOKEN=credentials('GITHUB_TOKEN')
+     }
     
     stage('clean workspace') {
         cleanWs()
