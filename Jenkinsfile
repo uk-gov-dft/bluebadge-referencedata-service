@@ -27,6 +27,13 @@ node {
         finally {
             junit '**/TEST*.xml'
         }
+        withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+          sh '''
+            curl -s -o docker-publish.sh -H "Authorization: token ${GITHUB_TOKEN}" -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/uk-gov-dft/shell-scripts/master/docker-publish.sh
+            ls -la
+            bash docker-publish.sh
+          '''
+        }
         publishHTML (target: [
           allowMissing: false,
           alwaysLinkToLastBuild: false,
@@ -35,18 +42,6 @@ node {
           reportFiles: 'index.html',
           reportName: "Gradle Profile Report"
         ])
-    }
-
-    stage("Docker Publish") {
-      node('Functional') {
-        withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
-          sh '''
-            curl -s -o docker-publish.sh -H "Authorization: token ${GITHUB_TOKEN}" -H 'Accept: application/vnd.github.v3.raw' -O -L https://raw.githubusercontent.com/uk-gov-dft/shell-scripts/master/docker-publish.sh
-            ls -la
-            bash docker-publish.sh
-          '''
-        }
-      }
     }
 
     stage ('OWASP Dependency Check') {
