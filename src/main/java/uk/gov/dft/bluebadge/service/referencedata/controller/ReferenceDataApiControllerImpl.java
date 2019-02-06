@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.dft.bluebadge.common.api.model.CommonResponse;
 import uk.gov.dft.bluebadge.common.controller.AbstractController;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
@@ -29,7 +28,7 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
 
   @SuppressWarnings("unused")
   @Autowired
-  public ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
+  ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
     this.service = service;
     converter = new ReferenceDataConverter(objectMapper);
   }
@@ -54,11 +53,9 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
 
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
   @Override
-  public ResponseEntity<CommonResponse> update(
-      @PathVariable(required = true) String shortCode,
-      @Valid @RequestBody LocalAuthority localAuthority) {
-
-    service.update(shortCode, localAuthority);
-    return ResponseEntity.ok(new CommonResponse());
+  public ResponseEntity<Void> updateLocalAuthority(
+      @PathVariable() String shortCode, @Valid @RequestBody LocalAuthority localAuthority) {
+    service.updateLocalAuthority(shortCode, localAuthority);
+    return ResponseEntity.ok().build();
   }
 }
