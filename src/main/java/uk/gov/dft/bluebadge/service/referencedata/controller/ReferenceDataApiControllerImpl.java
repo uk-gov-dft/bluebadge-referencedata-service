@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.dft.bluebadge.common.controller.AbstractController;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.converter.ReferenceDataConverter;
 import uk.gov.dft.bluebadge.service.referencedata.generated.controller.ReferenceDataApi;
@@ -56,6 +57,14 @@ public class ReferenceDataApiControllerImpl extends AbstractController implement
   public ResponseEntity<Void> updateLocalAuthority(
       @PathVariable() String shortCode, @Valid @RequestBody LocalAuthority localAuthority) {
     service.updateLocalAuthority(shortCode, localAuthority);
+    return ResponseEntity.ok().build();
+  }
+
+  @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
+  @Override
+  public ResponseEntity<Void> updateLocalCouncil(
+      @PathVariable("shortCode") String shortCode, @Valid @RequestBody LocalCouncil localCouncil) {
+    service.updateLocalCouncil(shortCode, localCouncil);
     return ResponseEntity.ok().build();
   }
 }
