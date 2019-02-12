@@ -21,7 +21,15 @@
         UPDATE reference_data
         SET
         description = #{description},
-        meta_data = meta_data::JSONB || #{localAuthorityInJson}::JSONB
+        meta_data = COALESCE(meta_data::JSONB, '{}'::JSONB) || #{localAuthorityInJson}::JSONB
         WHERE data_group_id = 'LA' AND code = #{shortCode}
+    </update>
+
+    <update id="updateLCMetaData" parameterType="LocalCouncilEntityUpdateParams">
+        UPDATE reference_data
+        SET
+          description = #{description},
+          meta_data = COALESCE(meta_data::JSONB, '{}'::JSONB) || #{json}::JSONB
+        WHERE data_group_id = 'LC' AND code = #{shortCode}
     </update>
 </mapper>
