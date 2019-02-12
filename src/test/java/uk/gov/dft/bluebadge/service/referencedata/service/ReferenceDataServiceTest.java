@@ -1,8 +1,8 @@
 package uk.gov.dft.bluebadge.service.referencedata.service;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
@@ -51,7 +52,7 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
   }
 
   @Test
-  public void update_shouldReturnTrue_WhenUpdateIsSuccessful() throws JsonProcessingException {
+  public void updateLocalAuthority_shouldReturnTrue_WhenUpdateIsSuccessful() {
     when(repositoryMock.updateLocalAuthority(
             SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
         .thenReturn(1);
@@ -66,5 +67,17 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
         .thenReturn(0);
 
     service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
+  }
+
+  @Test
+  public void updateLocalCouncil() {
+    when(repositoryMock.updateLocalCouncil(any(), any())).thenReturn(1);
+    service.updateLocalCouncil("ANGL", new LocalCouncil());
+  }
+
+  @Test(expected = NotFoundException.class)
+  public void updateLocalCouncil_NotFound() {
+    when(repositoryMock.updateLocalCouncil(any(), any())).thenReturn(0);
+    service.updateLocalCouncil("ANGL", new LocalCouncil());
   }
 }
