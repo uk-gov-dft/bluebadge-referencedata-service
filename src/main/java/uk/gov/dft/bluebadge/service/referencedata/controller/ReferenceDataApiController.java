@@ -22,14 +22,14 @@ import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDat
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
 
 @RestController
-public class ReferenceDataApiControllerImpl extends AbstractController implements ReferenceDataApi {
+public class ReferenceDataApiController extends AbstractController implements ReferenceDataApi {
 
   private final ReferenceDataService service;
   private final ReferenceDataConverter converter;
 
   @SuppressWarnings("unused")
   @Autowired
-  ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
+  ReferenceDataApiController(ReferenceDataService service, ObjectMapper objectMapper) {
     this.service = service;
     converter = new ReferenceDataConverter(objectMapper);
   }

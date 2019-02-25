@@ -38,7 +38,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   @Before
   public void setup() {
     mvc =
-        MockMvcBuilders.standaloneSetup(new ReferenceDataApiControllerImpl(service, objectMapper))
+        MockMvcBuilders.standaloneSetup(new ReferenceDataApiController(service, objectMapper))
             .build();
   }
 
@@ -46,8 +46,8 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   public void findByDomain() {
 
     when(service.findByDomain("DOMAIN")).thenReturn(sampleEntityList);
-    ReferenceDataApiControllerImpl controller =
-        new ReferenceDataApiControllerImpl(service, objectMapper);
+    ReferenceDataApiController controller =
+        new ReferenceDataApiController(service, objectMapper);
 
     ResponseEntity<ReferenceDataResponse> response = controller.findByDomain("DOMAIN");
     assertEquals(1, Objects.requireNonNull(response.getBody()).getData().size());
