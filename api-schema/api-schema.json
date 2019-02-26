@@ -1,0 +1,371 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "ReferenceData API",
+    "description" : "Manage Reference Data",
+    "version" : "1.0.1"
+  },
+  "schemes" : [ "https", "http" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/reference-data/{domain}" : {
+      "parameters" : [ {
+        "in" : "path",
+        "name" : "domain",
+        "type" : "string",
+        "description" : "Domain to retrieve data for",
+        "required" : true
+      } ],
+      "get" : {
+        "tags" : [ "ReferenceData" ],
+        "summary" : "Retrieve all reference data for a domain",
+        "operationId" : "findByDomain",
+        "responses" : {
+          "200" : {
+            "description" : "An array of reference data",
+            "schema" : {
+              "$ref" : "#/definitions/ReferenceDataResponse"
+            }
+          }
+        }
+      }
+    },
+    "/reference-data/authorities" : {
+      "post" : {
+        "tags" : [ "ReferenceData" ],
+        "summary" : "Create a new Local Authority",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "localAuthority",
+          "schema" : {
+            "$ref" : "#/definitions/LocalAuthority"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Created."
+          },
+          "400" : {
+            "description" : "There was a validation problem with the data submitted.",
+            "schema" : {
+              "$ref" : "#/definitions/CommonResponse"
+            }
+          }
+        }
+      }
+    },
+    "/reference-data/authorities/{shortCode}" : {
+      "put" : {
+        "tags" : [ "ReferenceData" ],
+        "summary" : "Update a Local Authority",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "shortCode",
+          "type" : "string",
+          "description" : "The local authority that needs to be updated.",
+          "required" : true
+        }, {
+          "in" : "body",
+          "name" : "localAuthority",
+          "schema" : {
+            "$ref" : "#/definitions/LocalAuthority"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Updated."
+          },
+          "400" : {
+            "description" : "There was a validation problem with the data.",
+            "schema" : {
+              "$ref" : "#/definitions/CommonResponse"
+            }
+          }
+        }
+      }
+    },
+    "/reference-data/councils" : {
+      "post" : {
+        "tags" : [ "ReferenceData" ],
+        "summary" : "Create a new Council",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "council",
+          "schema" : {
+            "$ref" : "#/definitions/Council"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Created."
+          },
+          "400" : {
+            "description" : "There was a validation problem with the data.",
+            "schema" : {
+              "$ref" : "#/definitions/CommonResponse"
+            }
+          }
+        }
+      }
+    },
+    "/reference-data/councils/{shortCode}" : {
+      "put" : {
+        "tags" : [ "ReferenceData" ],
+        "summary" : "Update a Council",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "shortCode",
+          "type" : "string",
+          "description" : "The council that needs to be updated.",
+          "required" : true
+        }, {
+          "in" : "body",
+          "name" : "council",
+          "schema" : {
+            "$ref" : "#/definitions/Council"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Updated."
+          },
+          "400" : {
+            "description" : "There was a validation problem with the data.",
+            "schema" : {
+              "$ref" : "#/definitions/CommonResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ReferenceDataResponse" : {
+      "type" : "object",
+      "allOf" : [ {
+        "$ref" : "#/definitions/CommonResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/ReferenceData"
+            }
+          }
+        }
+      } ]
+    },
+    "ReferenceData" : {
+      "type" : "object",
+      "properties" : {
+        "shortCode" : {
+          "type" : "string",
+          "description" : "Identifier of data item",
+          "example" : "AFRFCS"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Display value of data item",
+          "example" : "Armed Forces Compensation scheme"
+        },
+        "metaData" : {
+          "type" : "object",
+          "additionalProperties" : true,
+          "description" : "JSON block of meta data for the item",
+          "example" : "{\"nation\":\"Scotland\"}"
+        },
+        "groupShortCode" : {
+          "type" : "string",
+          "description" : "Group of data.",
+          "example" : "ELIGIBILIT"
+        },
+        "groupDescription" : {
+          "type" : "string",
+          "description" : "Description of group",
+          "example" : "Eligibility"
+        },
+        "subgroupShortCode" : {
+          "type" : "string",
+          "description" : "Id of a subgroup",
+          "example" : "ELIG_AUTO"
+        },
+        "subgroupDescription" : {
+          "type" : "string",
+          "description" : "Display value of a sub group",
+          "example" : "Automatic"
+        },
+        "displayOrder" : {
+          "type" : "integer",
+          "description" : "Order to display"
+        }
+      }
+    },
+    "LocalAuthority" : {
+      "type" : "object",
+      "properties" : {
+        "shortCode" : {
+          "type" : "string",
+          "maxLength" : 10,
+          "example" : "ABERD"
+        },
+        "description" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "example" : "Aberdeenshire County Council"
+        },
+        "nameLine2" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "example" : "Bluebadge Team"
+        },
+        "contactNumber" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "example" : "01232 5454545"
+        },
+        "differentServiceSignpostUrl" : {
+          "type" : "string",
+          "maxLength" : 300,
+          "description" : "Only supplied when the Local Authority is NOT taking part in the beta programme",
+          "example" : "https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here"
+        },
+        "addressLine1" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "The first line of the address"
+        },
+        "addressLine2" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "The second line of the address"
+        },
+        "addressLine3" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "The third line of the address"
+        },
+        "addressLine4" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "The fourth line of the address"
+        },
+        "town" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "Town part of the address",
+          "example" : "Aberdeen"
+        },
+        "county" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "County part of the address",
+          "example" : "Aberdeenshire"
+        },
+        "postcode" : {
+          "type" : "string",
+          "maxLength" : 10,
+          "description" : "Postal code for the Local Authority address",
+          "example" : "PR1 1BP"
+        },
+        "country" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "Country for the Local Authority address",
+          "example" : "Scotland"
+        },
+        "emailAddress" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "description" : "The Blue Badge administrative contact email",
+          "example" : "bluebadgeparking@yourla.gov.uk"
+        },
+        "contactUrl" : {
+          "type" : "string",
+          "maxLength" : 300,
+          "description" : "A website providing a point of contact",
+          "example" : "https://www.aberdeenshire.gov.uk"
+        }
+      },
+      "required" : [ "shortCode", "description", "nameLine2", "contactNumber", "addressLine1", "addressLine2", "addressLine3", "addressLine4", "town", "county", "postcode", "country", "emailAddress", "contactUrl" ]
+    },
+    "Council" : {
+      "type" : "object",
+      "properties" : {
+        "shortCode" : {
+          "type" : "string",
+          "maxLength" : 10,
+          "example" : "ABERC"
+        },
+        "description" : {
+          "type" : "string",
+          "maxLength" : 100,
+          "example" : "Aberdeenshire County Council"
+        },
+        "issuingAuthorityShortCode" : {
+          "type" : "string",
+          "maxLength" : 10,
+          "description" : "The short code of the LA that issues Blue Badges for this council",
+          "example" : "ABERD"
+        }
+      },
+      "required" : [ "shortCode", "description", "issuingAuthorityCode" ]
+    },
+    "CommonResponse" : {
+      "type" : "object",
+      "properties" : {
+        "apiVersion" : {
+          "type" : "string"
+        },
+        "context" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "method" : {
+          "type" : "string"
+        },
+        "error" : {
+          "$ref" : "#/definitions/Error"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "errors" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "field" : {
+                "type" : "string"
+              },
+              "reason" : {
+                "type" : "string"
+              },
+              "message" : {
+                "type" : "string"
+              },
+              "location" : {
+                "type" : "string"
+              },
+              "locationType" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/uk-gov-dft/reference-dataservice/1.0.0"
+}
