@@ -46,8 +46,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   public void findByDomain() {
 
     when(service.findByDomain("DOMAIN")).thenReturn(sampleEntityList);
-    ReferenceDataApiController controller =
-        new ReferenceDataApiController(service, objectMapper);
+    ReferenceDataApiController controller = new ReferenceDataApiController(service, objectMapper);
 
     ResponseEntity<ReferenceDataResponse> response = controller.findByDomain("DOMAIN");
     assertEquals(1, Objects.requireNonNull(response.getBody()).getData().size());
