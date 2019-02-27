@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-public class ReferenceDataApiControllerImpl implements ReferenceDataApi {
+public class ReferenceDataApiController implements ReferenceDataApi {
 
   private final ReferenceDataService service;
   private final ReferenceDataConverter converter;
