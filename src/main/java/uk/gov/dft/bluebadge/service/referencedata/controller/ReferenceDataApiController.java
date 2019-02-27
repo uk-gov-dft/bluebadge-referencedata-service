@@ -29,7 +29,7 @@ public class ReferenceDataApiControllerImpl implements ReferenceDataApi {
 
   @SuppressWarnings("unused")
   @Autowired
-  ReferenceDataApiControllerImpl(ReferenceDataService service, ObjectMapper objectMapper) {
+  ReferenceDataApiController(ReferenceDataService service, ObjectMapper objectMapper) {
     this.service = service;
     converter = new ReferenceDataConverter(objectMapper);
   }
