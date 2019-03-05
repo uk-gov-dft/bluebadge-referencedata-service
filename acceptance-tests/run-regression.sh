@@ -78,6 +78,7 @@ fi
 
 ./wait_for_it.sh localhost:5432 localhost:8681:/manage/actuator/health localhost:8381:/manage/actuator/health localhost:8281:/manage/actuator/health localhost:8081:/manage/actuator/health localhost:8481:/manage/actuator/health localhost:8181:/manage/actuator/health localhost:8581:/manage/actuator/health
 psql -h localhost -U developer -d bb_dev -f ./scripts/db/setup-users.sql -a
+psql -h localhost -U developer -d bb_dev -f ./scripts/db/rebase_la.sql -a
 echo "Users in postgresql container before acceptance tests"
 docker-compose exec -T postgresql psql -d bb_dev -U developer -c 'select * from usermanagement.users'
 
