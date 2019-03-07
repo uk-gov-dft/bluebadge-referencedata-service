@@ -2,6 +2,8 @@ package uk.gov.dft.bluebadge.service.referencedata.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
+import java.util.List;
+import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,6 @@ import uk.gov.dft.bluebadge.service.referencedata.converter.ReferenceDataConvert
 import uk.gov.dft.bluebadge.service.referencedata.generated.controller.ReferenceDataApi;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 public class ReferenceDataApiController implements ReferenceDataApi {
