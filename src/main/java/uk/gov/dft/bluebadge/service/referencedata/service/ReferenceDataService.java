@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
+import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.service.referencedata.repository.ReferenceDataRepository;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.LocalAuthorityEntity;
 import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDataEntity;
@@ -52,6 +53,12 @@ public class ReferenceDataService {
     int updates = repository.updateLocalAuthority(shortCode, la.getDescription(), entity);
     if (updates == 0) {
       throw new NotFoundException("LA", NotFoundException.Operation.UPDATE);
+    }
+  }
+
+  public void updateLocalCouncil(String shortCode, LocalCouncil localCouncil) {
+    if (repository.updateLocalCouncil(shortCode, localCouncil) == 0) {
+      throw new NotFoundException("LC", NotFoundException.Operation.UPDATE);
     }
   }
 }
