@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import uk.gov.dft.bluebadge.common.service.exception.BadRequestException;
 import uk.gov.dft.bluebadge.common.service.exception.InternalServerException;
 import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 
@@ -95,6 +96,25 @@ public class PostcodesIOApiClientTest {
   }
 
   @Test
+  public void findPostcode_badRequest() {
+    postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_bad.json");
+    mockServer
+        .expect(once(), requestTo(TEST_URI + "/postcodes/"))
+        .andExpect(method(HttpMethod.GET))
+        .andRespond(
+            withStatus(HttpStatus.BAD_REQUEST)
+                .body(postcodeJsonResponse)
+                .contentType(MediaType.APPLICATION_JSON));
+
+    try {
+      postcodesIOApiClient.findPostcode("");
+      fail("No Exception thrown");
+    } catch (BadRequestException e) {
+      // pass
+    }
+  }
+
+  @Test
   public void findPostcode_error() {
     postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_error.json");
     mockServer
@@ -107,6 +127,25 @@ public class PostcodesIOApiClientTest {
 
     try {
       postcodesIOApiClient.findPostcode("CA166XX");
+      fail("No Exception thrown");
+    } catch (InternalServerException e) {
+      // pass
+    }
+  }
+
+  @Test
+  public void findPostcode_changeToApi() {
+    postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_corrupt.json");
+    mockServer
+        .expect(once(), requestTo(TEST_URI + "/postcodes/whatever"))
+        .andExpect(method(HttpMethod.GET))
+        .andRespond(
+            withStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(postcodeJsonResponse)
+                .contentType(MediaType.APPLICATION_JSON));
+
+    try {
+      postcodesIOApiClient.findPostcode("whatever");
       fail("No Exception thrown");
     } catch (InternalServerException e) {
       // pass
