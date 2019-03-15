@@ -22,17 +22,18 @@ public class PostcodeService {
   public ReferenceDataEntity findLAByPostcode(String postcode) {
     PostcodeIO postcodeIO = postcodesClient.findPostcode(postcode);
 
-    if(null == postcodeIO){
+    if (null == postcodeIO) {
       log.debug("No postcode found for: {}", postcode);
       throw new NotFoundException("Local Authority", NotFoundException.Operation.RETRIEVE);
     }
-    if(null == postcodeIO.getAdminDistrictCode()){
+    if (null == postcodeIO.getAdminDistrictCode()) {
       log.info("No admin district on postcode from postcodeIO: {}", postcodeIO);
       throw new NotFoundException("Local Authority", NotFoundException.Operation.RETRIEVE);
     }
 
-    ReferenceDataEntity la = repository.findLAByAdminDistrictCode(postcodeIO.getAdminDistrictCode());
-    if(null == la){
+    ReferenceDataEntity la =
+        repository.findLAByAdminDistrictCode(postcodeIO.getAdminDistrictCode());
+    if (null == la) {
       log.info("No LA found for: {}", postcodeIO);
       throw new NotFoundException("Local Authority", NotFoundException.Operation.RETRIEVE);
     }

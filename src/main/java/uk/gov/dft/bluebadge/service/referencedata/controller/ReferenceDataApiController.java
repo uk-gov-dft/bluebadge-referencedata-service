@@ -32,7 +32,8 @@ public class ReferenceDataApiController {
 
   @SuppressWarnings("unused")
   @Autowired
-  ReferenceDataApiController(ReferenceDataService service, ObjectMapper objectMapper, PostcodeService postcodeService) {
+  ReferenceDataApiController(
+      ReferenceDataService service, ObjectMapper objectMapper, PostcodeService postcodeService) {
     this.service = service;
     converter = new ReferenceDataConverter(objectMapper);
     this.postcodeService = postcodeService;
@@ -44,7 +45,10 @@ public class ReferenceDataApiController {
    * @param domain e.g. BADGE, APP
    * @return List wrapped by CommonResponse
    */
-  @GetMapping(value = "/reference-data/{domain}", produces = {"application/json"})
+  @GetMapping(
+    value = "/reference-data/{domain}",
+    produces = {"application/json"}
+  )
   public ResponseEntity<ReferenceDataResponse> findByDomain(
       @ApiParam(value = "Domain to retrieve data for", required = true) @PathVariable("domain")
           String domain) {
@@ -56,20 +60,28 @@ public class ReferenceDataApiController {
     return ResponseEntity.ok(response);
   }
 
-  @GetMapping(value = "/reference-data/postcode/{postcode}", produces = {"application/json"})
+  @GetMapping(
+    value = "/reference-data/postcode/{postcode}",
+    produces = {"application/json"}
+  )
   public ResponseEntity<SingleReferenceDataResponse> findLAByPostcode(
       @ApiParam(value = "postcode to retrieve data for", required = true) @PathVariable("postcode")
           String postcode) {
     Assert.notNull(StringUtils.trimToNull(postcode), "postcode required");
 
     ReferenceDataEntity laReferenceData = postcodeService.findLAByPostcode(postcode);
-    SingleReferenceDataResponse response = SingleReferenceDataResponse.builder()
-        .referenceData(converter.convertToModel(laReferenceData)).build();
+    SingleReferenceDataResponse response =
+        SingleReferenceDataResponse.builder()
+            .data(converter.convertToModel(laReferenceData))
+            .build();
     return ResponseEntity.ok(response);
   }
 
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
-  @PutMapping(value = "/reference-data/authorities/{shortCode}", produces = {"application/json"})
+  @PutMapping(
+    value = "/reference-data/authorities/{shortCode}",
+    produces = {"application/json"}
+  )
   public ResponseEntity<Void> updateLocalAuthority(
       @PathVariable() String shortCode, @Valid @RequestBody LocalAuthority localAuthority) {
     service.updateLocalAuthority(shortCode, localAuthority);
@@ -77,7 +89,10 @@ public class ReferenceDataApiController {
   }
 
   @PreAuthorize("hasAuthority('PERM_MANAGE_LOCAL_AUTHORITIES')")
-  @PutMapping(value = "/reference-data/councils/{shortCode}", produces = {"application/json"})
+  @PutMapping(
+    value = "/reference-data/councils/{shortCode}",
+    produces = {"application/json"}
+  )
   public ResponseEntity<Void> updateLocalCouncil(
       @PathVariable("shortCode") String shortCode, @Valid @RequestBody LocalCouncil localCouncil) {
     service.updateLocalCouncil(shortCode, localCouncil);

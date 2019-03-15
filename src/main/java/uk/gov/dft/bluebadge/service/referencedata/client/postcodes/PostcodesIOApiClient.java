@@ -25,8 +25,8 @@ public class PostcodesIOApiClient {
    */
   public PostcodeIO findPostcode(String postcode) {
     log.debug("Finding postcode by postcode {}", postcode);
-    PostcodeIOResult result = restTemplate
-        .getForObject("/postcodes/{postcode}", PostcodeIOResult.class, postcode);
+    PostcodeIOResult result =
+        restTemplate.getForObject("/postcodes/{postcode}", PostcodeIOResult.class, postcode);
     return result.getResult();
   }
 }

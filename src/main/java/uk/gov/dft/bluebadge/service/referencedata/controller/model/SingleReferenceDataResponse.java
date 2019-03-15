@@ -1,6 +1,5 @@
 package uk.gov.dft.bluebadge.service.referencedata.controller.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,5 +11,5 @@ import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceData;
 @Getter
 @EqualsAndHashCode
 public class SingleReferenceDataResponse extends CommonResponse {
-  @JsonIgnore @NonNull private ReferenceData data;
+  @NonNull private ReferenceData data;
 }
