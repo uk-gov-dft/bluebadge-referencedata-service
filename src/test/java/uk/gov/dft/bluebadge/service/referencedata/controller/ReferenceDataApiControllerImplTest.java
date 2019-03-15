@@ -16,6 +16,7 @@ import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
 import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
+import uk.gov.dft.bluebadge.service.referencedata.service.PostcodeService;
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
 
 import java.util.Objects;
@@ -32,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Mock ReferenceDataService service;
+  @Mock PostcodeService postcodeService;
   private ObjectMapper objectMapper = new ObjectMapper();
 
   private MockMvc mvc;
@@ -39,7 +41,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   @Before
   public void setup() {
     mvc =
-        MockMvcBuilders.standaloneSetup(new ReferenceDataApiController(service, objectMapper))
+        MockMvcBuilders.standaloneSetup(new ReferenceDataApiController(service, objectMapper, postcodeService))
             .setControllerAdvice(CommonResponseControllerAdvice.class)
             .build();
   }
@@ -48,7 +50,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   public void findByDomain() {
 
     when(service.findByDomain("DOMAIN")).thenReturn(sampleEntityList);
-    ReferenceDataApiController controller = new ReferenceDataApiController(service, objectMapper);
+    ReferenceDataApiController controller = new ReferenceDataApiController(service, objectMapper, postcodeService);
 
     ResponseEntity<ReferenceDataResponse> response = controller.findByDomain("DOMAIN");
     assertEquals(1, Objects.requireNonNull(response.getBody()).getData().size());
