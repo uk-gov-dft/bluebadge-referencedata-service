@@ -11,6 +11,7 @@ import uk.gov.dft.bluebadge.service.referencedata.repository.domain.ReferenceDat
 @Service
 @Slf4j
 public class PostcodeService {
+  private static final String LOCAL_AUTHORITY = "Local Authority";
   private final PostcodesIOApiClient postcodesClient;
   private final ReferenceDataRepository repository;
 
@@ -24,18 +25,18 @@ public class PostcodeService {
 
     if (null == postcodeIO) {
       log.debug("No postcode found for: {}", postcode);
-      throw new NotFoundException("Local Authority", NotFoundException.Operation.RETRIEVE);
+      throw new NotFoundException(LOCAL_AUTHORITY, NotFoundException.Operation.RETRIEVE);
     }
     if (null == postcodeIO.getAdminDistrictCode()) {
       log.info("No admin district on postcode from postcodeIO: {}", postcodeIO);
-      throw new NotFoundException("Local Authority", NotFoundException.Operation.RETRIEVE);
+      throw new NotFoundException(LOCAL_AUTHORITY, NotFoundException.Operation.RETRIEVE);
     }
 
     ReferenceDataEntity la =
         repository.findLAByAdminDistrictCode(postcodeIO.getAdminDistrictCode());
     if (null == la) {
       log.info("No LA found for: {}", postcodeIO);
-      throw new NotFoundException("Local Authority", NotFoundException.Operation.RETRIEVE);
+      throw new NotFoundException(LOCAL_AUTHORITY, NotFoundException.Operation.RETRIEVE);
     }
 
     log.debug("Postcode {}, associated with LA:{}", postcode, la);
