@@ -24,7 +24,7 @@ blue-badge:
     client-id: bb_user_management_id
      ***REMOVED***
   postcodesio:
-    url: http://localhost:8000
+    url: https://postcodesio.does.not.exist
 
 spring:
   datasource:
