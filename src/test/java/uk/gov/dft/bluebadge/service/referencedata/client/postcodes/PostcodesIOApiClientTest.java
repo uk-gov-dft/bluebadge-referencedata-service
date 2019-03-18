@@ -1,7 +1,6 @@
 package uk.gov.dft.bluebadge.service.referencedata.client.postcodes;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.springframework.test.web.client.ExpectedCount.once;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -24,7 +23,6 @@ import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 
 public class PostcodesIOApiClientTest {
   public static final String TEST_URI = "http://justtesting:7878/test";
-  public static final String TEST_API_KEY = "test api key";
 
   PostcodesIOApiClient postcodesIOApiClient;
   MockRestServiceServer mockServer;
@@ -57,7 +55,7 @@ public class PostcodesIOApiClientTest {
     assertThat(postcode.getPostcode()).isEqualTo("CA16 6XX");
   }
 
-  @Test
+  @Test(expected = NotFoundException.class)
   public void findPostcode_invalid() {
     postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_invalid.json");
     mockServer
@@ -68,15 +66,10 @@ public class PostcodesIOApiClientTest {
                 .body(postcodeJsonResponse)
                 .contentType(MediaType.APPLICATION_JSON));
 
-    try {
-      postcodesIOApiClient.findPostcode("CA166XX");
-      fail("No Exception thrown");
-    } catch (NotFoundException e) {
-      // pass
-    }
+    postcodesIOApiClient.findPostcode("CA166XX");
   }
 
-  @Test
+  @Test(expected = NotFoundException.class)
   public void findPostcode_notFound() {
     postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_notfound.json");
     mockServer
@@ -87,15 +80,10 @@ public class PostcodesIOApiClientTest {
                 .body(postcodeJsonResponse)
                 .contentType(MediaType.APPLICATION_JSON));
 
-    try {
-      postcodesIOApiClient.findPostcode("CA166XX");
-      fail("No Exception thrown");
-    } catch (NotFoundException e) {
-      // pass
-    }
+    postcodesIOApiClient.findPostcode("CA166XX");
   }
 
-  @Test
+  @Test(expected = BadRequestException.class)
   public void findPostcode_badRequest() {
     postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_bad.json");
     mockServer
@@ -106,15 +94,10 @@ public class PostcodesIOApiClientTest {
                 .body(postcodeJsonResponse)
                 .contentType(MediaType.APPLICATION_JSON));
 
-    try {
-      postcodesIOApiClient.findPostcode("");
-      fail("No Exception thrown");
-    } catch (BadRequestException e) {
-      // pass
-    }
+    postcodesIOApiClient.findPostcode("");
   }
 
-  @Test
+  @Test(expected = InternalServerException.class)
   public void findPostcode_error() {
     postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_error.json");
     mockServer
@@ -125,15 +108,10 @@ public class PostcodesIOApiClientTest {
                 .body(postcodeJsonResponse)
                 .contentType(MediaType.APPLICATION_JSON));
 
-    try {
-      postcodesIOApiClient.findPostcode("CA166XX");
-      fail("No Exception thrown");
-    } catch (InternalServerException e) {
-      // pass
-    }
+    postcodesIOApiClient.findPostcode("CA166XX");
   }
 
-  @Test
+  @Test(expected = InternalServerException.class)
   public void findPostcode_changeToApi() {
     postcodeJsonResponse = new ClassPathResource("testdata/postcode_io_corrupt.json");
     mockServer
@@ -144,11 +122,6 @@ public class PostcodesIOApiClientTest {
                 .body(postcodeJsonResponse)
                 .contentType(MediaType.APPLICATION_JSON));
 
-    try {
-      postcodesIOApiClient.findPostcode("whatever");
-      fail("No Exception thrown");
-    } catch (InternalServerException e) {
-      // pass
-    }
+    postcodesIOApiClient.findPostcode("whatever");
   }
 }
