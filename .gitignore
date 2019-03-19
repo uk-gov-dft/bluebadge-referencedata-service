@@ -25,3 +25,6 @@ VERSION-computed
 acceptance-tests/target/
 target/
 **/dev-env*
+
+*.log
+run-regression-script.sh
