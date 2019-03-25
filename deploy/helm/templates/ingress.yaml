@@ -1,0 +1,15 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "referencedata-service.name" . }}
+  instance: {{ .Release.Name }}
+spec:
+  rules:
+  - host: "reference-service.{{ .Release.Name }}.does.not.exist"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: "{{ .Release.Name }}-{{ include "referencedata-service.name" . }}"
+          servicePort: {{ .Values.service.port }}
