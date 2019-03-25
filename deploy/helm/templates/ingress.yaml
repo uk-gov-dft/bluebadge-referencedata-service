@@ -17,3 +17,9 @@ spec:
         backend:
           serviceName: "{{ .Release.Name }}-{{ include "referencedata-service.name" . }}"
           servicePort: {{ .Values.service.port }}
+  - http:
+      paths:
+      - path: /manage
+        backend:
+          serviceName: "{{ .Release.Name }}-{{ include "referencedata-service.name" . }}"
+          servicePort: {{ .Values.adminservice.port }}
