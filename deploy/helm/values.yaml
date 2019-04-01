@@ -8,28 +8,16 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
+# The hostname portion of the DNS hostname in R53
 service:
+  hostname: reference-service
   type: ClusterIP
-  port: 8580
+  port: 8080
 
 adminservice:
   type: ClusterIP
-  port: 8581
-  path: '/manage/actuator/info'
-
-ingress:
-  enabled: false
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "false"
-  hosts:
-    - host: "referencedata"
-      paths: ['/']
-
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  port: 8081
+  path: '/manage/actuator/health'
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
