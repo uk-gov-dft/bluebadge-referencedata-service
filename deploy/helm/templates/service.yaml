@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "referencedata-service.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+    helm.sh/chart: {{ include "referencedata-service.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      protocol: TCP
+      name: http
+    - port: {{ .Values.adminservice.port }}
+      protocol: TCP
+      name: springbootadmin
+  selector:
+    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

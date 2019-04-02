@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "referencedata-service.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+    helm.sh/chart: {{ include "referencedata-service.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: dft-bb-ecr
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["java"]
+          args: ["-Dspring.profiles.active=codedeploy", "-jar", "/usr/src/app/app.jar"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            - name: springboot
+              containerPort: {{ .Values.adminservice.port }}
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 15
+            httpGet:
+              path: '/manage/actuator/info'
+              port: springboot
+          readinessProbe:
+            initialDelaySeconds: 15
+            httpGet:
+              path: '/manage/actuator/info'
+              port: springboot
+          env:
+          - name: RDS_HOSTNAME
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-postgres-creds"
+                key: RDS_HOSTNAME
+          - name: bb_db_username
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-postgres-creds"
+                key: bb_db_username
+          - name: bb_db_password
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-postgres-creds"
+                key: bb_db_password
+          - name: bb_env
+            value: {{ .Release.Name }}
+          - name: bb_database
+            value: "bb_{{ .Release.Name }}"
+          - name: url
+            value: "does.not.exist"
+          - name: bb_port
+            value: "{{ .Values.service.port }}"
+          - name: bb_health
+            value: "{{ .Values.adminservice.port }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
