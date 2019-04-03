@@ -1,0 +1,38 @@
+{
+  "status": 200,
+  "result": {
+    "postcode": "CA16 6XX",
+    "quality": 1,
+    "eastings": 368116,
+    "northings": 521282,
+    "country": "England",
+    "nhs_ha": "North West",
+    "longitude": -2.494864,
+    "latitude": 54.585722,
+    "european_electoral_region": "North West",
+    "primary_care_trust": "Cumbria Teaching",
+    "region": "North West",
+    "lsoa": "Eden 006B",
+    "msoa": "Eden 006",
+    "incode": "6XX",
+    "outcode": "CA16",
+    "parliamentary_constituency": "Penrith and The Border",
+    "admin_district": "Eden",
+    "parish": "Appleby-in-Westmorland",
+    "admin_county": "Cumbria",
+    "admin_ward": "Appleby (Bongate)",
+    "ced": "Appleby",
+    "ccg": "NHS North Cumbria",
+    "nuts": "East Cumbria",
+    "codes": {
+      "admin_district": "E07000030",
+      "admin_county": "E10000006",
+      "admin_ward": "E05003207",
+      "parish": "E04002512",
+      "parliamentary_constituency": "E14000877",
+      "ccg": "E38000215",
+      "ced": "E58000110",
+      "nuts": "UKD12"
+    }
+  }
+}

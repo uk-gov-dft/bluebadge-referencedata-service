@@ -1,12 +1,25 @@
 package uk.gov.dft.bluebadge.service.referencedata.controller;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Objects;
 import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
@@ -14,24 +27,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
-import uk.gov.dft.bluebadge.model.referencedata.generated.ReferenceDataResponse;
 import uk.gov.dft.bluebadge.service.referencedata.ReferenceDataFixture;
+import uk.gov.dft.bluebadge.service.referencedata.service.PostcodeService;
 import uk.gov.dft.bluebadge.service.referencedata.service.ReferenceDataService;
-
-import java.util.Objects;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Mock ReferenceDataService service;
+  @Mock PostcodeService postcodeService;
   private ObjectMapper objectMapper = new ObjectMapper();
 
   private MockMvc mvc;
@@ -39,19 +42,37 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   @Before
   public void setup() {
     mvc =
-        MockMvcBuilders.standaloneSetup(new ReferenceDataApiController(service, objectMapper))
+        MockMvcBuilders.standaloneSetup(
+                new ReferenceDataApiController(service, objectMapper, postcodeService))
             .setControllerAdvice(CommonResponseControllerAdvice.class)
             .build();
   }
 
   @Test
+  @SneakyThrows
   public void findByDomain() {
+    when(service.findByDomain("DOMAIN-TEST")).thenReturn(sampleEntityList);
 
-    when(service.findByDomain("DOMAIN")).thenReturn(sampleEntityList);
-    ReferenceDataApiController controller = new ReferenceDataApiController(service, objectMapper);
+    mvc.perform(get("/reference-data/DOMAIN-TEST"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.apiVersion").hasJsonPath())
+        .andExpect(jsonPath("$.data", hasSize(1)))
+        .andExpect(jsonPath("$.data[0].shortCode", is("CODE")));
+  }
 
-    ResponseEntity<ReferenceDataResponse> response = controller.findByDomain("DOMAIN");
-    assertEquals(1, Objects.requireNonNull(response.getBody()).getData().size());
+  @Test
+  @SneakyThrows
+  public void findLAByPostcode() {
+    when(postcodeService.findLAByPostcode("CA166ST")).thenReturn(sampleEntity);
+
+    mvc.perform(get("/reference-data/postcode/CA166ST"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.apiVersion").hasJsonPath())
+        .andExpect(jsonPath("$.data.shortCode").hasJsonPath())
+        .andExpect(jsonPath("$.data.shortCode", is("CODE")));
+
+    verify(postcodeService).findLAByPostcode("CA166ST");
+    verifyZeroInteractions(service);
   }
 
   @Test

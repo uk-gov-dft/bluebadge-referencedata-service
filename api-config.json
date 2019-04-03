@@ -4,7 +4,7 @@
     "info" : {
       "title" : "ReferenceData API",
       "description" : "Manage Reference Data",
-      "version" : "1.0.0"
+      "version" : "1.1.0"
     },
     "schemes" : [ "https", "http" ],
     "produces" : [ "application/json" ],
@@ -26,6 +26,28 @@
               "description" : "An array of reference data",
               "schema" : {
                 "$ref" : "#/definitions/ReferenceDataResponse"
+              }
+            }
+          }
+        }
+      },
+      "/reference-data/postcode/{postcode}" : {
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "postcode",
+          "type" : "string",
+          "description" : "Postcode to search",
+          "required" : true
+        } ],
+        "get" : {
+          "tags" : [ "ReferenceData" ],
+          "summary" : "Retrieve LA reference data for a postcode",
+          "operationId" : "findLAByPostcode",
+          "responses" : {
+            "200" : {
+              "description" : "An single of reference data for the corresponding LA",
+              "schema" : {
+                "$ref" : "#/definitions/SingleReferenceDataResponse"
               }
             }
           }
@@ -63,7 +85,10 @@
               }
             },
             "404" : {
-              "description" : "Local Authority not found."
+              "description" : "Local Council not found.",
+              "schema" : {
+                "$ref" : "#/definitions/CommonResponse"
+              }
             }
           }
         }
@@ -99,7 +124,10 @@
               }
             },
             "404" : {
-              "description" : "Local Authority not found."
+              "description" : "Local Authority not found.",
+              "schema" : {
+                "$ref" : "#/definitions/CommonResponse"
+              }
             }
           }
         }
@@ -234,6 +262,19 @@
           }
         } ]
       },
+      "SingleReferenceDataResponse" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/definitions/CommonResponse"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "$ref" : "#/definitions/ReferenceData"
+            }
+          }
+        } ]
+      },
       "ReferenceData" : {
         "type" : "object",
         "properties" : {
@@ -356,5 +397,5 @@
     "useTags" : true,
     "hideGenerationTimestamp" : true,
     "appVersion" : "1.0"
-  }
 }
+

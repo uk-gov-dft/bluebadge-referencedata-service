@@ -17,6 +17,21 @@
         WHERE data_domain_id = #{domainId}
     </select>
 
+    <select id="findLAByLCAdminDistrictCode" parameterType="String" resultType="ReferenceDataEntity">
+        SELECT
+          la.code                  AS shortCode,
+          la.description           AS description,
+          la.meta_data             AS metaData,
+          la.data_group_id         AS groupShortCode,
+          dg.description           AS groupDescription
+        FROM referencedata.reference_data la
+        JOIN referencedata.reference_data lc on lc.meta_data->>'issuingAuthorityShortCode' = la.code
+        JOIN referencedata.data_group dg on la.data_group_id = dg.id
+        WHERE la.data_group_id = 'LA'
+        and   lc.data_group_id= 'LC'
+        and   lc.meta_data ->> 'adminDistrictCode' = #{adminDistrictCode}
+    </select>
+
     <update id="updateLAMetaData" parameterType="LocalAuthorityEntityUpdateParams">
         UPDATE reference_data
         SET
