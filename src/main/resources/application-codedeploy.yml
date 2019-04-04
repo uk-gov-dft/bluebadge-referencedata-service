@@ -1,6 +1,6 @@
 management:
   server:
-    port: ${bb_health:-8081}
+    port: ${bb_health:8081}
 
 blue-badge:
   auth-server:
@@ -9,10 +9,10 @@ blue-badge:
 spring:
   datasource:
      ***REMOVED***
-    username: ${bb_db_username:-developer}
-    url: jdbc:postgresql://${RDS_HOSTNAME}:5432/${bb_database:-bb_dev}?currentSchema=referencedata&sslmode=verify-full
+    username: ${bb_db_username}
+    url: jdbc:postgresql://${RDS_HOSTNAME}:5432/${bb_database}?currentSchema=referencedata&sslmode=verify-full
 
 server:
-  port: ${bb_port:-8080}
+  port: ${bb_port:8080}
 
 
