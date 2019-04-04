@@ -7,6 +7,8 @@ blue-badge:
     url: https://api.${bb_env}.${url}/bb_auth
 
 spring:
+  main:
+    banner-mode: "off"
   datasource:
      ***REMOVED***
     username: ${bb_db_username}
