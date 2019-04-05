@@ -16,5 +16,3 @@ spring:
 
 server:
   port: ${bb_port:8080}
-
-
