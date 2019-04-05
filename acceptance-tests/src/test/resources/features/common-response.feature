@@ -5,6 +5,7 @@ Feature: Verify ref data retrieval
     * url baseUrl
     * def result = callonce read('./oauth2.feature')
     * header Authorization = 'Bearer ' + result.accessToken
+    * header Accept = jsonVersionHeader
 
   Scenario: Verify bean validation gives common response wrapped error
     Given path '/reference-data/authorities/DELETE_1'
