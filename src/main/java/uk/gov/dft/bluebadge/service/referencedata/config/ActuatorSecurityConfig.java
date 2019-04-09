@@ -2,6 +2,7 @@ package uk.gov.dft.bluebadge.service.referencedata.config;
 
 import static uk.gov.dft.bluebadge.service.referencedata.config.ActuatorSecurityConfig.BEFORE_RESOURCE_SERVER_ORDER;
 
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import uk.gov.dft.bluebadge.common.actuator.MyBatisInfo;
 
-import javax.sql.DataSource;
-
 @Configuration
 @Order(BEFORE_RESOURCE_SERVER_ORDER)
 public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,8 +20,7 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
   /** Order before the resource server (which is 3) */
   static final int BEFORE_RESOURCE_SERVER_ORDER = 2;
 
-  @Autowired
-  private DataSource dataSource;
+  @Autowired private DataSource dataSource;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -36,5 +34,4 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
   public MyBatisInfo getMyBatisInfo() {
     return new MyBatisInfo(new JdbcTemplate(dataSource));
   }
-
 }
