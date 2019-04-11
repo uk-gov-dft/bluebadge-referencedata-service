@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import uk.gov.dft.bluebadge.common.api.common.CommonResponseHandler;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
