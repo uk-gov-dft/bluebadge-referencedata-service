@@ -18,8 +18,8 @@ DELETE FROM referencedata.reference_data WHERE data_group_id = 'LC' and code IN(
 
 INSERT INTO referencedata.reference_data (data_group_id, code, description, display_order, data_subgroup_id, meta_data)
 VALUES
-   ('LA', 'DELETE_1', 'Test LA to update metadata', 0, null, '{"town": "Town", "county": "", "country": "United Kingdom", "postcode": "B69 9EL", "nameLine2": "", "addressLine1": "PO Box 15825", "addressLine2": "", "addressLine3": "", "addressLine4": "", "emailAddress": "email@mail.gov.uk", "contactNumber": "01715692266", "differentServiceSignpostUrl": "https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here"}')
- , ('LA', 'DELETE_2', 'Test LA to add metadata', 0, null, '{"town": "Town", "county": "", "country": "United Kingdom", "postcode": "B69 9EL", "nameLine2": "", "addressLine1": "PO Box 15825", "addressLine2": "", "addressLine3": "", "addressLine4": "", "emailAddress": "email@mail.gov.uk", "contactNumber": "01015692266"}')
+   ('LA', 'DELETE_1', 'Test LA to update metadata', 0, null, '{"town": "Town", "county": "", "country": "United Kingdom", "postcode": "B69 9EL", "nameLine2": "", "addressLine1": "PO Box 15825", "addressLine2": "", "addressLine3": "", "addressLine4": "", "emailAddress": "email@mail.gov.uk", "contactNumber": " 0 1 715 69 2266 ", "differentServiceSignpostUrl": "https://bluebadge.direct.gov.uk/bluebadge/why-are-you-here"}')
+ , ('LA', 'DELETE_2', 'Test LA to add metadata', 0, null, '{"town": "Town", "county": "", "country": "United Kingdom", "postcode": "B69 9EL", "nameLine2": "", "addressLine1": "PO Box 15825", "addressLine2": "", "addressLine3": "", "addressLine4": "", "emailAddress": "email@mail.gov.uk", "contactNumber": " +44 0 1 5 692266 "}')
  , ('LC', 'LC_UPDATE', 'Test LC to update metadata', 0, null, '{"welshDescription": "Original"}')
  , ('LC', 'LC_ADD', 'Test LC to add metadata', 0, null, null)
 ;
