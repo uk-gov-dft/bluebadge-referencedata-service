@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import uk.gov.dft.bluebadge.common.service.exception.NotFoundException;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalAuthority;
 import uk.gov.dft.bluebadge.model.referencedata.generated.LocalCouncil;
@@ -42,7 +43,7 @@ public class ReferenceDataService {
             .country(la.getCountry())
             .postcode(la.getPostcode())
             .nation(la.getNation())
-            .contactNumber(la.getContactNumber())
+            .contactNumber(StringUtils.trimAllWhitespace(la.getContactNumber()))
             .contactUrl(la.getContactUrl())
             .emailAddress(la.getEmailAddress())
             .clockType(la.getBadgePackType())
