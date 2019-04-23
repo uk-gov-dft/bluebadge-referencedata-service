@@ -9,6 +9,7 @@ Feature: Verify LAs metadata could be updated
     * def setup = callonce db.runScript('acceptance-tests-data.sql')
     * def result = callonce read('./oauth2-non-dft-admin.feature')
     * header Authorization = 'Bearer ' + result.accessToken
+    * header Accept = jsonVersionHeader
 
   Scenario: Verify update metadata for LA
     Given path '/reference-data/authorities/DELETE_1'

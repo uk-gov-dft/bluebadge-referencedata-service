@@ -5,6 +5,7 @@ Feature: Verify retrieving LA by postcode
     * url baseUrl
     * def result = callonce read('./oauth2.feature')
     * header Authorization = 'Bearer ' + result.accessToken
+    * header Accept = jsonVersionHeader
 
   Scenario: Successful retrieval of LA by postcode
     Given path 'reference-data/postcode/M41FS'
