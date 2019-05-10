@@ -1,31 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "referencedata-service.fullname" . }}
+  name: {{ include "referencedata-service.fullname" . }}-{{ .Values.service.bbApiVersion }}
   labels:
-    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
     helm.sh/chart: {{ include "referencedata-service.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
+  revisionHistoryLimit: 2
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+      app.kubernetes.io/name: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+        app.kubernetes.io/name: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      imagePullSecrets:
-        - name: dft-bb-ecr
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ["java"]
-          args: ["-Dspring.profiles.active=codedeploy", "-jar", "/usr/src/app/app.jar"]
+          args: ["-Dmanagement.metrics.tags.application={{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }} -Dspring.profiles.active=codedeploy", "-jar", "/usr/src/app/app.jar"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -35,12 +34,12 @@ spec:
               containerPort: {{ .Values.adminservice.port }}
               protocol: TCP
           livenessProbe:
-            initialDelaySeconds: 15
+            initialDelaySeconds: 40
             httpGet:
               path: '/manage/actuator/info'
               port: springboot
           readinessProbe:
-            initialDelaySeconds: 15
+            initialDelaySeconds: 40
             httpGet:
               path: '/manage/actuator/info'
               port: springboot

@@ -11,12 +11,13 @@ fullnameOverride: ""
 # The hostname portion of the DNS hostname in R53
 service:
   hostname: reference-service
+  bbApiVersion: 1
   type: ClusterIP
-  port: 8080
+  port: 8580
 
 adminservice:
   type: ClusterIP
-  port: 8081
+  port: 8581
   path: '/manage/actuator/health'
 
 resources: {}
