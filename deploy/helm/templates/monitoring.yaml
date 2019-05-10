@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  namespace: monitoring
+  namespace: default # should be pre / prod
   name: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
   labels:
     app: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
