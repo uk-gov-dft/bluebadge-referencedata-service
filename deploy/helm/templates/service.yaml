@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "referencedata-service.fullname" . }}
+  name: {{ include "referencedata-service.fullname" . }}-{{ .Values.service.bbApiVersion }}
   labels:
-    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
     helm.sh/chart: {{ include "referencedata-service.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -17,5 +17,5 @@ spec:
       protocol: TCP
       name: springbootadmin
   selector:
-    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}
+    app.kubernetes.io/name: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
     app.kubernetes.io/instance: {{ .Release.Name }}

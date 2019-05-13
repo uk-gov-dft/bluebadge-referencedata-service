@@ -2,24 +2,24 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "referencedata-service.name" . }}
+  name: {{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
     - hosts:
-      - "{{ .Values.service.hostname }}.{{ .Release.Name }}.does.not.exist"
+      - "{{ .Values.service.hostname }}-{{ .Values.service.bbApiVersion }}.{{ .Release.Name }}.does.not.exist"
   rules:
-  - host: "{{ .Values.service.hostname }}.{{ .Release.Name }}.does.not.exist"
+  - host: "{{ .Values.service.hostname }}-{{ .Values.service.bbApiVersion }}.{{ .Release.Name }}.does.not.exist"
     http:
       paths:
       - path: /
         backend:
-          serviceName: "{{ .Release.Name }}-{{ include "referencedata-service.name" . }}"
+          serviceName: "{{ .Release.Name }}-{{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}"
           servicePort: {{ .Values.service.port }}
   - http:
       paths:
       - path: /manage
         backend:
-          serviceName: "{{ .Release.Name }}-{{ include "referencedata-service.name" . }}"
+          serviceName: "{{ .Release.Name }}-{{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}"
           servicePort: {{ .Values.adminservice.port }}
