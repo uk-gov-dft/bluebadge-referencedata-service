@@ -24,7 +24,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ["java"]
-          args: ["-Dmanagement.metrics.tags.application={{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }} -Dspring.profiles.active=codedeploy", "-jar", "/usr/src/app/app.jar"]
+          args: ["-Dmanagement.metrics.tags.application={{ include "referencedata-service.name" . }}-{{ .Values.service.bbApiVersion }}", "-Dspring.profiles.active=codedeploy", "-jar", "/usr/src/app/app.jar"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
