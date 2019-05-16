@@ -72,6 +72,9 @@ public class LocalAuthority {
   @JsonProperty("differentServiceSignpostUrl")
   private String differentServiceSignpostUrl = null;
 
+  @JsonProperty("streamlinedCitizenReapplicationJourneyEnabled")
+  private Boolean streamlinedCitizenReapplicationJourneyEnabled = null;
+
   public LocalAuthority nameLine2(String nameLine2) {
     this.nameLine2 = nameLine2;
     return this;
@@ -444,6 +447,28 @@ public class LocalAuthority {
     return this;
   }
 
+  /**
+   * Streamlined citizen reapplication journey enabled
+   *
+   * @return streamlinedCitizenJourneyEnabled
+   */
+  @ApiModelProperty(value = "Streamlined citizen reapplication journey enabled")
+  public Boolean getStreamlinedCitizenReapplicationJourneyEnabled() {
+    return streamlinedCitizenReapplicationJourneyEnabled;
+  }
+
+  public void setStreamlinedCitizenReapplicationJourneyEnabled(
+      Boolean streamlinedCitizenJourneyEnabled) {
+    this.streamlinedCitizenReapplicationJourneyEnabled = streamlinedCitizenJourneyEnabled;
+  }
+
+  public LocalAuthority streamlinedCitizenReapplicationJourneyEnabled(
+      Boolean streamlinedCitizenReapplicationJourneyEnabled) {
+    this.streamlinedCitizenReapplicationJourneyEnabled =
+        streamlinedCitizenReapplicationJourneyEnabled;
+    return this;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -472,7 +497,10 @@ public class LocalAuthority {
         && Objects.equals(this.paymentsEnabled, localAuthority.paymentsEnabled)
         && Objects.equals(this.badgeCost, localAuthority.badgeCost)
         && Objects.equals(
-            this.differentServiceSignpostUrl, localAuthority.differentServiceSignpostUrl);
+            this.differentServiceSignpostUrl, localAuthority.differentServiceSignpostUrl)
+        && Objects.equals(
+            this.streamlinedCitizenReapplicationJourneyEnabled,
+            localAuthority.streamlinedCitizenReapplicationJourneyEnabled);
   }
 
   @Override
@@ -496,7 +524,8 @@ public class LocalAuthority {
         badgePackType,
         paymentsEnabled,
         badgeCost,
-        differentServiceSignpostUrl);
+        differentServiceSignpostUrl,
+        streamlinedCitizenReapplicationJourneyEnabled);
   }
 
   @Override
@@ -523,6 +552,9 @@ public class LocalAuthority {
     sb.append("    badgeCost: ").append(toIndentedString(badgeCost)).append("\n");
     sb.append("    differentServiceSignpostUrl: ")
         .append(toIndentedString(differentServiceSignpostUrl))
+        .append("\n");
+    sb.append("    streamlinedCitizenReapplicationJourneyEnabled: ")
+        .append(toIndentedString(streamlinedCitizenReapplicationJourneyEnabled))
         .append("\n");
     sb.append("}");
     return sb.toString();

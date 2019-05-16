@@ -13,7 +13,7 @@ Feature: Verify LAs metadata could be updated
 
   Scenario: Verify update metadata for LA
     Given path '/reference-data/authorities/DELETE_1'
-    And request {"description": "local authority", "postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com", "contactNumber": "0 1 7 1569226 6 "}
+    And request {"description": "local authority", "postcode": "ABC123", "nation": "SCO", "country": "United Kingdom2", contactUrl:"http://localhost2", "differentServiceSignpostUrl": "http://new_url.com", "contactNumber": "0 1 7 1569226 6 ", "streamlinedCitizenReapplicationJourneyEnabled":true}
     When method PUT
     Then status 200
  	* def updatedLA = db.readValueAsString("select meta_data from referencedata.reference_data la where la.data_group_id = 'LA' and la.code = 'DELETE_1'")
@@ -26,6 +26,7 @@ Feature: Verify LAs metadata could be updated
     * match updatedLA.contactUrl contains 'http://localhost2'
     * match updatedLA.emailAddress contains ''
     * match updatedLA.contactNumber contains '01715692266'
+    * match updatedLA.streamlinedCitizenReapplicationJourneyEnabled contains true
 
    Scenario: Verify upsert metadata for LA
     Given path '/reference-data/authorities/DELETE_2'
