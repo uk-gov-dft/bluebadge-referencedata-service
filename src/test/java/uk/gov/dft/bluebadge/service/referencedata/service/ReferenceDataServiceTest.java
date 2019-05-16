@@ -64,7 +64,7 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
   @Test
   public void updateLocalAuthority_shouldReturnTrue_WhenUpdateIsSuccessfulWithAllValues() {
     when(repositoryMock.updateLocalAuthority(
-            SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_ALL_VALUES))
+            SHORTCODE, DESCRIPTION, getLocalAuthorityEntityAllValues()))
         .thenReturn(1);
     service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_ALL_VALUES);
   }

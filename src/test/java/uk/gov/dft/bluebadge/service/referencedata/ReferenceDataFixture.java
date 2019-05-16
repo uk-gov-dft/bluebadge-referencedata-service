@@ -51,14 +51,15 @@ public class ReferenceDataFixture {
 
   // LocalAuthority
   public static LocalAuthority LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY =
-      new LocalAuthority()
+      LocalAuthority.builder()
           .description(DESCRIPTION)
           .contactUrl(CONTACT_URL)
           .nation(NATION)
           .country(COUNTRY)
-          .postcode(POSTCODE);
+          .postcode(POSTCODE)
+          .build();
   public static LocalAuthority LOCAL_AUTHORITY_ALL_VALUES =
-      new LocalAuthority()
+      LocalAuthority.builder()
           .postcode(POSTCODE)
           .addressLine1(ADDRESS_LINE1)
           .addressLine2(ADDRESS_LINE2)
@@ -79,27 +80,35 @@ public class ReferenceDataFixture {
           .streamlinedCitizenReapplicationJourneyEnabled(
               STREAMLINED_CITIZEN_REAPPLICATION_JOURNEY_ENABLED)
           .town(TOWN)
-          .welshDescription(WELSH_DESCRIPTION);
+          .welshDescription(WELSH_DESCRIPTION)
+          .build();
 
   public static LocalAuthority LOCAL_AUTHORITY_MANDATORY_VALUES_PLUS_PHONE_NUMBER =
-      new LocalAuthority()
+      LocalAuthority.builder()
           .description(DESCRIPTION)
           .contactUrl(CONTACT_URL)
           .nation(NATION)
           .country(COUNTRY)
           .postcode(POSTCODE)
-          .contactNumber(PHONE_NUMBER);
+          .contactNumber(PHONE_NUMBER)
+          .build();
 
   public static LocalAuthority LOCAL_AUTHORITY_ONE_MANDATORY_VALUE_IS_EMPTY =
-      new LocalAuthority().contactUrl(CONTACT_URL).nation(NATION).country(COUNTRY).postcode("");
+      LocalAuthority.builder()
+          .contactUrl(CONTACT_URL)
+          .nation(NATION)
+          .country(COUNTRY)
+          .postcode("")
+          .build();
   public static LocalAuthority LOCAL_AUTHORITY_MANDATORY_VALUES_PLUS_INVALID_VALUE =
-      new LocalAuthority()
+      LocalAuthority.builder()
           .description(DESCRIPTION)
           .contactUrl(CONTACT_URL)
           .nation(NATION)
           .country(COUNTRY)
           .postcode(POSTCODE)
-          .differentServiceSignpostUrl("INVALID");
+          .differentServiceSignpostUrl("INVALID")
+          .build();
 
   // LocalAuthorityEntity
   public static LocalAuthorityEntity LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY =
@@ -119,27 +128,28 @@ public class ReferenceDataFixture {
           .contactNumber(PHONE_NUMBER_TRIMMED)
           .build();
 
-  public static LocalAuthorityEntity LOCAL_AUTHORITY_ENTITY_ALL_VALUES =
-      LocalAuthorityEntity.builder()
-          .postcode(POSTCODE)
-          .addressLine1(ADDRESS_LINE1)
-          .addressLine2(ADDRESS_LINE2)
-          .addressLine3(ADDRESS_LINE3)
-          .addressLine4(ADDRESS_LINE4)
-          .badgeCost(BADGE_COST)
-          .clockType(CLOCK_TYPE)
-          .contactNumber(PHONE_NUMBER_TRIMMED)
-          .contactUrl(CONTACT_URL)
-          .country(COUNTRY)
-          .county(COUNTY)
-          .differentServiceSignpostUrl(DIFFERENT_SERVICE_SIGNPOST_URL)
-          .emailAddress(EMAIL_ADDRESS)
-          .nameLine2(NAME_LINE2)
-          .nation(NATION)
-          .paymentsEnabled(PAYMENTS_ENABLED)
-          .streamlinedCitizenReapplicationJourneyEnabled(
-              STREAMLINED_CITIZEN_REAPPLICATION_JOURNEY_ENABLED)
-          .town(TOWN)
-          .welshDescription(WELSH_DESCRIPTION)
-          .build();
+  public LocalAuthorityEntity getLocalAuthorityEntityAllValues() {
+    return LocalAuthorityEntity.builder()
+        .postcode(POSTCODE)
+        .addressLine1(ADDRESS_LINE1)
+        .addressLine2(ADDRESS_LINE2)
+        .addressLine3(ADDRESS_LINE3)
+        .addressLine4(ADDRESS_LINE4)
+        .badgeCost(BADGE_COST)
+        .clockType(CLOCK_TYPE)
+        .contactNumber(PHONE_NUMBER_TRIMMED)
+        .contactUrl(CONTACT_URL)
+        .country(COUNTRY)
+        .county(COUNTY)
+        .differentServiceSignpostUrl(DIFFERENT_SERVICE_SIGNPOST_URL)
+        .emailAddress(EMAIL_ADDRESS)
+        .nameLine2(NAME_LINE2)
+        .nation(NATION)
+        .paymentsEnabled(PAYMENTS_ENABLED)
+        .streamlinedCitizenReapplicationJourneyEnabled(
+            STREAMLINED_CITIZEN_REAPPLICATION_JOURNEY_ENABLED)
+        .town(TOWN)
+        .welshDescription(WELSH_DESCRIPTION)
+        .build();
+  }
 }

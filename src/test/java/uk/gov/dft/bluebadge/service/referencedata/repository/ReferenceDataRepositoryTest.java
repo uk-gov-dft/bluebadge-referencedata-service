@@ -72,9 +72,9 @@ public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
   public void updateLocalAuthority_shouldReturnTrue_whenAllValuesAreValid() {
     when(sqlSessionMock.update(any(), any())).thenReturn(1);
     repository.updateLocalAuthority(
-        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, LOCAL_AUTHORITY_ENTITY_ALL_VALUES);
+        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, getLocalAuthorityEntityAllValues());
 
-    String body = objectMapper.writer().writeValueAsString(LOCAL_AUTHORITY_ENTITY_ALL_VALUES);
+    String body = objectMapper.writer().writeValueAsString(getLocalAuthorityEntityAllValues());
     LocalAuthorityEntityUpdateParams updateParams =
         LocalAuthorityEntityUpdateParams.builder()
             .shortCode(SHORTCODE)
