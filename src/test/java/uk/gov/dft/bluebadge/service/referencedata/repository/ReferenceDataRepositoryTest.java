@@ -53,10 +53,10 @@ public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
   public void updateLocalAuthority_shouldReturnTrue_whenMandatoryValuesAreValid() {
     when(sqlSessionMock.update(any(), any())).thenReturn(1);
     repository.updateLocalAuthority(
-        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
+        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, getLocalAuthorityEntityMandatoryValues());
 
     String body =
-        objectMapper.writer().writeValueAsString(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
+        objectMapper.writer().writeValueAsString(getLocalAuthorityEntityMandatoryValues());
     LocalAuthorityEntityUpdateParams updateParams =
         LocalAuthorityEntityUpdateParams.builder()
             .shortCode(SHORTCODE)
@@ -94,10 +94,10 @@ public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
     when(objectMapperMock.writeValueAsString(any())).thenThrow(JsonProcessingException.class);
 
     repository.updateLocalAuthority(
-        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
+        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, getLocalAuthorityEntityMandatoryValues());
 
     String body =
-        objectMapper.writer().writeValueAsString(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
+        objectMapper.writer().writeValueAsString(getLocalAuthorityEntityMandatoryValues());
     LocalAuthorityEntityUpdateParams updateParams =
         LocalAuthorityEntityUpdateParams.builder()
             .shortCode(SHORTCODE)
