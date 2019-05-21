@@ -7,7 +7,7 @@ VALUES
  ('REPLACE','UNDELIVER','Undelivered - Lost in post',4)
 ,('CANCEL' ,'UNDELIVER','Undelivered - Lost in post',4)
 ,('CANCEL' ,'LOST'     ,'Lost',5)
-,('CANCEL' ,'STOLEN'   ,'Stolen',6)
+,('CANCEL' ,'STOLE'   ,'Stolen',6)
 ,('CANCEL' ,'DAMAGED'  ,'Damaged',7)
 ;
 
@@ -19,7 +19,7 @@ WHERE (data_group_id,code) IN (
  ('REPLACE','UNDELIVER')
 ,('CANCEL','UNDELIVER')
 ,('CANCEL','LOST')
-,('CANCEL','STOLEN')
+,('CANCEL','STOLE')
 ,('CANCEL','DAMAGED')
 );
 

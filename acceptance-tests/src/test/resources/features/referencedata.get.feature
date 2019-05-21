@@ -33,7 +33,7 @@ Feature: Verify ref data retrieval
     And match $.data[*] contains {groupShortCode:'CANCEL', shortCode:'NOLONG', metaData:null, description:'#notnull',groupDescription:'#string', subgroupShortCode:null, subgroupDescription:null, displayOrder:'#notnull'}
     And match $.data[*] contains {groupShortCode:'CANCEL', shortCode:'REVOKE', metaData:null, description:'#notnull',groupDescription:'#string', subgroupShortCode:null, subgroupDescription:null, displayOrder:'#notnull'}
     And match $.data[*] contains {groupShortCode:'CANCEL', shortCode:'LOST', metaData:null, description:'#notnull',groupDescription:'#string', subgroupShortCode:null, subgroupDescription:null, displayOrder:'#notnull'}
-    And match $.data[*] contains {groupShortCode:'CANCEL', shortCode:'STOLEN', metaData:null, description:'#notnull',groupDescription:'#string', subgroupShortCode:null, subgroupDescription:null, displayOrder:'#notnull'}
+    And match $.data[*] contains {groupShortCode:'CANCEL', shortCode:'STOLE', metaData:null, description:'#notnull',groupDescription:'#string', subgroupShortCode:null, subgroupDescription:null, displayOrder:'#notnull'}
     And match $.data[*] contains {groupShortCode:'CANCEL', shortCode:'DAMAGED', metaData:null, description:'#notnull',groupDescription:'#string', subgroupShortCode:null, subgroupDescription:null, displayOrder:'#notnull'}
 
 
