@@ -50,38 +50,55 @@ public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
 
   @Test
   @SneakyThrows
-  public void update_shouldReturnTrue_whenUpdateIsSuccessful() {
+  public void updateLocalAuthority_shouldReturnTrue_whenMandatoryValuesAreValid() {
     when(sqlSessionMock.update(any(), any())).thenReturn(1);
     repository.updateLocalAuthority(
-        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
+        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, getLocalAuthorityEntityMandatoryValues());
 
     String body =
-        objectMapper.writer().writeValueAsString(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
-    LocalAuthorityEntityUpdateParams localAuthorityEntityUpdateMandatoryValuesOnly =
+        objectMapper.writer().writeValueAsString(getLocalAuthorityEntityMandatoryValues());
+    LocalAuthorityEntityUpdateParams updateParams =
         LocalAuthorityEntityUpdateParams.builder()
             .shortCode(SHORTCODE)
             .description(LOCAL_AUTHORITY_DESCRIPTION)
             .localAuthorityInJson(body)
             .build();
 
-    verify(sqlSessionMock, times(1))
-        .update("updateLAMetaData", localAuthorityEntityUpdateMandatoryValuesOnly);
+    verify(sqlSessionMock, times(1)).update("updateLAMetaData", updateParams);
   }
 
+  @Test
+  @SneakyThrows
+  public void updateLocalAuthority_shouldReturnTrue_whenAllValuesAreValid() {
+    when(sqlSessionMock.update(any(), any())).thenReturn(1);
+    repository.updateLocalAuthority(
+        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, getLocalAuthorityEntityAllValues());
+
+    String body = objectMapper.writer().writeValueAsString(getLocalAuthorityEntityAllValues());
+    LocalAuthorityEntityUpdateParams updateParams =
+        LocalAuthorityEntityUpdateParams.builder()
+            .shortCode(SHORTCODE)
+            .description(LOCAL_AUTHORITY_DESCRIPTION)
+            .localAuthorityInJson(body)
+            .build();
+
+    verify(sqlSessionMock, times(1)).update("updateLAMetaData", updateParams);
+  }
+
+  @SneakyThrows
   @Test(expected = BadRequestException.class)
-  public void update_shouldThrowBadRequestException_whenUpdateIsNotSuccessful()
-      throws JsonProcessingException {
+  public void updateLocalAuthority_shouldThrowBadRequestException_whenUpdateIsNotSuccessful() {
 
     ReferenceDataRepository repository =
         new ReferenceDataRepository(sqlSessionMock, objectMapperMock);
     when(objectMapperMock.writeValueAsString(any())).thenThrow(JsonProcessingException.class);
 
     repository.updateLocalAuthority(
-        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
+        SHORTCODE, LOCAL_AUTHORITY_DESCRIPTION, getLocalAuthorityEntityMandatoryValues());
 
     String body =
-        objectMapper.writer().writeValueAsString(LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY);
-    LocalAuthorityEntityUpdateParams localAuthorityEntityUpdateMandatoryValuesOnly =
+        objectMapper.writer().writeValueAsString(getLocalAuthorityEntityMandatoryValues());
+    LocalAuthorityEntityUpdateParams updateParams =
         LocalAuthorityEntityUpdateParams.builder()
             .shortCode(SHORTCODE)
             .description(LOCAL_AUTHORITY_DESCRIPTION)
@@ -110,8 +127,9 @@ public class ReferenceDataRepositoryTest extends ReferenceDataFixture {
     verify(sqlSessionMock, times(1)).update("updateLCMetaData", params);
   }
 
+  @SneakyThrows
   @Test(expected = BadRequestException.class)
-  public void updateLocalCouncil_serialisationError() throws JsonProcessingException {
+  public void updateLocalCouncil_serialisationError() {
     ReferenceDataRepository repository =
         new ReferenceDataRepository(sqlSessionMock, objectMapperMock);
     when(objectMapperMock.writeValueAsString(any())).thenThrow(JsonProcessingException.class);

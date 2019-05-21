@@ -27,4 +27,5 @@ public class LocalAuthorityEntity {
   private Boolean paymentsEnabled;
   private BigDecimal badgeCost;
   private String differentServiceSignpostUrl;
+  private Boolean streamlinedCitizenReapplicationJourneyEnabled;
 }

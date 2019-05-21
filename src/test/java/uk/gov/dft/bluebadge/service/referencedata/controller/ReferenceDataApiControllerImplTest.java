@@ -76,8 +76,22 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Test
   @SneakyThrows
-  public void update_shouldBeOK_WhenPassingAllMandatoryValues() {
-    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
+  public void updateLocalAuthority_shouldBeOK_WhenPassingAllMandatoryValues() {
+    String body = objectMapper.writeValueAsString(getLocalAuthorityMandatoryValues());
+
+    RequestBuilder builder =
+        MockMvcRequestBuilders.put("/reference-data/authorities/" + SHORTCODE)
+            .content(body)
+            .contentType(MediaType.APPLICATION_JSON);
+
+    mvc.perform(builder).andExpect(status().isOk());
+    verify(service, times(1)).updateLocalAuthority(SHORTCODE, getLocalAuthorityMandatoryValues());
+  }
+
+  @Test
+  @SneakyThrows
+  public void updateLocalAuthority_shouldBeOK_WhenPassingAllValues() {
+    String body = objectMapper.writeValueAsString(getLocalAuthorityMandatoryValues());
 
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
@@ -90,8 +104,8 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
 
   @Test
   @SneakyThrows
-  public void update_shouldBeBadRequest_WhenPassingAnEmptyMandatoryValue() {
-    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_ONE_MANDATORY_VALUE_IS_EMPTY);
+  public void updateLocalAuthority_shouldBeBadRequest_WhenPassingAnEmptyMandatoryValue() {
+    String body = objectMapper.writeValueAsString(getLocalAuthorityOneMandatoryValuesIsEmpty());
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
@@ -105,8 +119,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   @Test
   @SneakyThrows
   public void updateLocalAuthority_shouldBeBadRequest_WhenPassingAnInvalidValues() {
-    String body =
-        objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_PLUS_INVALID_VALUE);
+    String body = objectMapper.writeValueAsString(getLocalAuthorityMandatoryValuesPlusOneInvalid());
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")
             .content(body)
@@ -120,7 +133,7 @@ public class ReferenceDataApiControllerImplTest extends ReferenceDataFixture {
   @Test
   @SneakyThrows
   public void updateLocalAuthority_shouldBeNotFound_whenUpdateFails() {
-    String body = objectMapper.writeValueAsString(LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
+    String body = objectMapper.writeValueAsString(getLocalAuthorityMandatoryValues());
 
     RequestBuilder builder =
         MockMvcRequestBuilders.put("/reference-data/authorities/ABC")

@@ -55,28 +55,36 @@ public class ReferenceDataServiceTest extends ReferenceDataFixture {
   public void
       updateLocalAuthority_shouldReturnTrue_WhenUpdateIsSuccessfulWithMandatoryValuesOnly() {
     when(repositoryMock.updateLocalAuthority(
-            SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+            SHORTCODE, DESCRIPTION, getLocalAuthorityEntityMandatoryValues()))
         .thenReturn(1);
 
-    service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
+    service.updateLocalAuthority(SHORTCODE, getLocalAuthorityMandatoryValues());
+  }
+
+  @Test
+  public void updateLocalAuthority_shouldReturnTrue_WhenUpdateIsSuccessfulWithAllValues() {
+    when(repositoryMock.updateLocalAuthority(
+            SHORTCODE, DESCRIPTION, getLocalAuthorityEntityAllValues()))
+        .thenReturn(1);
+    service.updateLocalAuthority(SHORTCODE, getLocalAuthorityAllValues());
   }
 
   @Test
   public void updateLocalAuthority_shouldReturnTrue_WhenUpdateIsSuccessful() {
     when(repositoryMock.updateLocalAuthority(
-            SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_PLUS_PHONE_NUMBER))
+            SHORTCODE, DESCRIPTION, getLocalAuthorityEntityMandatoryValuesPlusPhone()))
         .thenReturn(1);
 
-    service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_PLUS_PHONE_NUMBER);
+    service.updateLocalAuthority(SHORTCODE, getLocalAuthorityMandatoryValuesPlusPhone());
   }
 
   @Test(expected = NotFoundException.class)
-  public void update_shouldReturnBadRequestException_whenUpdateFails() {
+  public void updateLocalAuthority_shouldReturnBadRequestException_whenUpdateFails() {
     when(repositoryMock.updateLocalAuthority(
-            SHORTCODE, DESCRIPTION, LOCAL_AUTHORITY_ENTITY_MANDATORY_VALUES_ONLY))
+            SHORTCODE, DESCRIPTION, getLocalAuthorityEntityMandatoryValues()))
         .thenReturn(0);
 
-    service.updateLocalAuthority(SHORTCODE, LOCAL_AUTHORITY_MANDATORY_VALUES_ONLY);
+    service.updateLocalAuthority(SHORTCODE, getLocalAuthorityMandatoryValues());
   }
 
   @Test

@@ -50,6 +50,8 @@ public class ReferenceDataService {
             .paymentsEnabled(la.getPaymentsEnabled())
             .badgeCost(la.getBadgeCost())
             .differentServiceSignpostUrl(la.getDifferentServiceSignpostUrl())
+            .streamlinedCitizenReapplicationJourneyEnabled(
+                la.getStreamlinedCitizenReapplicationJourneyEnabled())
             .build();
     int updates = repository.updateLocalAuthority(shortCode, la.getDescription(), entity);
     if (updates == 0) {
